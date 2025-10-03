@@ -11,23 +11,24 @@ namespace Bolic.Backend;
 public class Dummy(IRuntime runtime)
 {
     [Function("Dummy")]
-    public HttpResponseData Run([HttpTrigger("get", "post")] HttpRequestData req)
+    public async Task<HttpResponseData> Run([HttpTrigger("get", "post")] HttpRequestData req)
     {
         var result = Tap.Process<Blah>(req).Run((Runtime)runtime);
 
-        return result.Match(
-            Succ: _ =>
+        return await result.Match(
+            Succ: async payload =>
             {
                 runtime.Logger.LogInformation("Worked");
+                var blah = payload.Result.Method;
                 var response = req.CreateResponse(HttpStatusCode.OK);
-                response.WriteStringAsync("Worked");
+                await response.WriteStringAsync(blah);
                 return response;
             },
-            Fail: error =>
+            Fail: async error =>
             {
                 runtime.Logger.LogError($"Effect failed: {error}");
                 var response = req.CreateResponse(HttpStatusCode.InternalServerError);
-                response.WriteStringAsync("Internal server error");
+                await response.WriteStringAsync("Internal server error");
                 return response;
             }
         );
