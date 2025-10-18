@@ -17,6 +17,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Debug environment secrets
+        run: echo "RG=${{ secrets.AZURE_RESOURCE_GROUP }}"
+        
       - name: Azure Login
         uses: azure/login@v2
         with:
