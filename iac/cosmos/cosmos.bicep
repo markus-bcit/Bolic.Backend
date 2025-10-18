@@ -8,7 +8,12 @@ resource account 'Microsoft.DocumentDB/databaseAccounts@2025-05-01-preview' = {
   name: accountName
   properties: {
     databaseAccountOfferType: 'Standard'
-    locations: location
+    locations: [
+      {
+        locationName: location
+        failoverPriority: 0
+      }
+    ]
     enableFreeTier: true // this
   }
 }
