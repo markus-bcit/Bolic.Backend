@@ -1,0 +1,48 @@
+name: Deploy Infrastructure (Develop)
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+permissions:
+  id-token: write      # Required for federated credentials (OIDC)
+  contents: read
+
+env:
+  AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+  AZURE_RESOURCE_GROUP: ${{ secrets.AZURE_RESOURCE_GROUP }}
+  ENVIRONMENT: develop
+
+jobs:
+  deploy:
+    name: Deploy Bicep to Azure
+    runs-on: ubuntu-latest
+    environment: develop
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Azure Login
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Validate Bicep template
+        run: |
+          az deployment group validate \
+            --resource-group $AZURE_RESOURCE_GROUP \
+            --template-file iac/main.bicep \
+            --parameters iac/dev.bicepparam
+
+      - name: Deploy Bicep
+        run: |
+          az deployment group create \
+            --name "bolic-develop-deployment-$(date +%s)" \
+            --resource-group $AZURE_RESOURCE_GROUP \
+            --template-file iac/main.bicep \
+            --parameters iac/dev.bicepparam \
