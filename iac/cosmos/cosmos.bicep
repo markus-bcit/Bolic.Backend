@@ -6,6 +6,7 @@ param location string = resourceGroup().location
 
 resource account 'Microsoft.DocumentDB/databaseAccounts@2025-05-01-preview' = {
   name: accountName
+  location: location
   properties: {
     databaseAccountOfferType: 'Standard'
     locations: [
