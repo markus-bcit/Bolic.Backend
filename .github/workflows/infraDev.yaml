@@ -1,9 +1,6 @@
 name: Deploy Infrastructure (Develop)
 
 on:
-  push:
-    tags:
-      - 'v*'
   workflow_dispatch:
 
 permissions:
@@ -14,7 +11,7 @@ jobs:
   deploy:
     name: Deploy Bicep to Azure
     runs-on: ubuntu-latest
-    environment: develop  # 👈 This links to your environment in GitHub
+    environment: develop  # Must match the environment in GitHub exactly
 
     steps:
       - name: Checkout repository
@@ -28,20 +25,16 @@ jobs:
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
       - name: Validate Bicep template
-        env:
-          AZURE_RESOURCE_GROUP: ${{ secrets.AZURE_RESOURCE_GROUP }}
         run: |
           az deployment group validate \
-            --resource-group "$AZURE_RESOURCE_GROUP" \
+            --resource-group "${{ secrets.AZURE_RESOURCE_GROUP }}" \
             --template-file iac/main.bicep \
             --parameters iac/dev.bicepparam
 
       - name: Deploy Bicep
-        env:
-          AZURE_RESOURCE_GROUP: ${{ secrets.AZURE_RESOURCE_GROUP }}
         run: |
           az deployment group create \
             --name "bolic-develop-deployment-$(date +%s)" \
-            --resource-group "$AZURE_RESOURCE_GROUP" \
+            --resource-group "${{ secrets.AZURE_RESOURCE_GROUP }}" \
             --template-file iac/main.bicep \
             --parameters iac/dev.bicepparam
