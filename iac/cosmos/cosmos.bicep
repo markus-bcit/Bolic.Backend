@@ -12,6 +12,7 @@ resource account 'Microsoft.DocumentDB/databaseAccounts@2025-05-01-preview' = {
       {
         locationName: location
         failoverPriority: 0
+        isZoneRedundant: false
       }
     ]
     enableFreeTier: true // this
