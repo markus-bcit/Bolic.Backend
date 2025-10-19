@@ -6,9 +6,16 @@ param location string = resourceGroup().location
 
 resource account 'Microsoft.DocumentDB/databaseAccounts@2025-05-01-preview' = {
   name: accountName
+  location: location
   properties: {
     databaseAccountOfferType: 'Standard'
-    locations: location
+    locations: [
+      {
+        locationName: location
+        failoverPriority: 0
+        isZoneRedundant: false
+      }
+    ]
     enableFreeTier: true // this
   }
 }
@@ -31,7 +38,6 @@ resource container 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/container
       id: 'trainingDays'
       partitionKey: {
         paths: [
-          '/id'
           '/userId'
         ]
       }
