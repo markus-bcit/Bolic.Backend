@@ -6,9 +6,8 @@
         <Nullable>enable</Nullable>
         <RootNamespace>Bolic.Backend.Models</RootNamespace>
     </PropertyGroup>
-
     <ItemGroup>
-      <Folder Include="DomainTypes\" />
+        <ProjectReference Include="..\Bolic.Backend.Core\Bolic.Backend.Core.csproj"/>
+        <Compile Include="..\Bolic.Backend.Core\Global.cs" Link="Global.cs" />
     </ItemGroup>
-
 </Project>

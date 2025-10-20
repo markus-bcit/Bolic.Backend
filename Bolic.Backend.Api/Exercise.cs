@@ -9,5 +9,5 @@ public record Exercise
     public string Category { get; init; } = string.Empty;
     public string Equipment { get; init; } = string.Empty;
     public string Notes { get; init; } = string.Empty;
-    public List<Set> Sets { get; init; } = [];
+    public List<TrainingSet> Sets { get; init; } = [];
 }

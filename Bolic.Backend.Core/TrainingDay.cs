@@ -1,17 +1,9 @@
-using System.Net;
-using Microsoft.Azure.Functions.Worker;
-using Microsoft.Extensions.Logging;
-using Microsoft.Azure.Functions.Worker.Http;
-using Bolic.Shared.Core;
-using Bolic.Shared.Tap;
-using LanguageExt;
-
 namespace Bolic.Backend;
 
-public class Dummy(IRuntime runtime)
+public class TrainingDay(IRuntime runtime)
 {
-    [Function("Dummy")]
-    public async Task<HttpResponseData> Run([HttpTrigger("get", "post")] HttpRequestData req)
+    [Function("CreateTrainingDay")]
+    public async Task<HttpResponseData> CreateTrainingDay([HttpTrigger("get", "post")] HttpRequestData req)
     {
         var result = Tap.Process<Blah>(req).Run((Runtime)runtime);
 
@@ -33,9 +25,4 @@ public class Dummy(IRuntime runtime)
             }
         );
     }
-}
-
-public class Blah
-{
-    public string Blahblah { get; set; } = string.Empty;
 }

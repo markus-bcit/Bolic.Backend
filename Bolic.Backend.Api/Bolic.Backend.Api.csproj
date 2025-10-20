@@ -5,5 +5,8 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
     </PropertyGroup>
-
+    <ItemGroup>
+        <ProjectReference Include="..\Bolic.Backend.Core\Bolic.Backend.Core.csproj"/>
+        <Compile Include="..\Bolic.Backend.Core\Global.cs" Link="Global.cs" />
+    </ItemGroup>
 </Project>

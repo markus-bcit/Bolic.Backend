@@ -1,6 +1,6 @@
 namespace Bolic.Backend.Api;
 
-public record Set
+public record TrainingSet
 {
     [JsonPropertyName("id")]
     public required string Id { get; init; }
