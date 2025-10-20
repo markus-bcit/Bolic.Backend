@@ -1,6 +1,8 @@
-﻿namespace Bolic.Backend.Models;
+﻿namespace Bolic.Backend.Domain;
 
 public record TrainingDay(
+    Option<Guid> Id,
+    Option<Guid> UserId,
     Option<string> Name,
     Option<string> Description,
     Option<DateTime> StartDate,

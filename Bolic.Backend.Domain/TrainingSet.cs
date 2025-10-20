@@ -1,8 +1,8 @@
-namespace Bolic.Backend.Models;
+namespace Bolic.Backend.Domain;
 
 public record TrainingSet(
-    Option<string> Id,
-    Option<string> UserId,
+    Option<Guid> Id,
+    Option<Guid> UserId,
     Option<string> Type,
     Option<float> Weight,
     Option<string> WeightType,

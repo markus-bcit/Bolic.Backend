@@ -4,10 +4,9 @@
         <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <RootNamespace>Bolic.Backend.Models</RootNamespace>
+        <RootNamespace>Bolic.Backend.Domain</RootNamespace>
     </PropertyGroup>
     <ItemGroup>
-        <ProjectReference Include="..\Bolic.Backend.Core\Bolic.Backend.Core.csproj"/>
-        <Compile Include="..\Bolic.Backend.Core\Global.cs" Link="Global.cs" />
+        <PackageReference Include="Bolic.Shared.Core" Version="1.0.37"/>
     </ItemGroup>
 </Project>
