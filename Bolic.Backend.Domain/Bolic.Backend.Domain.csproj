@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <RootNamespace>Bolic.Backend.Models</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Folder Include="DomainTypes\" />
+    </ItemGroup>
+
+</Project>
