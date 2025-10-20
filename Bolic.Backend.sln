@@ -1,6 +1,10 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bolic.Backend", "Bolic.Backend\Bolic.Backend.csproj", "{B028CC35-A720-4CE8-AA1A-7C584B4A568D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bolic.Backend.Core", "Bolic.Backend.Core\Bolic.Backend.Core.csproj", "{B028CC35-A720-4CE8-AA1A-7C584B4A568D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bolic.Backend.Domain", "Bolic.Backend.Domain\Bolic.Backend.Domain.csproj", "{DF57A081-EA41-4A42-85F6-EDD80238153A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bolic.Backend.Api", "Bolic.Backend.Api\Bolic.Backend.Api.csproj", "{9DABB5B9-409E-4BEB-A315-9095AE05C3E0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -12,5 +16,13 @@ Global
 		{B028CC35-A720-4CE8-AA1A-7C584B4A568D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B028CC35-A720-4CE8-AA1A-7C584B4A568D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B028CC35-A720-4CE8-AA1A-7C584B4A568D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF57A081-EA41-4A42-85F6-EDD80238153A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF57A081-EA41-4A42-85F6-EDD80238153A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF57A081-EA41-4A42-85F6-EDD80238153A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF57A081-EA41-4A42-85F6-EDD80238153A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9DABB5B9-409E-4BEB-A315-9095AE05C3E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9DABB5B9-409E-4BEB-A315-9095AE05C3E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9DABB5B9-409E-4BEB-A315-9095AE05C3E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9DABB5B9-409E-4BEB-A315-9095AE05C3E0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
