@@ -2,11 +2,12 @@
 
 public record TrainingDay
 {
-    public required string id { get; init; }
-    public string name { get; init; }
-    public string description { get; init; }
-    public DateTime startDate { get; init; }
-    public DateTime endDate { get; init; }
-    
-    public Exercise exercise { get; init; }
+    [JsonPropertyName("id")] public required string Id { get; init; } = Guid.NewGuid().ToString();
+
+    public string Name { get; init; } = string.Empty;
+    public string Description { get; init; } = string.Empty;
+    public DateTime StartDate { get; init; }
+    public DateTime EndDate { get; init; }
+
+    public Exercise Exercise { get; init; } = new(){Id = Guid.NewGuid().ToString()};
 }

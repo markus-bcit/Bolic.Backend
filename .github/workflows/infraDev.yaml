@@ -11,7 +11,7 @@ jobs:
   deploy:
     name: Deploy Bicep to Azure
     runs-on: ubuntu-latest
-    environment: develop  # Must match the environment in GitHub exactly
+    environment: develop  
 
     steps:
       - name: Checkout repository
