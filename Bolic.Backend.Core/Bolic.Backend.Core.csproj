@@ -9,7 +9,6 @@
     </PropertyGroup>
     <ItemGroup>
         <FrameworkReference Include="Microsoft.AspNetCore.App"/>
-        <PackageReference Include="Bolic.Shared.Azure" Version="1.0.34" />
         <!-- Application Insights isn't enabled by default. See https://aka.ms/AAt8mw4. -->
         <!-- <PackageReference Include="Microsoft.ApplicationInsights.WorkerService" Version="2.22.0" /> -->
         <!-- <PackageReference Include="Microsoft.Azure.Functions.Worker.ApplicationInsights" Version="2.0.0" /> -->
@@ -17,8 +16,11 @@
         <PackageReference Include="Microsoft.Azure.Functions.Worker.Extensions.Http.AspNetCore" Version="2.0.0"/>
         <PackageReference Include="Microsoft.Azure.Functions.Worker.Sdk" Version="2.0.0"/>
 
-        <PackageReference Include="Bolic.Shared.Core" Version="1.0.34" />
-        <PackageReference Include="Bolic.Shared.Tap" Version="1.0.34" />
+        <PackageReference Include="Bolic.Shared.Azure" Version="1.0.36" />
+        <PackageReference Include="Bolic.Shared.Core" Version="1.0.36" />
+        <PackageReference Include="Bolic.Shared.Tap" Version="1.0.36" />
+        <PackageReference Include="Bolic.Shared.Database" Version="1.0.36" />
+
     </ItemGroup>
     <ItemGroup>
         <None Update="host.json">
