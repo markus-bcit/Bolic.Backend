@@ -30,7 +30,7 @@ resource database 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases@2024-02-15
   }
 }
 
-resource training-days-container 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers@2025-05-01-preview' = {
+resource trainingDaysContainer 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers@2025-05-01-preview' = {
   parent: database
   name: 'training-days'
   properties: {
@@ -45,7 +45,7 @@ resource training-days-container 'Microsoft.DocumentDB/databaseAccounts/sqlDatab
   }
 }
 
-resource exercises-container 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers@2025-05-01-preview' = {
+resource exercisesContainer 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers@2025-05-01-preview' = {
   parent: database
   name: 'exercises'
   properties: {
@@ -60,7 +60,7 @@ resource exercises-container 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases
   }
 }
 
-resource users-container 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers@2025-05-01-preview' = {
+resource usersContainer 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers@2025-05-01-preview' = {
   parent: database
   name: 'users'
   properties: {
