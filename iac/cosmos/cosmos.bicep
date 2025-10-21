@@ -66,6 +66,12 @@ resource usersContainer 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/cont
   properties: {
     resource: {
       id: 'users'
+      partitionKey: {
+        paths: [
+          '/id'
+        ]
+        kind: 'Hash'
+      }
     }
   }
 }
