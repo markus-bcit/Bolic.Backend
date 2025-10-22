@@ -1,28 +1,37 @@
-namespace Bolic.Backend;
+using Bolic.Backend.Core.Transformers;
+using Bolic.Backend.Core.Util;
+using Bolic.Shared.Database.Implementation;
+using Newtonsoft.Json;
+
+namespace Bolic.Backend.Core;
 
 public class TrainingDay(IRuntime runtime)
 {
     [Function("CreateTrainingDay")]
-    public async Task<HttpResponseData> CreateTrainingDay([HttpTrigger("get", "post")] HttpRequestData req)
+    public async Task<HttpResponseData> CreateTrainingDay([HttpTrigger("post")] HttpRequestData req)
     {
-        var result = Tap.Process<Blah>(req).Run((Runtime)runtime);
-
-        return await result.Match(
-            Succ: async payload =>
-            {
-                runtime.Logger.LogInformation("Worked");
-                var blah = payload.Result.Method;
-                var response = req.CreateResponse(HttpStatusCode.OK);
-                await response.WriteStringAsync(blah);
-                return response;
-            },
-            Fail: async error =>
-            {
-                runtime.Logger.LogError($"Effect failed: {error}");
-                var response = req.CreateResponse(HttpStatusCode.InternalServerError);
-                await response.WriteStringAsync("Internal server error");
-                return response;
-            }
-        );
+        var program = 
+            from request in Tap.Process<Api.TrainingDay>(req)
+            from body in request.Body.ToEff()
+            from dto in TrainingDayTransformers.ConvertToDto(body).ToEff()
+            from cr in TrainingDayTransformers.DtoToCreateRequest(dto, "training-days", "bolic").ToEff()
+            let blah = JsonConvert.SerializeObject(cr)
+            from databaseResponse in CosmosDatabase.CreateItem(cr)
+            select databaseResponse;
+        
+        return await program.Run((Runtime)runtime).ToHttpResponse(req, HttpStatusCode.Created);
+    }
+    
+    [Function("UpdateTrainingDay")]
+    public async Task<HttpResponseData> UpdateTrainingDay([HttpTrigger("put")] HttpRequestData req)
+    {
+        var program = from request in Tap.Process<Api.TrainingDay>(req)
+            from body in request.Body.ToEff()
+            from dto in TrainingDayTransformers.ConvertToDto(body).ToEff()
+            from cr in TrainingDayTransformers.DtoToUpdateRequest(dto, "training-days", "bolic").ToEff()
+            from databaseResponse in CosmosDatabase.UpdateItem<Domain.TrainingDay>(cr)
+            select databaseResponse;
+        
+        return await program.Run((Runtime)runtime).ToHttpResponse(req, HttpStatusCode.Created);
     }
 }

@@ -2,8 +2,8 @@ namespace Bolic.Backend.Api;
 
 public record TrainingSet
 {
-    [JsonPropertyName("id")]
-    public required string Id { get; init; }
+    // ReSharper disable once InconsistentNaming
+    public required string id { get; init; }
     public string UserId { get; init; } = string.Empty;
     public string Type { get; init; } = string.Empty; // working set, warmup etc.
     public float Weight { get; init; }
