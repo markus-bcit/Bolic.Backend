@@ -1,4 +1,5 @@
-using Bolic.Shared.Database.Api;
+using Bolic.Backend.Transformers;
+using Bolic.Backend.Util;
 using Bolic.Shared.Database.Implementation;
 
 namespace Bolic.Backend;
@@ -10,37 +11,24 @@ public class TrainingDay(IRuntime runtime)
     {
         var program = from request in Tap.Process<Api.TrainingDay>(req)
             from body in request.Body.ToEff()
-            from dto in ConvertToDto(body).ToEff()
-            from cr in FormatCreateRequest(dto, "training-days", "bolic").ToEff()
+            from dto in TrainingDayTransformers.ConvertToDto(body).ToEff()
+            from cr in TrainingDayTransformers.DtoToCreateRequest(dto, "training-days", "bolic").ToEff()
             from databaseResponse in CosmosDatabase.CreateItem(cr)
             select databaseResponse;
-
-        var result = program.Run((Runtime)runtime);
-
-        return await result.ToHttpResponse(req, HttpStatusCode.Created);
+        
+        return await program.Run((Runtime)runtime).ToHttpResponse(req, HttpStatusCode.Created);
     }
-
-    public Option<Domain.TrainingDay> ConvertToDto(Api.TrainingDay trainingDay)
+    
+    [Function("UpdateTrainingDay")]
+    public async Task<HttpResponseData> UpdateTrainingDay([HttpTrigger("put")] HttpRequestData req)
     {
-        return new Domain.TrainingDay(
-            Id: parseGuid(trainingDay.Id),
-            UserId: parseGuid(trainingDay.UserId),
-            Name: trainingDay.Name,
-            Description: trainingDay.Description,
-            StartDate: trainingDay.StartDate,
-            EndDate: trainingDay.EndDate,
-            Exercises: new List<Domain.Exercise>());
-    }
-
-    public Option<CreateRequest<Domain.TrainingDay>> FormatCreateRequest(Domain.TrainingDay trainingDay,
-        Option<string> container, Option<string> database)
-    {
-        return new CreateRequest<Domain.TrainingDay>(
-            Id: trainingDay.Id.ToString(),
-            UserId: trainingDay.UserId.ToString(),
-            Container: container,
-            Database: database,
-            Document: trainingDay
-        );
+        var program = from request in Tap.Process<Api.TrainingDay>(req)
+            from body in request.Body.ToEff()
+            from dto in TrainingDayTransformers.ConvertToDto(body).ToEff()
+            from cr in TrainingDayTransformers.DtoToUpdateRequest(dto, "training-days", "bolic").ToEff()
+            from databaseResponse in CosmosDatabase.UpdateItem<Domain.TrainingDay>(cr)
+            select databaseResponse;
+        
+        return await program.Run((Runtime)runtime).ToHttpResponse(req, HttpStatusCode.Created);
     }
 }
