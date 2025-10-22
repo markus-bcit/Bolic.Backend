@@ -1,6 +1,7 @@
 ﻿namespace Bolic.Backend.Domain;
 
 public record TrainingDay(
+    
     Option<Guid> Id,
     Option<Guid> UserId,
     Option<string> Name,

@@ -2,7 +2,8 @@
 
 public record TrainingDay
 {
-    [JsonPropertyName("id")] public required string Id { get; init; }
+    // ReSharper disable once InconsistentNaming
+    public required string id { get; init; }
     public required string UserId { get; init; }
 
     public string Name { get; init; } = string.Empty;

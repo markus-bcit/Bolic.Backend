@@ -1,4 +1,4 @@
-namespace Bolic.Backend;
+namespace Bolic.Backend.Core;
 
 public class Exercise
 {

@@ -1,4 +1,4 @@
-namespace Bolic.Backend.Util;
+namespace Bolic.Backend.Core.Util;
 
 public static class HttpResponseExtensions
 {

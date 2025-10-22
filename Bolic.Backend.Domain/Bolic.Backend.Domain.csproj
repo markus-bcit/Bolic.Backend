@@ -7,6 +7,6 @@
         <RootNamespace>Bolic.Backend.Domain</RootNamespace>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="Bolic.Shared.Core" Version="1.0.37"/>
+        <PackageReference Include="Bolic.Shared.Core" Version="1.0.40"/>
     </ItemGroup>
 </Project>
