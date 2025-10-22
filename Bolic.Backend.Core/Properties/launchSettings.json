@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "Bolic.Backend.Core": {
+      "commandName": "Project",
+      "commandLineArgs": "--port 7216",
+      "launchBrowser": false
+    }
+  }
+}
