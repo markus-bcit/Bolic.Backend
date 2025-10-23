@@ -15,7 +15,6 @@ public class TrainingDay(IRuntime runtime)
             from body in request.Body.ToEff()
             from dto in TrainingDayTransformers.ConvertToDto(body).ToEff()
             from cr in TrainingDayTransformers.DtoToCreateRequest(dto, "training-days", "bolic").ToEff()
-            let blah = JsonConvert.SerializeObject(cr)
             from databaseResponse in CosmosDatabase.CreateItem(cr)
             select databaseResponse;
 
