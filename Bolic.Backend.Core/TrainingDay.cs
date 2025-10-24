@@ -13,8 +13,8 @@ public class TrainingDay(IRuntime runtime)
         var program =
             from request in Tap.Process<Api.TrainingDay>(req)
             from body in request.Body.ToEff()
-            from dto in TrainingDayTransformers.ConvertToDto(body).ToEff()
-            from cr in TrainingDayTransformers.DtoToCreateRequest(dto, "training-days", "bolic").ToEff()
+            from dt in TrainingDayTransformers.ToDt(body).ToEff()
+            from cr in TrainingDayTransformers.ToCreateRequest(dt, "training-days", "bolic").ToEff()
             from databaseResponse in CosmosDatabase.CreateItem(cr)
             select databaseResponse;
 
@@ -26,8 +26,8 @@ public class TrainingDay(IRuntime runtime)
     {
         var program = from request in Tap.Process<Api.TrainingDay>(req)
             from body in request.Body.ToEff()
-            from dto in TrainingDayTransformers.ConvertToDto(body).ToEff()
-            from cr in TrainingDayTransformers.DtoToUpdateRequest(dto, "training-days", "bolic").ToEff()
+            from dt in TrainingDayTransformers.ToDt(body).ToEff()
+            from cr in TrainingDayTransformers.ToUpdateRequest(dt, "training-days", "bolic").ToEff()
             from databaseResponse in CosmosDatabase.UpdateItem(cr)
             select databaseResponse;
 
