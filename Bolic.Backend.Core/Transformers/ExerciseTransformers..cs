@@ -5,7 +5,7 @@ public static class ExerciseTransformers
     public static Api.Exercise ConvertExercise(Domain.Exercise e) =>
         new()
         {
-            id = e.Id.Match(id => id.ToString(), () => Guid.NewGuid().ToString()),
+            Id = e.Id.Match(id => id.ToString(), () => Guid.NewGuid().ToString()),
             UserId = e.UserId.Match(id => id.ToString(), () => throw new Exceptional("Invalid UserId", 0004)),
             Name = e.Name.IfNone(string.Empty),
             TargetPosition = e.TargetPosition.IfNone(string.Empty),

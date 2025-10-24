@@ -5,8 +5,8 @@ public static class TrainingSetTransformers
     public static Api.TrainingSet ConvertSet(Domain.TrainingSet s) =>
         new()
         {
-            id = s.Id.Match(id => id.ToString(), () => Guid.NewGuid().ToString()),
-            UserId = s.UserId.Match(id => id.ToString(), () => throw new Exceptional("Invalid UserId", 0004)),
+            Id = s.Id.Match(id => id.ToString(), () => Guid.NewGuid().ToString()),
+            UserId = s.UserId.Match(id => id.ToString(), () => throw new Exceptional("Invalid UserId", 0006)),
             Type = s.Type.IfNone(string.Empty),
             Weight = s.Weight.IfNone(0),
             WeightType = s.WeightType.IfNone(string.Empty),
