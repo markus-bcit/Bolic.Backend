@@ -2,7 +2,7 @@ namespace Bolic.Backend.Core.Transformers;
 
 public static class TrainingSetTransformers
 {
-    public static Api.TrainingSet ConvertSet(Domain.TrainingSet s) =>
+    public static Api.TrainingSet ToDt(Domain.TrainingSet s) =>
         new()
         {
             Id = s.Id.Match(id => id.ToString(), () => Guid.NewGuid().ToString()),
