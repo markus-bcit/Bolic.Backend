@@ -2,7 +2,7 @@ namespace Bolic.Backend.Api;
 
 public record TrainingSet
 {
-    [JsonProperty("id")] public required string Id { get; init; }
+    [JsonProperty("id")] public string Id { get; init; } = Guid.NewGuid().ToString();
     public required string UserId { get; init; }
     public string Type { get; init; } = string.Empty; // working set, warmup etc.
     public float Weight { get; init; }
