@@ -2,10 +2,8 @@
 
 public record TrainingDay
 {
-    // ReSharper disable once InconsistentNaming
-    public required string id { get; init; }
+    [JsonProperty("id")] public required string Id { get; init; }
     public required string UserId { get; init; }
-
     public string Name { get; init; } = string.Empty;
     public string Description { get; init; } = string.Empty;
     public DateTime StartDate { get; init; }
