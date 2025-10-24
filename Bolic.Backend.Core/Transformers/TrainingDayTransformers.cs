@@ -40,7 +40,7 @@ public static class TrainingDayTransformers
         string container, string database)
     {
         return new UpdateRequest<Domain.TrainingDay>(
-            Id: trainingDay.Id.Match(id => id.ToString(), () => Guid.NewGuid().ToString()),
+            Id: trainingDay.Id.Match(id => id.ToString(), () => throw new Exceptional("Invalid id", 0005)),
             UserId: trainingDay.UserId.Match(id => id.ToString(), () => throw new Exceptional("Invalid UserId", 0002)),
             Container: container,
             Database: database,

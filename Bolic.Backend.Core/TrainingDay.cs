@@ -28,9 +28,9 @@ public class TrainingDay(IRuntime runtime)
             from body in request.Body.ToEff()
             from dto in TrainingDayTransformers.ConvertToDto(body).ToEff()
             from cr in TrainingDayTransformers.DtoToUpdateRequest(dto, "training-days", "bolic").ToEff()
-            from databaseResponse in CosmosDatabase.UpdateItem<Domain.TrainingDay>(cr)
+            from databaseResponse in CosmosDatabase.UpdateItem(cr)
             select databaseResponse;
 
-        return await program.Run((Runtime)runtime).ToHttpResponse((Runtime)runtime, req, HttpStatusCode.Created);
+        return await program.Run((Runtime)runtime).ToHttpResponse((Runtime)runtime, req, HttpStatusCode.OK);
     }
 }
