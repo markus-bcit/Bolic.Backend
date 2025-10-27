@@ -2,11 +2,13 @@
 
 # 🧠 Bolic — Training Platform
 
-Bolic is a functionally designed backend for a fitness training app — built with **Azure Functions**, **LanguageExt v5**, and **C#** functional programming principles.
+Bolic is a functionally designed science based fitness training app — built with **Azure Functions**, **LanguageExt v5**, and **C#** functional programming principles.
 
 The goal of Bolic is to create a fully composable, type-safe, and scalable backend that models real-world training structures (meso / macro cycles, training days, and volume tracking). 
 
-The goal of Bolic is to implement new functionality I otherwise found to be lacking the current realm of fitness tracking apps. 
+The goal of Bolic is to implement new functionality I otherwise found to be lacking the current realm of fitness tracking apps. This app is designed for SBLs (Science Based Lifters) and people who want to track their lifts in the most optimal way. 
+
+It's designed in a way to allow for quick iterations to always use what's "most optimal," staying up to date with current literature. 
 
 ---
 
