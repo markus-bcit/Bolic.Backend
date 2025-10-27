@@ -27,8 +27,8 @@ public static class HttpResponseExtensions
                             _ => await CreateResponse(req, HttpStatusCode.InternalServerError, new { error = "Internal server error." })
                         },
 
-                        TimeoutException => await CreateResponse(req, HttpStatusCode.RequestTimeout, new Error(nameof(HttpStatusCode.Forbidden),  "Request timed out.")),
-                        UnauthorizedAccessException => await CreateResponse(req, HttpStatusCode.Unauthorized, new Error(nameof(HttpStatusCode.Forbidden),  "User is unauthorized.")),
+                        TimeoutException => await CreateResponse(req, HttpStatusCode.RequestTimeout, new Error(nameof(HttpStatusCode.RequestTimeout),  "Request timed out.")),
+                        UnauthorizedAccessException => await CreateResponse(req, HttpStatusCode.Unauthorized, new Error(nameof(HttpStatusCode.Unauthorized),  "User is unauthorized.")),
                         _ => await CreateResponse(req, HttpStatusCode.InternalServerError, new { error = "Internal server error." })
                     };
                 }
