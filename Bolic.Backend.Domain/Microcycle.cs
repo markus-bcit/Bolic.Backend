@@ -1,13 +1,13 @@
-﻿namespace Bolic.Backend.Domain;
+namespace Bolic.Backend.Domain;
 
-public record TrainingDay(
-    
+public record Microcycle(
     Option<Guid> Id,
     Option<Guid> UserId,
-    Option<Guid> MicrocycleId,
+    Option<Guid> MacrocycleId,
     Option<string> Name,
     Option<string> Description,
+    Option<DateTime> CreatedDate,
     Option<DateTime> StartDate,
     Option<DateTime> EndDate,
-    List<TrainingExercise> Exercises
+    List<TrainingDay> TrainingDays
 );
