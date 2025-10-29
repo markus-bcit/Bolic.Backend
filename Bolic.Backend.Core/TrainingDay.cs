@@ -14,12 +14,12 @@ public class TrainingDay(IRuntime runtime)
         var program =
             from request in Tap.Process<Api.TrainingDay>(req)
             from body in request.Body.ToEff()
-            from dt in TrainingDayTransformers.ToDt(body).ToEff()
+            from dt in body.ToDt().ToEff()
             from databaseResponse in CosmosDatabase.CreateItem(
                 new CreateRequest<Api.TrainingDay>(
                     Id: dt.Id.First().ToString(),
                     UserId: dt.UserId.First().ToString(),
-                    Document: TrainingDayTransformers.ToApi(dt).First(),
+                    Document: dt.ToApi().First(),
                     Container: "training-days",
                     Database: "bolic"
                 )
@@ -35,12 +35,12 @@ public class TrainingDay(IRuntime runtime)
         var program =
             from request in Tap.Process<Api.TrainingDay>(req)
             from body in request.Body.ToEff()
-            from dt in TrainingDayTransformers.ToDt(body).ToEff()
+            from dt in body.ToDt().ToEff()
             from databaseResponse in CosmosDatabase.UpdateItem(
                 new UpdateRequest<Api.TrainingDay>(
                     Id: dt.Id.First().ToString(),
                     UserId: dt.UserId.First().ToString(),
-                    Document: TrainingDayTransformers.ToApi(dt).First(),
+                    Document: dt.ToApi().First(),
                     Container: "training-days",
                     Database: "bolic"
                 )
@@ -56,7 +56,7 @@ public class TrainingDay(IRuntime runtime)
         var program =
             from request in Tap.Process<Api.TrainingDay>(req)
             from body in request.Body.ToEff()
-            from dt in TrainingDayTransformers.ToDt(body).ToEff()
+            from dt in body.ToDt().ToEff()
             from databaseResponse in CosmosDatabase.ReadItem<Api.TrainingDay>(
                 new ReadRequest(
                     Id: dt.Id.First().ToString(),
@@ -75,9 +75,8 @@ public class TrainingDay(IRuntime runtime)
         [HttpTrigger("patch", Route = "training-days")] HttpRequestData req)
     {
         var program =
-            from request in Tap.Process<Api.TrainingDay>(req)
+            from request in Tap.Process<Api.TrainingDay>(req, new() { NullValueHandling = NullValueHandling.Ignore})
             from body in request.Body.ToEff()
-            // ToDo #1 start here, fix this
             from databaseResponse in CosmosDatabase.PatchItem<Api.TrainingDay>(
                 new PatchRequest<Api.TrainingDay>(
                     Id: body.Id,      // take directly from the API object ToDo verify

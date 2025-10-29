@@ -1,23 +1,21 @@
-using Bolic.Shared.Database.Api;
-
 namespace Bolic.Backend.Core.Transformers;
 
-public static class TrainingDayTransformers
+public static class TrainingDayTransformer
 {
-    public static Option<Domain.TrainingDay> ToDt(Api.TrainingDay td) =>
+    public static Option<Domain.TrainingDay> ToDt(this Api.TrainingDay td) =>
         new Domain.TrainingDay(
             Id: parseGuid(td.Id),
             UserId: parseGuid(td.UserId),
-            MicrocycleId: parseGuid(td.MicrocycleId),
+            MicrocycleId: parseGuid(td.MicrocycleId ?? string.Empty),
             Name: td.Name,
             Description: td.Description,
-            StartDate: td.StartDate,
-            EndDate: td.EndDate,
+            StartDate: td.StartDate ?? Option<DateTime>.None,
+            EndDate: td.EndDate ?? Option<DateTime>.None,
             Exercises: td.Exercises.Select(TrainingExerciseTransformer.ToDt)
                 .Select(a => a.First()).ToList()
         );
 
-    public static Option<Api.TrainingDay> ToApi(Domain.TrainingDay td) =>
+    public static Option<Api.TrainingDay> ToApi(this Domain.TrainingDay td) =>
         new Api.TrainingDay()
         {
             Id = td.Id.Match(id => id.ToString(), () => Guid.NewGuid().ToString()),

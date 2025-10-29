@@ -1,8 +1,8 @@
 namespace Bolic.Backend.Core.Transformers;
 
-public static class TrainingSetTransformers
+public static class TrainingSetTransformer
 {
-    public static Option<Domain.TrainingSet> ToDt(Api.TrainingSet s) =>
+    public static Option<Domain.TrainingSet> ToDt(this Api.TrainingSet s) =>
         new Domain.TrainingSet(
             Id: parseGuid(s.Id),
             UserId: parseGuid(s.UserId),
@@ -18,7 +18,7 @@ public static class TrainingSetTransformers
             Notes: s.Notes
         );
 
-    public static Option<Api.TrainingSet> ToApi(Domain.TrainingSet s) =>
+    public static Option<Api.TrainingSet> ToApi(this Domain.TrainingSet s) =>
         new Api.TrainingSet()
         {
             Id = s.Id.Match(id => id.ToString(), () => Guid.NewGuid().ToString()),
