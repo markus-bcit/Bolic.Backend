@@ -1,5 +1,3 @@
-using Bolic.Backend.Api;
-
 namespace Bolic.Backend.Domain;
 
 public record Macrocycle

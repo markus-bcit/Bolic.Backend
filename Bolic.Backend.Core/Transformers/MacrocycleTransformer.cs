@@ -6,11 +6,11 @@ public static class MacrocycleTransformer
         new Domain.Macrocycle(
             Id: parseGuid(m.Id),
             UserId: parseGuid(m.UserId),
-            MesocycleId: parseGuid(m.MesocycleId),
+            MesocycleId: parseGuid(m.MesocycleId ?? string.Empty),
             Name: m.Name,
             Description: m.Description,
-            StartDate: m.StartDate,
-            EndDate: m.EndDate,
+            StartDate: m.StartDate ?? Option<DateTime>.None, 
+            EndDate: m.EndDate ??  Option<DateTime>.None,
             Microcycles: m.Microcycles.Select(MicrocycleTransformer.ToDt)
                 .Select(a => a.IfNone(() => throw new Exceptional("Invalid microcycle", 0006))).ToList()
         );

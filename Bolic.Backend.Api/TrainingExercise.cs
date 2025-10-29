@@ -8,17 +8,17 @@ public record TrainingExercise
 
     public required string UserId { get; init; }
     public required string TrainingDayId { get; init; }
-    public string Name { get; init; } = string.Empty;
+    public string? Name { get; init; }
 
-    public string TargetPosition { get; init; } = string.Empty; // lengthened, short, etc.
+    public string? TargetPosition { get; init; } // lengthened, short, etc.
 
-    public string MuscleCategory { get; init; } = string.Empty;
+    public string? MuscleCategory { get; init; }
 
-    public string MuscleSubcategory { get; init; } = string.Empty; // optional
+    public string? MuscleSubcategory { get; init; } // optional
 
-    public string Equipment { get; init; } = string.Empty;
+    public string? Equipment { get; init; }
 
-    public string Notes { get; init; } = string.Empty;
+    public string? Notes { get; init; }
 
     public List<TrainingSet> Sets { get; init; } = [];
 }
