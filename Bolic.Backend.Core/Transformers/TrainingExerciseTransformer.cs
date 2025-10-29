@@ -1,4 +1,3 @@
-using Bolic.Backend.Api;
 using Bolic.Backend.Domain;
 using MuscleCategory = Bolic.Backend.Domain.MuscleCategory;
 
@@ -17,7 +16,7 @@ public static class TrainingExerciseTransformer
             TargetPosition: e.TargetPosition,
             Equipment: e.Equipment,
             Notes: e.Notes,
-            Sets: e.Sets.Select(TrainingSetTransformers.ToDt).Select(a => a.IfNone(() => throw new Exceptional("Invalid TrainingSet", 0018))).ToList()
+            Sets: e.Sets.Select(TrainingSetTransformer.ToDt).Select(a => a.IfNone(() => throw new Exceptional("Invalid TrainingSet", 0018))).ToList()
         );
 
     public static Option<Api.TrainingExercise> ToApi(this Domain.TrainingExercise e)
@@ -32,7 +31,7 @@ public static class TrainingExerciseTransformer
             TargetPosition = e.TargetPosition.IfNone(string.Empty),
             Equipment = e.Equipment.IfNone(string.Empty),
             Notes = e.Notes.IfNone(string.Empty),
-            Sets = e.Sets.Select(TrainingSetTransformers.ToApi).Select(a => a.IfNone(() => throw new Exceptional("Invalid TrainingSet", 0019))).ToList()
+            Sets = e.Sets.Select(TrainingSetTransformer.ToApi).Select(a => a.IfNone(() => throw new Exceptional("Invalid TrainingSet", 0019))).ToList()
         };
     }
 }

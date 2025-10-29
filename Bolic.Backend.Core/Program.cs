@@ -1,4 +1,3 @@
-using Bolic.Shared.Core;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 

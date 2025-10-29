@@ -1,5 +1,4 @@
 using Bolic.Shared.Database.Api;
-using Newtonsoft.Json;
 using Error = Bolic.Backend.Api.Error;
 
 namespace Bolic.Backend.Core.Util;
@@ -32,22 +31,26 @@ public static class HttpResponseExtensions
                             _ => await CreateResponse(req, HttpStatusCode.InternalServerError,
                                 new { error = "Internal server error." })
                         },
-
-                        TimeoutException => await CreateResponse(req, HttpStatusCode.RequestTimeout,
-                            new Error(nameof(HttpStatusCode.RequestTimeout), "Request timed out.")),
-                        UnauthorizedAccessException => await CreateResponse(req, HttpStatusCode.Unauthorized,
-                            new Error(nameof(HttpStatusCode.Unauthorized), "User is unauthorized.")),
-                        _ => await CreateResponse(req, HttpStatusCode.InternalServerError,
-                            new { error = "Internal server error." })
+                        TimeoutException => await CreateResponse(req, HttpStatusCode.RequestTimeout, new Error(nameof(HttpStatusCode.RequestTimeout), "Request timed out.")),
+                        UnauthorizedAccessException => await CreateResponse(req, HttpStatusCode.Unauthorized, new Error(nameof(HttpStatusCode.Unauthorized), "User is unauthorized.")),
+                        _ => await CreateResponse(req, HttpStatusCode.InternalServerError, new { error = "Internal server error." })
                     };
                 }
             ),
             Fail: async ex =>
             {
                 rt.Logger.LogError(ex,
-                    "Request received InternalServerError status code on unhandled error, see exception for details on {invocationId}",
+                    "Request received non-success status code, see exception for details on {invocationId}",
                     invocationId);
-                return await CreateResponse(req, HttpStatusCode.InternalServerError, new { error = ex.Message });
+                return ex.Exception.First() switch
+                {
+                    // why do I need to catch both??
+                    Newtonsoft.Json.JsonException => await CreateResponse(
+                        req, HttpStatusCode.BadRequest,
+                        new Error(nameof(HttpStatusCode.BadRequest), "Bad request payload.")
+                    ),
+                    _ => await CreateResponse(req, HttpStatusCode.InternalServerError, new { error = ex.Message })
+                };
             }
         );
     }
