@@ -75,3 +75,18 @@ resource usersContainer 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/cont
     }
   }
 }
+
+resource setsContainer 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers@2025-05-01-preview' = {
+  parent: database
+  name: 'sets'
+  properties: {
+    resource: {
+      id: 'sets'
+      partitionKey: {
+        paths: [
+          '/UserId'
+        ]
+      }
+    }
+  }
+}
