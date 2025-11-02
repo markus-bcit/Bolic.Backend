@@ -5,7 +5,7 @@ public static class MicrocycleTransformer
     public static Option<Domain.Microcycle> ToDt(this Api.Microcycle m) =>
         new Domain.Microcycle(
             Id: parseGuid(m.Id),
-            UserId: parseGuid(m.UserId),
+            UserId: parseGuid(m.UserId).IfNone(() => throw new Exceptional("Missing UserId", 0000)),
             MacrocycleId: parseGuid(m.MacrocycleId ?? string.Empty),
             Name: m.Name,
             Description: m.Description,

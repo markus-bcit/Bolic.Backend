@@ -8,7 +8,7 @@ public static class TrainingExerciseTransformer
     public static Option<Domain.TrainingExercise> ToDt(this Api.TrainingExercise e) =>
         new Domain.TrainingExercise(
             Id: parseGuid(e.Id),
-            UserId: parseGuid(e.UserId),
+            UserId: parseGuid(e.UserId).IfNone(() => throw new Exceptional("Missing UserId", 0000)),
             TrainingDayId: parseGuid(e.TrainingDayId),
             MuscleCategory: new MuscleCategory(e.MuscleCategory),
             MuscleSubcategory: new MuscleSubcategory(new MuscleCategory(e.MuscleCategory), e.MuscleSubcategory),
