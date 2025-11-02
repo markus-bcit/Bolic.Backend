@@ -1,15 +1,14 @@
-using System.Text.Json.Serialization;
-
 namespace Bolic.Backend.Api;
 
 public record TrainingExercise
 {
-    [JsonPropertyName("id")] public string Id { get; init; } = Guid.NewGuid().ToString();
+    [JsonProperty("id")] public string Id { get; init; } = Guid.NewGuid().ToString();
 
     public required string UserId { get; init; }
     public required string TrainingDayId { get; init; }
     public string? Name { get; init; }
-
+    public string? TargetRepetitions { get; init; }
+    public string? TargetRepetitionsInReserve { get; init; }
     public string? TargetPosition { get; init; } // lengthened, short, etc.
 
     public string? MuscleCategory { get; init; }

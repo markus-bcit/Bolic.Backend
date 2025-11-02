@@ -60,6 +60,21 @@ resource exercisesContainer 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/
   }
 }
 
+resource trainingSessionContainer 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers@2025-05-01-preview' = {
+  parent: database
+  name: 'training-session'
+  properties: {
+    resource: {
+      id: 'training-session'
+      partitionKey: {
+        paths: [
+          '/UserId'
+        ]
+      }
+    }
+  }
+}
+
 resource usersContainer 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers@2025-05-01-preview' = {
   parent: database
   name: 'users'
