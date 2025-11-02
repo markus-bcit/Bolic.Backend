@@ -50,27 +50,7 @@ public class TrainingSession(IRuntime runtime)
 
         return await program.Run((Runtime)runtime).ToHttpResponse((Runtime)runtime, req, HttpStatusCode.Created, req.FunctionContext.InvocationId);
     }
-
-    [Function("PutTrainingDay")]
-    public async Task<HttpResponseData> PutTrainingSession([HttpTrigger("put", Route = "training-session")] HttpRequestData req)
-    {
-        var program =
-            from request in Tap.Process<Api.TrainingDay>(req)
-            from body in request.Body.ToEff()
-            from dt in body.ToDt().ToEff()
-            from databaseResponse in CosmosDatabase.UpdateItem(
-                new UpdateRequest<Api.TrainingDay>(
-                    Id: dt.Id.First().ToString(),
-                    UserId: dt.UserId.First().ToString(),
-                    Document: dt.ToApi().First(),
-                    Container: "training-sessions",
-                    Database: "bolic"
-                )
-            )
-            select databaseResponse;
-
-        return await program.Run((Runtime)runtime).ToHttpResponse((Runtime)runtime, req, HttpStatusCode.OK, req.FunctionContext.InvocationId);
-    }
+    
     
     [Function("GetTrainingDay")]
     public async Task<HttpResponseData> GetTrainingSession([HttpTrigger("get", Route = "training-session")] HttpRequestData req, string userId, string id)
@@ -81,7 +61,7 @@ public class TrainingSession(IRuntime runtime)
             from dt in body.ToDt().ToEff()
             from databaseResponse in CosmosDatabase.ReadItem<Api.TrainingDay>(
                 new ReadRequest(
-                    Id: dt.Id.First().ToString(),
+                    Id: dt.Id.Match(a=> a.ToString(), () => throw new Exceptional("Missing Id", 0034)),
                     UserId: dt.UserId.First().ToString(),
                     Container: "training-sessions",
                     Database: "bolic"
@@ -90,28 +70,6 @@ public class TrainingSession(IRuntime runtime)
             select databaseResponse;
 
         return await program.Run((Runtime)runtime).ToHttpResponse((Runtime)runtime, req, HttpStatusCode.OK, req.FunctionContext.InvocationId);
-    }
-    
-    [Function("PatchTrainingDay")]
-    public async Task<HttpResponseData> PatchTrainingSession(
-        [HttpTrigger("patch", Route = "training-session")] HttpRequestData req)
-    {
-        var program =
-            from request in Tap.Process<Api.TrainingDay>(req, new() { NullValueHandling = NullValueHandling.Ignore})
-            from body in request.Body.ToEff()
-            from databaseResponse in CosmosDatabase.PatchItem<Api.TrainingDay>(
-                new PatchRequest<Api.TrainingDay>(
-                    Id: body.Id,      // take directly from the API object ToDo verify
-                    UserId: body.UserId, //  ToDo verify
-                    Document: body,   // pass the API object directly  ToDo verify
-                    Container: "training-session",
-                    Database: "bolic"
-                )
-            )
-            select databaseResponse;
-
-        return await program.Run((Runtime)runtime)
-            .ToHttpResponse((Runtime)runtime, req, HttpStatusCode.OK, req.FunctionContext.InvocationId);
     }
 
 }
