@@ -1,3 +1,4 @@
+using Bolic.Backend.Core.PatchOperations;
 using Bolic.Backend.Core.Transformers;
 using Bolic.Backend.Core.Util;
 using Bolic.Shared.Database.Api;
@@ -78,13 +79,15 @@ public class TrainingDay(IRuntime runtime)
             from request in Tap.Process<Api.TrainingDay>(req)
             from body in request.Body.ToEff()
             from dt in body.ToDt().ToEff()
-            from databaseResponse in CosmosDatabase.UpdateItem<Api.TrainingDay>(
-                new UpdateRequest<Api.TrainingDay>(
+            let po = dt.GetPatchOperations()
+            from databaseResponse in CosmosDatabase.PatchItem<Api.TrainingDay>(
+                new PatchRequest<Api.TrainingDay>(
                     Id: dt.Id.First().ToString(),
                     UserId: dt.UserId.First().ToString(),
                     Document: dt.ToApi().First(),
                     Container: "training-days",
-                    Database: "bolic"
+                    Database: "bolic",
+                    Operations: po
                 )
             )
             select databaseResponse;
