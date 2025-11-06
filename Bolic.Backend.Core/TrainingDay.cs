@@ -75,21 +75,21 @@ public class TrainingDay(IRuntime runtime)
         [HttpTrigger("patch", Route = "training-days")] HttpRequestData req)
     {
         var program =
-            from request in Tap.Process<Api.TrainingDay>(req, new() { NullValueHandling = NullValueHandling.Ignore})
+            from request in Tap.Process<Api.TrainingDay>(req)
             from body in request.Body.ToEff()
-            from databaseResponse in CosmosDatabase.PatchItem<Api.TrainingDay>(
-                new PatchRequest<Api.TrainingDay>(
-                    Id: body.Id,      // take directly from the API object ToDo verify
-                    UserId: body.UserId, //  ToDo verify
-                    Document: body,   // pass the API object directly  ToDo verify
+            from dt in body.ToDt().ToEff()
+            from databaseResponse in CosmosDatabase.UpdateItem<Api.TrainingDay>(
+                new UpdateRequest<Api.TrainingDay>(
+                    Id: dt.Id.First().ToString(),
+                    UserId: dt.UserId.First().ToString(),
+                    Document: dt.ToApi().First(),
                     Container: "training-days",
                     Database: "bolic"
                 )
             )
             select databaseResponse;
 
-        return await program.Run((Runtime)runtime)
-            .ToHttpResponse((Runtime)runtime, req, HttpStatusCode.OK, req.FunctionContext.InvocationId);
+        return await program.Run((Runtime)runtime).ToHttpResponse((Runtime)runtime, req, HttpStatusCode.Created, req.FunctionContext.InvocationId);
     }
 
 }

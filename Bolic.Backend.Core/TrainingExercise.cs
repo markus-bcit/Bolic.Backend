@@ -74,22 +74,23 @@ public class TrainingExercise(IRuntime runtime)
     public async Task<HttpResponseData> PatchTrainingExercise(
         [HttpTrigger("patch", Route = "exercises")] HttpRequestData req)
     {
+        // ToDo add patch functionality
         var program =
-            from request in Tap.Process<Api.TrainingExercise>(req, new() { NullValueHandling = NullValueHandling.Ignore})
+            from request in Tap.Process<Api.TrainingExercise>(req)
             from body in request.Body.ToEff()
-            from databaseResponse in CosmosDatabase.PatchItem<Api.TrainingExercise>(
-                new PatchRequest<Api.TrainingExercise>(
-                    Id: body.Id,      // take directly from the API object ToDo verify
-                    UserId: body.UserId, //  ToDo verify
-                    Document: body,   // pass the API object directly  ToDo verify
+            from dt in body.ToDt().ToEff()
+            from databaseResponse in CosmosDatabase.UpdateItem<Api.TrainingExercise>(
+                new UpdateRequest<Api.TrainingExercise>(
+                    Id: dt.Id.First().ToString(),
+                    UserId: dt.UserId.First().ToString(),
+                    Document: dt.ToApi().First(),
                     Container: "exercises",
                     Database: "bolic"
                 )
             )
             select databaseResponse;
 
-        return await program.Run((Runtime)runtime)
-            .ToHttpResponse((Runtime)runtime, req, HttpStatusCode.OK, req.FunctionContext.InvocationId);
+        return await program.Run((Runtime)runtime).ToHttpResponse((Runtime)runtime, req, HttpStatusCode.Created, req.FunctionContext.InvocationId);
     }
 
 }
