@@ -4,9 +4,9 @@ public static class TrainingSetTransformer
 {
     public static Option<Domain.TrainingSet> ToDt(this Api.TrainingSet s) =>
         new Domain.TrainingSet(
-            Id: parseGuid(s.Id),
+            Id: parseGuid(s.Id ?? string.Empty),
             UserId: parseGuid(s.UserId).IfNone(() => throw new Exceptional("Missing UserId", 0000)),
-            TrainingExerciseId: parseGuid(s.TrainingExerciseId),
+            TrainingExerciseId: parseGuid(s.TrainingExerciseId ?? string.Empty),
             Type: s.Type,
             Weight: s.Weight,
             WeightType: s.WeightType,

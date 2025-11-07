@@ -4,7 +4,7 @@ public static class TrainingDayTransformer
 {
     public static Option<Domain.TrainingDay> ToDt(this Api.TrainingDay td) =>
         new Domain.TrainingDay(
-            Id: parseGuid(td.Id),
+            Id: parseGuid(td.Id ?? string.Empty),
             UserId: parseGuid(td.UserId).IfNone(() => throw new Exceptional("Missing UserId", 0000)),
             MicrocycleId: parseGuid(td.MicrocycleId ?? string.Empty),
             TrainingDayId: parseGuid(td.TrainingDayId ?? string.Empty),

@@ -7,11 +7,11 @@ public static class TrainingExerciseTransformer
 {
     public static Option<Domain.TrainingExercise> ToDt(this Api.TrainingExercise e) =>
         new Domain.TrainingExercise(
-            Id: parseGuid(e.Id),
+            Id: parseGuid(e.Id ?? string.Empty),
             UserId: parseGuid(e.UserId).IfNone(() => throw new Exceptional("Missing UserId", 0000)),
             TrainingDayId: parseGuid(e.TrainingDayId),
-            MuscleCategory: new MuscleCategory(e.MuscleCategory),
-            MuscleSubcategory: new MuscleSubcategory(new MuscleCategory(e.MuscleCategory), e.MuscleSubcategory),
+            MuscleCategory: new MuscleCategory(e.MuscleCategory ?? string.Empty),
+            MuscleSubcategory: new MuscleSubcategory(new MuscleCategory(e.MuscleCategory ?? string.Empty), e.MuscleSubcategory ?? string.Empty),
             TargetRepetitions: e.TargetRepetitions,
             TargetRepetitionsInReserve: e.TargetRepetitionsInReserve,
             Name: e.Name,
