@@ -23,12 +23,12 @@ public class TrainingSession(IRuntime runtime)
             from body in request.Body.ToEff()
             from dt in body.ToDt().ToEff()
             let udt = dt with { Id = Guid.NewGuid() }
-            from id in udt.Id.ToEff()
+            from tdid in udt.TrainingDayId.ToEff(new Exceptional("Missing trainingId", 0102))
             from uid in udt.UserId.ToEff()
             from api in udt.ToApi().ToEff()
             from dbr in CosmosDatabase.ReadItem<Api.TrainingDay>(
                 new ReadRequest(
-                    Id: id.ToString(),
+                    Id: tdid.ToString(),
                     UserId: uid.ToString(),
                     Container: "training-days",
                     Database: "bolic"
@@ -64,9 +64,8 @@ public class TrainingSession(IRuntime runtime)
             from request in Tap.Process<Api.TrainingDay>(req)
             from body in request.Body.ToEff()
             from dt in body.ToDt().ToEff()
-            from id in dt.Id.ToEff()
-            from uid in dt.UserId.ToEff()
-            from dtuid in dt.UserId.ToEff()
+            from id in dt.Id.ToEff(new Exceptional("Missing id", 0101))
+            from uid in dt.UserId.ToEff() 
             from databaseResponse in CosmosDatabase.ReadItem<Api.TrainingDay>(
                 new ReadRequest(
                     Id: id.ToString(),
