@@ -4,8 +4,8 @@ public static class MicrocycleTransformer
 {
     public static Option<Domain.Microcycle> ToDt(this Api.Microcycle m) =>
         new Domain.Microcycle(
-            Id: parseGuid(m.Id),
-            UserId: parseGuid(m.UserId),
+            Id: parseGuid(m.Id ?? string.Empty),
+            UserId: parseGuid(m.UserId).IfNone(() => throw new Exceptional("Missing UserId", 0000)),
             MacrocycleId: parseGuid(m.MacrocycleId ?? string.Empty),
             Name: m.Name,
             Description: m.Description,
@@ -19,7 +19,7 @@ public static class MicrocycleTransformer
     public static Option<Api.Microcycle> ToApi(this Domain.Microcycle m) =>
         new Api.Microcycle()
         {
-            Id = m.Id.Match(id => id.ToString(), () => Guid.NewGuid().ToString()),
+            Id = m.Id.Match(id => id.ToString(), () => throw new Exceptional("Missing Id", 0015)),
             UserId = m.Id.Match(id => id.ToString(), () => throw new Exceptional("Invalid UserId", 0001)),
             MacrocycleId = m.MacrocycleId.Match(id => id.ToString(), () => ""),
             Name = m.Name.IfNone(string.Empty),

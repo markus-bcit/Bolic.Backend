@@ -2,7 +2,7 @@ namespace Bolic.Backend.Api;
 
 public record Microcycle
 {
-    [JsonProperty("id")] public string Id { get; init; } = Guid.NewGuid().ToString();
+    [JsonProperty("id")] public string? Id { get; init; }
     public required string UserId { get; init; }
     public string? MacrocycleId  { get; init; }
     public string? Name { get; init; }
