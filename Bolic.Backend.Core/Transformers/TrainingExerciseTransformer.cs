@@ -24,7 +24,7 @@ public static class TrainingExerciseTransformer
     public static Option<Api.TrainingExercise> ToApi(this Domain.TrainingExercise e)
     {
         return new Api.TrainingExercise(){
-            Id = e.Id.Match(id => id.ToString(), () => Guid.NewGuid().ToString()),
+            Id = e.Id.Match(id => id.ToString(), () => throw new Exceptional("Missing Id", 0015)),
             UserId = e.UserId.Match(id => id.ToString(), () => throw new Exceptional("Invalid UserId", 0017)),
             TrainingDayId = e.TrainingDayId.Match(id => id.ToString(), () => ""),
             MuscleCategory = e.MuscleCategory.IfNone(string.Empty),

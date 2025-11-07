@@ -18,7 +18,7 @@ public static class MacrocycleTransformer
     public static Option<Api.Macrocycle> ToApi(this Domain.Macrocycle m) =>
         new Api.Macrocycle()
         {
-            Id = m.Id.Match(id => id.ToString(), () => Guid.NewGuid().ToString()),
+            Id = m.Id.Match(id => id.ToString(), () => throw new Exceptional("Missing Id", 0015)),
             UserId = m.UserId.Match(id => id.ToString(), () => throw new Exceptional("Invalid UserId", 0004)),
             MesocycleId = m.MesocycleId.Match(id => id.ToString(), () => ""),
             Name = m.Name.IfNone(string.Empty),

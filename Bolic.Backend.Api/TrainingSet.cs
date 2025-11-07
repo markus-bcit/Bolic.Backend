@@ -4,7 +4,7 @@ namespace Bolic.Backend.Api;
 
 public record TrainingSet
 {
-    [JsonProperty("id")] public string Id { get; init; } = Guid.NewGuid().ToString();
+    [JsonProperty("id")] public string? Id { get; init; }
     public required string UserId { get; init; }
     public string TrainingExerciseId { get; init; } = string.Empty;
     public string Type { get; init; } = string.Empty; // working set, warmup etc.

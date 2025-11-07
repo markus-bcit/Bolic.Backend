@@ -19,7 +19,7 @@ public static class MicrocycleTransformer
     public static Option<Api.Microcycle> ToApi(this Domain.Microcycle m) =>
         new Api.Microcycle()
         {
-            Id = m.Id.Match(id => id.ToString(), () => Guid.NewGuid().ToString()),
+            Id = m.Id.Match(id => id.ToString(), () => throw new Exceptional("Missing Id", 0015)),
             UserId = m.Id.Match(id => id.ToString(), () => throw new Exceptional("Invalid UserId", 0001)),
             MacrocycleId = m.MacrocycleId.Match(id => id.ToString(), () => ""),
             Name = m.Name.IfNone(string.Empty),

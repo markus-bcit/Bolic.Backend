@@ -19,7 +19,7 @@ public static class TrainingDayTransformer
     public static Option<Api.TrainingDay> ToApi(this Domain.TrainingDay td) =>
         new Api.TrainingDay()
         {
-            Id = td.Id.Match(id => id.ToString(), () => Guid.NewGuid().ToString()),
+            Id = td.Id.Match(id => id.ToString(), () => throw new Exceptional("Missing Id", 0015)),
             UserId = td.UserId.Match(id => id.ToString(), () => throw new Exceptional("Invalid UserId", 0015)),
             MicrocycleId = td.MicrocycleId.Match(id => id.ToString(), () => ""),
             TrainingDayId =  td.TrainingDayId.Match(id => id.ToString(), () => ""),
