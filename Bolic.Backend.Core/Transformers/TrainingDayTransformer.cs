@@ -13,7 +13,7 @@ public static class TrainingDayTransformer
             StartDate: td.StartDate ?? Option<DateTime>.None,
             EndDate: td.EndDate ?? Option<DateTime>.None,
             Exercises: td.Exercises.Select(TrainingExerciseTransformer.ToDt)
-                .Select(a => a.First()).ToList()
+                .Select(a => a.Match(ts => ts, () => throw new Exceptional("Invalid training exercise", 0043))).ToList()
         );
 
     public static Option<Api.TrainingDay> ToApi(this Domain.TrainingDay td) =>

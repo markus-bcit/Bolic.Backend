@@ -16,11 +16,14 @@ public class TrainingDay(IRuntime runtime)
             from request in Tap.Process<Api.TrainingDay>(req)
             from body in request.Body.ToEff()
             from dt in body.ToDt().ToEff()
+            from id in dt.Id.ToEff()
+            from uid in dt.UserId.ToEff()
+            from api in dt.ToApi().ToEff()
             from databaseResponse in CosmosDatabase.CreateItem(
                 new CreateRequest<Api.TrainingDay>(
-                    Id: dt.Id.First().ToString(),
-                    UserId: dt.UserId.First().ToString(),
-                    Document: dt.ToApi().First(),
+                    Id: id.ToString(),
+                    UserId: uid.ToString(),
+                    Document: api,
                     Container: "training-days",
                     Database: "bolic"
                 )
@@ -37,11 +40,14 @@ public class TrainingDay(IRuntime runtime)
             from request in Tap.Process<Api.TrainingDay>(req)
             from body in request.Body.ToEff()
             from dt in body.ToDt().ToEff()
+            from id in dt.Id.ToEff()
+            from uid in dt.UserId.ToEff()
+            from api in dt.ToApi().ToEff()
             from databaseResponse in CosmosDatabase.UpdateItem(
                 new UpdateRequest<Api.TrainingDay>(
-                    Id: dt.Id.First().ToString(),
-                    UserId: dt.UserId.First().ToString(),
-                    Document: dt.ToApi().First(),
+                    Id: id.ToString(),
+                    UserId: uid.ToString(),
+                    Document: api,
                     Container: "training-days",
                     Database: "bolic"
                 )
@@ -52,16 +58,18 @@ public class TrainingDay(IRuntime runtime)
     }
     
     [Function("GetTrainingDay")]
-    public async Task<HttpResponseData> GetTrainingDay([HttpTrigger("get", Route = "training-days")] HttpRequestData req, string userId, string id)
+    public async Task<HttpResponseData> GetTrainingDay([HttpTrigger("get", Route = "training-days")] HttpRequestData req)
     {
         var program =
             from request in Tap.Process<Api.TrainingDay>(req)
             from body in request.Body.ToEff()
             from dt in body.ToDt().ToEff()
+            from dtid in dt.Id.ToEff()
+            from dtuid in dt.UserId.ToEff()
             from databaseResponse in CosmosDatabase.ReadItem<Api.TrainingDay>(
                 new ReadRequest(
-                    Id: dt.Id.First().ToString(),
-                    UserId: dt.UserId.First().ToString(),
+                    Id: dtid.ToString(),
+                    UserId: dtuid.ToString(),
                     Container: "training-days",
                     Database: "bolic"
                 )
@@ -79,12 +87,15 @@ public class TrainingDay(IRuntime runtime)
             from request in Tap.Process<Api.TrainingDay>(req)
             from body in request.Body.ToEff()
             from dt in body.ToDt().ToEff()
+            from id in  dt.Id.ToEff()
+            from uid in dt.UserId.ToEff()
+            from api in dt.ToApi().ToEff()
             let po = dt.GetPatchOperations()
             from databaseResponse in CosmosDatabase.PatchItem<Api.TrainingDay>(
                 new PatchRequest<Api.TrainingDay>(
-                    Id: dt.Id.First().ToString(),
-                    UserId: dt.UserId.First().ToString(),
-                    Document: dt.ToApi().First(),
+                    Id: id.ToString(),
+                    UserId: uid.ToString(),
+                    Document: api,
                     Container: "training-days",
                     Database: "bolic",
                     Operations: po

@@ -23,11 +23,14 @@ public class TrainingSession(IRuntime runtime)
         var program =
             from request in Tap.Process<Api.TrainingDay>(req)
             from body in request.Body.ToEff()
-            from ts in body.ToDt().ToEff()
+            from dt in body.ToDt().ToEff()
+            from id in dt.Id.ToEff()
+            from uid in dt.UserId.ToEff()
+            from api in dt.ToApi().ToEff()
             from dbr in CosmosDatabase.ReadItem<Api.TrainingDay>(
                 new ReadRequest(
-                    Id: ts.TrainingDayId.Match(a=> a.ToString(), () => throw new Exceptional("Missing Training Id", 0033)),
-                    UserId: ts.UserId.First().ToString(),
+                    Id: id.ToString(),
+                    UserId: uid.ToString(),
                     Container: "training-days",
                     Database: "bolic"
                 )
@@ -36,12 +39,15 @@ public class TrainingSession(IRuntime runtime)
                 Right: resp => resp.Document.ToDt().ToEff(),
                 Left: ex => LanguageExt.Eff<Domain.TrainingDay>.Fail(ex)
             )
-            from trainingSession in CreateTrainingSessionFromTrainingDay(td, ts).ToEff()
+            from ts in CreateTrainingSessionFromTrainingDay(td, dt).ToEff()
+            from tsId in ts.Id.ToEff()
+            from tsuid in ts.UserId.ToEff()
+            from tsApi in ts.ToApi().ToEff()
             from dbr2 in CosmosDatabase.CreateItem(
                 new CreateRequest<Api.TrainingDay>(
-                    Id: trainingSession.Id.First().ToString(),
-                    UserId: trainingSession.UserId.First().ToString(),
-                    Document: trainingSession.ToApi().First(),
+                    Id: tsId.ToString(),
+                    UserId: tsuid.ToString(),
+                    Document: tsApi,
                     Container: "training-session",
                     Database: "bolic"
                 )
@@ -59,9 +65,11 @@ public class TrainingSession(IRuntime runtime)
             from request in Tap.Process<Api.TrainingDay>(req)
             from body in request.Body.ToEff()
             from dt in body.ToDt().ToEff()
+            from dtid in dt.Id.Match(a=> a, () => throw new Exceptional("Missing Id", 0034))
+            from dtuid in dt.UserId.ToEff()
             from databaseResponse in CosmosDatabase.ReadItem<Api.TrainingDay>(
                 new ReadRequest(
-                    Id: dt.Id.Match(a=> a.ToString(), () => throw new Exceptional("Missing Id", 0034)),
+                    Id: dtid,
                     UserId: dt.UserId.First().ToString(),
                     Container: "training-sessions",
                     Database: "bolic"
