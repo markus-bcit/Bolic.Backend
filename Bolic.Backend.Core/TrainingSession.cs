@@ -24,9 +24,10 @@ public class TrainingSession(IRuntime runtime)
             from request in Tap.Process<Api.TrainingDay>(req)
             from body in request.Body.ToEff()
             from dt in body.ToDt().ToEff()
-            from id in dt.Id.ToEff()
-            from uid in dt.UserId.ToEff()
-            from api in dt.ToApi().ToEff()
+            let udt = dt with { Id = Guid.NewGuid() }
+            from id in udt.Id.ToEff()
+            from uid in udt.UserId.ToEff()
+            from api in udt.ToApi().ToEff()
             from dbr in CosmosDatabase.ReadItem<Api.TrainingDay>(
                 new ReadRequest(
                     Id: id.ToString(),
@@ -35,7 +36,7 @@ public class TrainingSession(IRuntime runtime)
                     Database: "bolic"
                 )
             )
-            from td in dbr.Match(
+            from td in dbr.Match( // ToDo this is ugly
                 Right: resp => resp.Document.ToDt().ToEff(),
                 Left: ex => LanguageExt.Eff<Domain.TrainingDay>.Fail(ex)
             )
@@ -59,18 +60,19 @@ public class TrainingSession(IRuntime runtime)
     
     
     [Function("GetTrainingDay")]
-    public async Task<HttpResponseData> GetTrainingSession([HttpTrigger("get", Route = "training-session")] HttpRequestData req, string userId, string id)
+    public async Task<HttpResponseData> GetTrainingSession([HttpTrigger("get", Route = "training-session")] HttpRequestData req)
     {
         var program =
             from request in Tap.Process<Api.TrainingDay>(req)
             from body in request.Body.ToEff()
             from dt in body.ToDt().ToEff()
-            from dtid in dt.Id.Match(a=> a, () => throw new Exceptional("Missing Id", 0034))
+            from id in dt.Id.ToEff()
+            from uid in dt.UserId.ToEff()
             from dtuid in dt.UserId.ToEff()
             from databaseResponse in CosmosDatabase.ReadItem<Api.TrainingDay>(
                 new ReadRequest(
-                    Id: dtid,
-                    UserId: dt.UserId.First().ToString(),
+                    Id: id.ToString(),
+                    UserId: uid.ToString(),
                     Container: "training-sessions",
                     Database: "bolic"
                 )

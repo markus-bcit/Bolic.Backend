@@ -16,9 +16,10 @@ public class TrainingDay(IRuntime runtime)
             from request in Tap.Process<Api.TrainingDay>(req)
             from body in request.Body.ToEff()
             from dt in body.ToDt().ToEff()
-            from id in dt.Id.ToEff()
-            from uid in dt.UserId.ToEff()
-            from api in dt.ToApi().ToEff()
+            let udt = dt with { Id = Guid.NewGuid() }
+            from id in udt.Id.ToEff()
+            from uid in udt.UserId.ToEff()
+            from api in udt.ToApi().ToEff()
             from databaseResponse in CosmosDatabase.CreateItem(
                 new CreateRequest<Api.TrainingDay>(
                     Id: id.ToString(),
