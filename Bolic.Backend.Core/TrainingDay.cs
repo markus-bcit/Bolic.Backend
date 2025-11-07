@@ -3,7 +3,6 @@ using Bolic.Backend.Core.Transformers;
 using Bolic.Backend.Core.Util;
 using Bolic.Shared.Database.Api;
 using Bolic.Shared.Database.Implementation;
-using Newtonsoft.Json;
 
 namespace Bolic.Backend.Core;
 
