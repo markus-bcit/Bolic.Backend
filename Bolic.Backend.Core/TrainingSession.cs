@@ -38,7 +38,7 @@ public class TrainingSession(IRuntime runtime)
                 Right: resp => resp.Document.ToDt().ToEff(),
                 Left: ex => LanguageExt.Eff<Domain.TrainingDay>.Fail(ex)
             )
-            from ts in CreateTrainingSessionFromTrainingDay(td, dt).ToEff()
+            from ts in CreateTrainingSessionFromTrainingDay(td, udt).ToEff()
             from tsId in ts.Id.ToEff()
             from tsuid in ts.UserId.ToEff()
             from tsApi in ts.ToApi().ToEff()
@@ -47,7 +47,7 @@ public class TrainingSession(IRuntime runtime)
                     Id: tsId.ToString(),
                     UserId: tsuid.ToString(),
                     Document: tsApi,
-                    Container: "training-session",
+                    Container: "training-sessions",
                     Database: "bolic"
                 )
             )
