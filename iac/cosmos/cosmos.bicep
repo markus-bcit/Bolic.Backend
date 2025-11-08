@@ -60,6 +60,21 @@ resource exercisesContainer 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/
   }
 }
 
+resource trainingSessionContainer 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers@2025-05-01-preview' = {
+  parent: database
+  name: 'training-sessions'
+  properties: {
+    resource: {
+      id: 'training-sessions'
+      partitionKey: {
+        paths: [
+          '/UserId'
+        ]
+      }
+    }
+  }
+}
+
 resource usersContainer 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers@2025-05-01-preview' = {
   parent: database
   name: 'users'
@@ -71,6 +86,21 @@ resource usersContainer 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/cont
           '/id'
         ]
         kind: 'Hash'
+      }
+    }
+  }
+}
+
+resource setsContainer 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers@2025-05-01-preview' = {
+  parent: database
+  name: 'sets'
+  properties: {
+    resource: {
+      id: 'sets'
+      partitionKey: {
+        paths: [
+          '/UserId'
+        ]
       }
     }
   }

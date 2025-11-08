@@ -1,4 +1,3 @@
-
 namespace Bolic.Backend.Domain;
 
 public record TrainingExercise(
@@ -9,6 +8,8 @@ public record TrainingExercise(
     Option<MuscleSubcategory> MuscleSubcategory,
     Option<string> Name,
     Option<string> TargetPosition, // TODO: probably better on the set 
+    Option<string> TargetRepetitions,
+    Option<string> TargetRepetitionsInReserve,
     Option<string> Equipment,
     Option<string> Notes,
     List<TrainingSet> Sets

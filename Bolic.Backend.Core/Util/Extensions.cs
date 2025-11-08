@@ -1,5 +1,4 @@
 using Bolic.Shared.Database.Api;
-using Newtonsoft.Json;
 using Error = Bolic.Backend.Api.Error;
 
 namespace Bolic.Backend.Core.Util;
@@ -13,6 +12,7 @@ public static class HttpResponseExtensions
         HttpStatusCode code,
         string invocationId)
     {
+        // TODO fix at some point, looks like a🥀🥀
         return await result.Match(
             Succ: async either => await either.Match(
                 Right: async r => await CreateResponse(req, code, r),
@@ -32,22 +32,25 @@ public static class HttpResponseExtensions
                             _ => await CreateResponse(req, HttpStatusCode.InternalServerError,
                                 new { error = "Internal server error." })
                         },
-
-                        TimeoutException => await CreateResponse(req, HttpStatusCode.RequestTimeout,
-                            new Error(nameof(HttpStatusCode.RequestTimeout), "Request timed out.")),
-                        UnauthorizedAccessException => await CreateResponse(req, HttpStatusCode.Unauthorized,
-                            new Error(nameof(HttpStatusCode.Unauthorized), "User is unauthorized.")),
-                        _ => await CreateResponse(req, HttpStatusCode.InternalServerError,
-                            new { error = "Internal server error." })
+                        TimeoutException => await CreateResponse(req, HttpStatusCode.RequestTimeout, new Error(nameof(HttpStatusCode.RequestTimeout), "Request timed out.")),
+                        UnauthorizedAccessException => await CreateResponse(req, HttpStatusCode.Unauthorized, new Error(nameof(HttpStatusCode.Unauthorized), "User is unauthorized.")),
+                        _ => await CreateResponse(req, HttpStatusCode.InternalServerError, new { error = "Internal server error." })
                     };
                 }
             ),
             Fail: async ex =>
             {
                 rt.Logger.LogError(ex,
-                    "Request received InternalServerError status code on unhandled error, see exception for details on {invocationId}",
+                    "Request received non-success status code, see exception for details on {invocationId}",
                     invocationId);
-                return await CreateResponse(req, HttpStatusCode.InternalServerError, new { error = ex.Message });
+                return ex.Exception.First() switch
+                {
+                    Newtonsoft.Json.JsonException => await CreateResponse(
+                        req, HttpStatusCode.BadRequest,
+                        new Error(nameof(HttpStatusCode.BadRequest), "Bad request payload.")
+                    ),
+                    _ => await CreateResponse(req, HttpStatusCode.BadRequest, new { Error = ex.Message })
+                };
             }
         );
     }
@@ -57,7 +60,7 @@ public static class HttpResponseExtensions
         HttpStatusCode code,
         T body)
     {
-        // TODO: I don't like this, fix it
+        // TODO: I don't like this, fix it 🥀🥀
         object? responseBody = body switch
         {
             var b when b?.GetType().IsGenericType == true &&

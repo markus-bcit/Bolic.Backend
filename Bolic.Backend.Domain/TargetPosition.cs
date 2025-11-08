@@ -1,4 +1,4 @@
-namespace Bolic.Backend.Api;
+namespace Bolic.Backend.Domain;
 
 public class TargetPosition
 {
