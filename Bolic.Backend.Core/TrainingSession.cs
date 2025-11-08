@@ -22,7 +22,7 @@ public class TrainingSession(IRuntime runtime)
             from request in Tap.Process<Api.TrainingDay>(req)
             from body in request.Body.ToEff()
             from dt in body.ToDt().ToEff()
-            let udt = dt with { Id = Guid.NewGuid() }
+            let udt = dt with { Id = Guid.NewGuid() } 
             from tdid in udt.TrainingDayId.ToEff(new Exceptional("Missing trainingId", 0102))
             from uid in udt.UserId.ToEff()
             from api in udt.ToApi().ToEff()

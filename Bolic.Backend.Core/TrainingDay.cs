@@ -91,6 +91,7 @@ public class TrainingDay(IRuntime runtime)
             from uid in dt.UserId.ToEff()
             from api in dt.ToApi().ToEff()
             let po = dt.GetPatchOperations()
+            from _ in guard<Error>(po.Any(), new Exceptional("No patch operations found.", 0102))
             from databaseResponse in CosmosDatabase.PatchItem<Api.TrainingDay>(
                 new PatchRequest<Api.TrainingDay>(
                     Id: id.ToString(),
