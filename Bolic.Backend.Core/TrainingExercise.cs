@@ -2,7 +2,6 @@ using Bolic.Backend.Core.Transformers;
 using Bolic.Backend.Core.Util;
 using Bolic.Shared.Database.Api;
 using Bolic.Shared.Database.Implementation;
-using Newtonsoft.Json;
 
 namespace Bolic.Backend.Core;
 
@@ -40,7 +39,7 @@ public class TrainingExercise(IRuntime runtime)
             from request in Tap.Process<Api.TrainingExercise>(req)
             from body in request.Body.ToEff()
             from dt in body.ToDt().ToEff()
-            from id in dt.Id.ToEff()
+            from id in dt.Id.ToEff(new Exceptional("Missing id", 0101))
             from uid in dt.UserId.ToEff()
             from api in dt.ToApi().ToEff()
             from databaseResponse in CosmosDatabase.UpdateItem(
@@ -64,7 +63,7 @@ public class TrainingExercise(IRuntime runtime)
             from request in Tap.Process<Api.TrainingExercise>(req)
             from body in request.Body.ToEff()
             from dt in body.ToDt().ToEff()
-            from pid in dt.Id.ToEff()
+            from pid in dt.Id.ToEff(new Exceptional("Missing id", 0101))
             from puserId in dt.UserId.ToEff()
             from api in dt.ToApi().ToEff()
             from databaseResponse in CosmosDatabase.ReadItem<Api.TrainingExercise>(
@@ -89,7 +88,7 @@ public class TrainingExercise(IRuntime runtime)
             from request in Tap.Process<Api.TrainingExercise>(req)
             from body in request.Body.ToEff()
             from dt in body.ToDt().ToEff()
-            from id in dt.Id.ToEff()
+            from id in dt.Id.ToEff(new Exceptional("Missing id", 0101))
             from userId in dt.UserId.ToEff()
             from api in dt.ToApi().ToEff()
             from databaseResponse in CosmosDatabase.UpdateItem<Api.TrainingExercise>(

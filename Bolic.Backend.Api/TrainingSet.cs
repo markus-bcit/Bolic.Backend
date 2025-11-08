@@ -1,5 +1,3 @@
-using Newtonsoft.Json;
-
 namespace Bolic.Backend.Api;
 
 public record TrainingSet

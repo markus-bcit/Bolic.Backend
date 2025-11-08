@@ -3,7 +3,6 @@ using Bolic.Backend.Core.Transformers;
 using Bolic.Backend.Core.Util;
 using Bolic.Shared.Database.Api;
 using Bolic.Shared.Database.Implementation;
-using Newtonsoft.Json;
 
 namespace Bolic.Backend.Core;
 
@@ -41,7 +40,7 @@ public class TrainingDay(IRuntime runtime)
             from request in Tap.Process<Api.TrainingDay>(req)
             from body in request.Body.ToEff()
             from dt in body.ToDt().ToEff()
-            from id in dt.Id.ToEff()
+            from id in dt.Id.ToEff(new Exceptional("Missing id", 0101))
             from uid in dt.UserId.ToEff()
             from api in dt.ToApi().ToEff()
             from databaseResponse in CosmosDatabase.UpdateItem(
@@ -65,7 +64,7 @@ public class TrainingDay(IRuntime runtime)
             from request in Tap.Process<Api.TrainingDay>(req)
             from body in request.Body.ToEff()
             from dt in body.ToDt().ToEff()
-            from dtid in dt.Id.ToEff()
+            from dtid in dt.Id.ToEff(new Exceptional("Missing id", 0101))
             from dtuid in dt.UserId.ToEff()
             from databaseResponse in CosmosDatabase.ReadItem<Api.TrainingDay>(
                 new ReadRequest(
@@ -88,10 +87,11 @@ public class TrainingDay(IRuntime runtime)
             from request in Tap.Process<Api.TrainingDay>(req)
             from body in request.Body.ToEff()
             from dt in body.ToDt().ToEff()
-            from id in  dt.Id.ToEff()
+            from id in  dt.Id.ToEff(new Exceptional("Missing id", 0101))
             from uid in dt.UserId.ToEff()
             from api in dt.ToApi().ToEff()
             let po = dt.GetPatchOperations()
+            from _ in guard<Error>(po.Any(), new Exceptional("No patch operations found.", 0102))
             from databaseResponse in CosmosDatabase.PatchItem<Api.TrainingDay>(
                 new PatchRequest<Api.TrainingDay>(
                     Id: id.ToString(),
