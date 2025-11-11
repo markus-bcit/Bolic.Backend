@@ -1,3 +1,4 @@
+using Bolic.Backend.Core.PatchOperations;
 using Bolic.Backend.Core.Transformers;
 using Bolic.Backend.Core.Util;
 using Bolic.Shared.Database.Api;
@@ -83,7 +84,6 @@ public class TrainingExercise(IRuntime runtime)
     public async Task<HttpResponseData> PatchTrainingExercise(
         [HttpTrigger("patch", Route = "exercises")] HttpRequestData req)
     {
-        // ToDo add patch functionality
         var program =
             from request in Tap.Process<Api.TrainingExercise>(req)
             from body in request.Body.ToEff()
@@ -91,13 +91,16 @@ public class TrainingExercise(IRuntime runtime)
             from id in dt.Id.ToEff(new Exceptional("Missing id", 0101))
             from userId in dt.UserId.ToEff()
             from api in dt.ToApi().ToEff()
-            from databaseResponse in CosmosDatabase.UpdateItem<Api.TrainingExercise>(
-                new UpdateRequest<Api.TrainingExercise>(
+            let po = dt.GetPatchOperations()
+            from _ in guard<Error>(po.Any(), new Exceptional("No patch operations found.", 0103))
+            from databaseResponse in CosmosDatabase.PatchItem<Api.TrainingExercise>(
+                new PatchRequest<Api.TrainingExercise>(
                     Id: id.ToString(),
                     UserId: userId.ToString(),
                     Document: api,
                     Container: "exercises",
-                    Database: "bolic"
+                    Database: "bolic",
+                    Operations: po
                 )
             )
             select databaseResponse;
