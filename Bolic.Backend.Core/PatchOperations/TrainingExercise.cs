@@ -9,8 +9,8 @@ public static class TrainingExercise
         var po = new List<PatchOperation>();
 
         td.TrainingDayId.IfSome(v => po.Add(PatchOperation.Replace("/TrainingDayId", v.ToString())));
-        td.MuscleCategory.IfSome(v => po.Add(PatchOperation.Replace("/MuscleCategory", v.ToString())));
-        td.MuscleSubcategory.IfSome(v => po.Add(PatchOperation.Replace("/MuscleSubcategory", v.ToString())));
+        td.MuscleCategory.IfSome(v => po.Add(PatchOperation.Replace("/MuscleCategory", v.Value)));
+        td.MuscleSubcategory.IfSome(v => po.Add(PatchOperation.Replace("/MuscleSubcategory", v.Name)));
         td.Name.IfSome(v => po.Add(PatchOperation.Replace("/Name", v)));
         td.TargetPosition.IfSome(v => po.Add(PatchOperation.Replace("/TargetPosition", v)));
         td.TargetRepetitions.IfSome(v => po.Add(PatchOperation.Replace("/TargetRepetitions", v)));
