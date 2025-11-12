@@ -11,7 +11,7 @@ public static class TrainingExerciseTransformer
             UserId: parseGuid(e.UserId).IfNone(() => throw new Exceptional("Missing UserId", 0000)),
             TrainingDayId: parseGuid(e.TrainingDayId),
             MuscleCategory: parseMuscleCategory(e.MuscleCategory),
-            MuscleSubcategory: parseMuscleSubcategory(e.MuscleSubcategory, e.MuscleSubcategory),
+            MuscleSubcategory: parseMuscleSubcategory(e.MuscleCategory, e.MuscleSubcategory),
             TargetRepetitions: e.TargetRepetitions,
             TargetRepetitionsInReserve: e.TargetRepetitionsInReserve,
             Name: e.Name,
