@@ -5,7 +5,7 @@ public static class TrainingExerciseTransformer
 {
     public static Option<Domain.TrainingExercise> ToDt(this Api.TrainingExercise e) =>
         new Domain.TrainingExercise(
-            Id: parseGuid(e.Id ?? string.Empty),
+            Id: parseGuid(e.Id ?? ""),
             UserId: parseGuid(e.UserId).IfNone(() => throw new Exceptional("Missing UserId", 0000)),
             TrainingDayId: parseGuid(e.TrainingDayId),
             MuscleCategory: parseMuscleCategory(e.MuscleCategory),
@@ -25,14 +25,14 @@ public static class TrainingExerciseTransformer
             Id = e.Id.Match(id => id.ToString(), () => throw new Exceptional("Missing Id", 0015)),
             UserId = e.UserId.Match(id => id.ToString(), () => throw new Exceptional("Invalid UserId", 0017)),
             TrainingDayId = e.TrainingDayId.Match(id => id.ToString(), () => ""),
-            MuscleCategory = e.MuscleCategory.Match(mc => mc.Value, () => string.Empty),
-            MuscleSubcategory = e.MuscleSubcategory.Match(ms => ms.Name, () => string.Empty),
-            TargetRepetitions = e.TargetRepetitions.IfNone(string.Empty),
-            TargetRepetitionsInReserve = e.TargetRepetitionsInReserve.IfNone(string.Empty),
-            Name = e.Name.IfNone(string.Empty),
-            TargetPosition = e.TargetPosition.IfNone(string.Empty),
-            Equipment = e.Equipment.IfNone(string.Empty),
-            Notes = e.Notes.IfNone(string.Empty),
+            MuscleCategory = e.MuscleCategory.Match(mc => mc.Value, () => ""),
+            MuscleSubcategory = e.MuscleSubcategory.Match(ms => ms.Name, () => ""),
+            TargetRepetitions = e.TargetRepetitions.IfNone(""),
+            TargetRepetitionsInReserve = e.TargetRepetitionsInReserve.IfNone(""),
+            Name = e.Name.IfNone(""),
+            TargetPosition = e.TargetPosition.IfNone(""),
+            Equipment = e.Equipment.IfNone(""),
+            Notes = e.Notes.IfNone(""),
             Sets = e.Sets.Select(TrainingSetTransformer.ToApi).Select(a => a.IfNone(() => throw new Exceptional("Invalid TrainingSet", 0019))).ToList()
         };
     }
