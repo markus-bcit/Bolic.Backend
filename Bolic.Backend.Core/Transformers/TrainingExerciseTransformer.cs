@@ -1,5 +1,3 @@
-using Bolic.Backend.Domain;
-using MuscleCategory = Bolic.Backend.Domain.MuscleCategory;
 using static Bolic.Backend.Core.Util.DomainExtensions;
 namespace Bolic.Backend.Core.Transformers;
 
