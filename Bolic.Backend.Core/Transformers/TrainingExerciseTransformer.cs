@@ -27,7 +27,7 @@ public static class TrainingExerciseTransformer
             Id = e.Id.Match(id => id.ToString(), () => throw new Exceptional("Missing Id", 0015)),
             UserId = e.UserId.Match(id => id.ToString(), () => throw new Exceptional("Invalid UserId", 0017)),
             TrainingDayId = e.TrainingDayId.Match(id => id.ToString(), () => ""),
-            MuscleCategory = e.MuscleCategory.IfNone(string.Empty),
+            MuscleCategory = e.MuscleCategory.Match(mc => mc.Value, () => string.Empty),
             MuscleSubcategory = e.MuscleSubcategory.Match(ms => ms.Name, () => string.Empty),
             TargetRepetitions = e.TargetRepetitions.IfNone(string.Empty),
             TargetRepetitionsInReserve = e.TargetRepetitionsInReserve.IfNone(string.Empty),

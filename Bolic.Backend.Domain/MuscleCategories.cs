@@ -23,6 +23,10 @@ public static class MuscleData
 {
     public static readonly List<MuscleSubcategory> Subcategories =
     [
+        new(MuscleCategory.Chest, "Upper"),
+        new(MuscleCategory.Chest, "Middle"),
+        new(MuscleCategory.Chest, "Lower"),
+
         new(MuscleCategory.Delts, "Front"),
         new(MuscleCategory.Delts, "Lateral"),
         new(MuscleCategory.Delts, "Rear"),
