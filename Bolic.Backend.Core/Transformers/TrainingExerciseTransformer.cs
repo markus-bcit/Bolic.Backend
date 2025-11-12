@@ -1,6 +1,6 @@
 using Bolic.Backend.Domain;
 using MuscleCategory = Bolic.Backend.Domain.MuscleCategory;
-
+using static Bolic.Backend.Core.Util.DomainExtensions;
 namespace Bolic.Backend.Core.Transformers;
 
 public static class TrainingExerciseTransformer
@@ -10,8 +10,8 @@ public static class TrainingExerciseTransformer
             Id: parseGuid(e.Id ?? string.Empty),
             UserId: parseGuid(e.UserId).IfNone(() => throw new Exceptional("Missing UserId", 0000)),
             TrainingDayId: parseGuid(e.TrainingDayId),
-            MuscleCategory: new MuscleCategory(e.MuscleCategory ?? string.Empty),
-            MuscleSubcategory: new MuscleSubcategory(new MuscleCategory(e.MuscleCategory ?? string.Empty), e.MuscleSubcategory ?? string.Empty),
+            MuscleCategory: parseMuscleCategory(e.MuscleCategory),
+            MuscleSubcategory: parseMuscleSubcategory(e.MuscleSubcategory, e.MuscleSubcategory),
             TargetRepetitions: e.TargetRepetitions,
             TargetRepetitionsInReserve: e.TargetRepetitionsInReserve,
             Name: e.Name,
