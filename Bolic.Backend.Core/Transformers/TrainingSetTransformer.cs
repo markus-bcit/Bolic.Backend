@@ -4,9 +4,9 @@ public static class TrainingSetTransformer
 {
     public static Option<Domain.TrainingSet> ToDt(this Api.TrainingSet s) =>
         new Domain.TrainingSet(
-            Id: parseGuid(s.Id ?? string.Empty),
+            Id: parseGuid(s.Id ?? ""),
             UserId: parseGuid(s.UserId).IfNone(() => throw new Exceptional("Missing UserId", 0000)),
-            TrainingExerciseId: parseGuid(s.TrainingExerciseId ?? string.Empty),
+            TrainingExerciseId: parseGuid(s.TrainingExerciseId ?? ""),
             Type: s.Type,
             Weight: s.Weight,
             WeightType: s.WeightType,
@@ -24,14 +24,14 @@ public static class TrainingSetTransformer
             Id = s.Id.Match(id => id.ToString(), () => throw new Exceptional("Missing Id", 0015)),
             UserId = s.UserId.Match(id => id.ToString(), () => throw new Exceptional("Invalid UserId", 0013)),
             TrainingExerciseId = s.TrainingExerciseId.Match(id => id.ToString(), () => ""),
-            Type = s.Type.IfNone(string.Empty),
+            Type = s.Type.IfNone(""),
             Weight = s.Weight.IfNone(0),
-            WeightType = s.WeightType.IfNone(string.Empty),
+            WeightType = s.WeightType.IfNone(""),
             Repetitions = s.Repetitions.IfNone(0),
             RepetitionsInReserve = s.RepetitionsInReserve.IfNone(0),
             RateOfPerceivedExertion = s.RateOfPerceivedExertion.IfNone(0),
             Quality = s.Quality.IfNone(0),
             AverageRepetitionTime = s.AverageRepetitionTime.IfNone(0),
-            Notes = s.Notes.IfNone(string.Empty)
+            Notes = s.Notes.IfNone("")
         };
 }

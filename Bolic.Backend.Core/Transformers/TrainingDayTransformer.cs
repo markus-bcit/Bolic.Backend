@@ -4,10 +4,10 @@ public static class TrainingDayTransformer
 {
     public static Option<Domain.TrainingDay> ToDt(this Api.TrainingDay td) =>
         new Domain.TrainingDay(
-            Id: parseGuid(td.Id ?? string.Empty),
+            Id: parseGuid(td.Id ?? ""),
             UserId: parseGuid(td.UserId).IfNone(() => throw new Exceptional("Missing UserId", 0000)),
-            MicrocycleId: parseGuid(td.MicrocycleId ?? string.Empty),
-            TrainingDayId: parseGuid(td.TrainingDayId ?? string.Empty),
+            MicrocycleId: parseGuid(td.MicrocycleId ?? ""),
+            TrainingDayId: parseGuid(td.TrainingDayId ?? ""),
             Name: td.Name,
             Description: td.Description,
             StartDate: td.StartDate ?? Option<DateTime>.None,
@@ -23,8 +23,8 @@ public static class TrainingDayTransformer
             UserId = td.UserId.Match(id => id.ToString(), () => throw new Exceptional("Invalid UserId", 0015)),
             MicrocycleId = td.MicrocycleId.Match(id => id.ToString(), () => ""),
             TrainingDayId =  td.TrainingDayId.Match(id => id.ToString(), () => ""),
-            Name = td.Name.IfNone(string.Empty),
-            Description = td.Description.IfNone(string.Empty),
+            Name = td.Name.IfNone(""),
+            Description = td.Description.IfNone(""),
             StartDate = td.StartDate.IfNone(DateTime.MinValue),
             EndDate = td.EndDate.IfNone(DateTime.MinValue),
             Exercises = td.Exercises.Select(TrainingExerciseTransformer.ToApi)

@@ -13,5 +13,5 @@ public record TrainingSet
     public float RateOfPerceivedExertion { get; init; }
     public float Quality { get; init; }
     public float AverageRepetitionTime { get; init; }
-    public string Notes { get; init; } = string.Empty;
+    public string? Notes { get; init; }
 }

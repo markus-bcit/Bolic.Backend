@@ -4,9 +4,9 @@ public static class MacrocycleTransformer
 {
     public static Option<Domain.Macrocycle> ToDt(this Api.Macrocycle m) =>
         new Domain.Macrocycle(
-            Id: parseGuid(m.Id ?? string.Empty),
+            Id: parseGuid(m.Id ?? ""),
             UserId: parseGuid(m.UserId).IfNone(() => throw new Exceptional("Missing UserId", 0000)),
-            MesocycleId: parseGuid(m.MesocycleId ?? string.Empty),
+            MesocycleId: parseGuid(m.MesocycleId ?? ""),
             Name: m.Name,
             Description: m.Description,
             StartDate: m.StartDate ?? Option<DateTime>.None, 
@@ -21,8 +21,8 @@ public static class MacrocycleTransformer
             Id = m.Id.Match(id => id.ToString(), () => throw new Exceptional("Missing Id", 0015)),
             UserId = m.UserId.Match(id => id.ToString(), () => throw new Exceptional("Invalid UserId", 0004)),
             MesocycleId = m.MesocycleId.Match(id => id.ToString(), () => ""),
-            Name = m.Name.IfNone(string.Empty),
-            Description = m.Description.IfNone(string.Empty),
+            Name = m.Name.IfNone(""),
+            Description = m.Description.IfNone(""),
             StartDate = m.StartDate.IfNone(DateTime.MinValue),
             EndDate = m.EndDate.IfNone(DateTime.MinValue),
             Microcycles = m.Microcycles.Select(MicrocycleTransformer.ToApi)

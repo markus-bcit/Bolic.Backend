@@ -15,14 +15,19 @@ public readonly record struct MuscleCategory(string Value)
 
     public static implicit operator string(MuscleCategory c) => c.Value;
     public static implicit operator MuscleCategory(string s) => new(s);
+    public static List<string> All() => [Quads, Glutes, Hamstrings, Calves, Abs, Chest, Delts, Back];
 }
 
-public readonly record struct MuscleSubcategory(MuscleCategory Parent, string Name);
-
-public static class MuscleData
+public readonly record struct MuscleSubcategory(MuscleCategory Parent, string Name)
 {
+    public override string ToString() => Name;
+
     public static readonly List<MuscleSubcategory> Subcategories =
     [
+        new(MuscleCategory.Chest, "Upper"),
+        new(MuscleCategory.Chest, "Middle"),
+        new(MuscleCategory.Chest, "Lower"),
+
         new(MuscleCategory.Delts, "Front"),
         new(MuscleCategory.Delts, "Lateral"),
         new(MuscleCategory.Delts, "Rear"),
@@ -34,9 +39,5 @@ public static class MuscleData
         new(MuscleCategory.Back, "Mid Lats"),
         new(MuscleCategory.Back, "Lower Lats")
     ];
-
-    public static bool IsValidSubcategory(MuscleCategory parent, string name) =>
-        Subcategories.Any(s =>
-            s.Parent.Equals(parent) &&
-            s.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
+    public static List<(string, string)> All() => Subcategories.Select(subcategory => (subcategory.Parent.Value, subcategory.Name)).ToList();
 }
