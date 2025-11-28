@@ -16,7 +16,21 @@ resource account 'Microsoft.DocumentDB/databaseAccounts@2025-05-01-preview' = {
         isZoneRedundant: false
       }
     ]
-    enableFreeTier: true // this
+    enableFreeTier: true // FREE: 1000 RU/s + 25 GB storage
+    consistencyPolicy: {
+      defaultConsistencyLevel: 'Session' // Cheapest option
+    }
+    backupPolicy: {
+      type: 'Periodic' // FREE (vs Continuous which costs extra)
+      periodicModeProperties: {
+        backupIntervalInMinutes: 240 // Max interval = fewer backups = cheaper
+        backupRetentionIntervalInHours: 8 // Min retention = cheaper
+        backupStorageRedundancy: 'Local' // Cheapest redundancy
+      }
+    }
+    enableAnalyticalStorage: false // Costs extra, disabled
+    enableAutomaticFailover: false // Not needed for single region
+    disableKeyBasedMetadataWriteAccess: false
   }
 }
 
