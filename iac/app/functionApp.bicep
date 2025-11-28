@@ -3,13 +3,15 @@ param environmentShort string
 param location string = resourceGroup().location
 param appInsightsConnectionString string
 param storageAccountName string
-param storageAccountKey string
 param hostingPlanId string
 
 resource functionApp 'Microsoft.Web/sites@2023-12-01' = {
   name: 'func-${projectName}-${environmentShort}'
   location: location
   kind: 'functionapp,linux'
+  identity: {
+    type: 'SystemAssigned'
+  }
   properties: {
     serverFarmId: hostingPlanId
     reserved: true
@@ -18,12 +20,24 @@ resource functionApp 'Microsoft.Web/sites@2023-12-01' = {
       linuxFxVersion: 'DOTNET-ISOLATED|8.0'
       appSettings: [
         {
-          name: 'AzureWebJobsStorage'
-          value: 'DefaultEndpointsProtocol=https;AccountName=${storageAccountName};EndpointSuffix=${environment().suffixes.storage};AccountKey=${storageAccountKey}'
+          name: 'AzureWebJobsStorage__accountName'
+          value: storageAccountName
+        }
+        {
+          name: 'AzureWebJobsStorage__blobServiceUri'
+          value: 'https://${storageAccountName}.blob.${environment().suffixes.storage}'
+        }
+        {
+          name: 'AzureWebJobsStorage__queueServiceUri'
+          value: 'https://${storageAccountName}.queue.${environment().suffixes.storage}'
+        }
+        {
+          name: 'AzureWebJobsStorage__tableServiceUri'
+          value: 'https://${storageAccountName}.table.${environment().suffixes.storage}'
         }
         {
           name: 'WEBSITE_CONTENTAZUREFILECONNECTIONSTRING'
-          value: 'DefaultEndpointsProtocol=https;AccountName=${storageAccountName};EndpointSuffix=${environment().suffixes.storage};AccountKey=${storageAccountKey}'
+          value: 'DefaultEndpointsProtocol=https;AccountName=${storageAccountName};EndpointSuffix=${environment().suffixes.storage}'
         }
         {
           name: 'WEBSITE_CONTENTSHARE'
@@ -51,3 +65,4 @@ resource functionApp 'Microsoft.Web/sites@2023-12-01' = {
 }
 
 output functionAppName string = functionApp.name
+output functionAppPrincipalId string = functionApp.identity.principalId

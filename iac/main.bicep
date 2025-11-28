@@ -1,8 +1,6 @@
 param projectName string
-param environment string
 param environmentShort string
 param location string
-param locationShort string
 
 module Cosmos 'cosmos/cosmos.bicep' = {
   params: {
@@ -43,7 +41,13 @@ module FunctionApp 'app/functionApp.bicep' = {
     location: location
     appInsightsConnectionString: AppInsights.outputs.connectionString
     storageAccountName: StorageAccount.outputs.storageAccountName
-    storageAccountKey: StorageAccount.outputs.storageAccountKey
     hostingPlanId: HostingPlan.outputs.hostingPlanId
+  }
+}
+
+module StorageRoleAssignments 'storage/roleAssignments.bicep' = {
+  params: {
+    storageAccountName: StorageAccount.outputs.storageAccountName
+    functionAppPrincipalId: FunctionApp.outputs.functionAppPrincipalId
   }
 }
