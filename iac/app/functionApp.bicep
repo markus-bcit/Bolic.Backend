@@ -24,24 +24,12 @@ resource functionApp 'Microsoft.Web/sites@2023-12-01' = {
           value: storageAccountName
         }
         {
-          name: 'AzureWebJobsStorage__blobServiceUri'
-          value: 'https://${storageAccountName}.blob.${environment().suffixes.storage}'
+          name: 'AzureWebJobsStorage__credential'
+          value: 'managedidentity'
         }
         {
-          name: 'AzureWebJobsStorage__queueServiceUri'
-          value: 'https://${storageAccountName}.queue.${environment().suffixes.storage}'
-        }
-        {
-          name: 'AzureWebJobsStorage__tableServiceUri'
-          value: 'https://${storageAccountName}.table.${environment().suffixes.storage}'
-        }
-        {
-          name: 'WEBSITE_CONTENTAZUREFILECONNECTIONSTRING'
-          value: 'DefaultEndpointsProtocol=https;AccountName=${storageAccountName};EndpointSuffix=${environment().suffixes.storage}'
-        }
-        {
-          name: 'WEBSITE_CONTENTSHARE'
-          value: toLower('func-${projectName}-${environmentShort}')
+          name: 'AzureWebJobsStorage__clientId'
+          value: 'system'
         }
         {
           name: 'FUNCTIONS_EXTENSION_VERSION'
