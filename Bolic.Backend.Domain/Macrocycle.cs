@@ -1,13 +1,13 @@
 namespace Bolic.Backend.Domain;
 
-public record Macrocycle
-(
+public record Macrocycle(
     Option<Guid> Id,
     Option<Guid> UserId,
     Option<Guid> MesocycleId,
     Option<string> Name,
-    Option<string> Description ,
-    Option<DateTime> StartDate ,
-    Option<DateTime> EndDate ,
+    Option<string> Description,
+    Option<DateTime> StartDate,
+    Option<DateTime> EndDate,
+    Option<int> Version,
     List<Microcycle> Microcycles
 );

@@ -12,6 +12,7 @@ public static class MicrocycleTransformer
             CreatedDate: m.CreatedDate ?? Option<DateTime>.None,
             StartDate: m.StartDate ?? Option<DateTime>.None,
             EndDate: m.EndDate ?? Option<DateTime>.None,
+            Version: m.Version,
             TrainingDays: m.TrainingDays.Select(TrainingDayTransformer.ToDt)
                 .Select(a => a.IfNone(() => throw new Exceptional("Invalid TrainingDay", 0016))).ToList()
         );
@@ -27,6 +28,7 @@ public static class MicrocycleTransformer
             CreatedDate = m.CreatedDate.IfNone(DateTime.MinValue),
             StartDate = m.StartDate.IfNone(DateTime.MinValue),
             EndDate = m.EndDate.IfNone(DateTime.MinValue),
+            Version = m.Version.IfNone(0),
             TrainingDays = m.TrainingDays.Select(TrainingDayTransformer.ToApi)
                 .Select(a => a.IfNone(() => throw new Exceptional("Invalid TrainingDay", 0018))).ToList()
         };

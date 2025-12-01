@@ -9,8 +9,9 @@ public static class MacrocycleTransformer
             MesocycleId: parseGuid(m.MesocycleId ?? ""),
             Name: m.Name,
             Description: m.Description,
-            StartDate: m.StartDate ?? Option<DateTime>.None, 
+            StartDate: m.StartDate ?? Option<DateTime>.None,
             EndDate: m.EndDate ??  Option<DateTime>.None,
+            Version: m.Version,
             Microcycles: m.Microcycles.Select(MicrocycleTransformer.ToDt)
                 .Select(a => a.IfNone(() => throw new Exceptional("Invalid microcycle", 0006))).ToList()
         );
@@ -25,6 +26,7 @@ public static class MacrocycleTransformer
             Description = m.Description.IfNone(""),
             StartDate = m.StartDate.IfNone(DateTime.MinValue),
             EndDate = m.EndDate.IfNone(DateTime.MinValue),
+            Version = m.Version.IfNone(0),
             Microcycles = m.Microcycles.Select(MicrocycleTransformer.ToApi)
                 .Select(a => a.IfNone(() => throw new Exceptional("Invalid microcycle", 0009))).ToList()
         };

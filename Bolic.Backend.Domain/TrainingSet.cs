@@ -12,5 +12,6 @@ public record TrainingSet(
     Option<float> RateOfPerceivedExertion,
     Option<float> Quality,
     Option<float> AverageRepetitionTime,
-    Option<string> Notes
+    Option<string> Notes,
+    Option<int> Version
 );

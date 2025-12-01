@@ -12,6 +12,7 @@ public static class TrainingDayTransformer
             Description: td.Description,
             StartDate: td.StartDate ?? Option<DateTime>.None,
             EndDate: td.EndDate ?? Option<DateTime>.None,
+            Version: td.Version,
             Exercises: td.Exercises.Select(TrainingExerciseTransformer.ToDt)
                 .Select(a => a.Match(ts => ts, () => throw new Exceptional("Invalid training exercise", 0043))).ToList()
         );
@@ -27,6 +28,7 @@ public static class TrainingDayTransformer
             Description = td.Description.IfNone(""),
             StartDate = td.StartDate.IfNone(DateTime.MinValue),
             EndDate = td.EndDate.IfNone(DateTime.MinValue),
+            Version = td.Version.IfNone(0),
             Exercises = td.Exercises.Select(TrainingExerciseTransformer.ToApi)
                 .Select(a => a.IfNone(() => throw new Exceptional("Invalid TrainingDay", 0018))).ToList()
         };

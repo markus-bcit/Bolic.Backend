@@ -1,7 +1,7 @@
 ﻿namespace Bolic.Backend.Domain;
 
 public record TrainingDay(
-    
+
     Option<Guid> Id,
     Option<Guid> UserId,
     Option<Guid> MicrocycleId,
@@ -10,5 +10,6 @@ public record TrainingDay(
     Option<string> Description,
     Option<DateTime> StartDate,
     Option<DateTime> EndDate,
+    Option<int> Version,
     List<TrainingExercise> Exercises
 );
