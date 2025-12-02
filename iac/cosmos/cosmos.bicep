@@ -16,11 +16,6 @@ resource account 'Microsoft.DocumentDB/databaseAccounts@2025-10-15' = {
       }
     ]
     enableFreeTier: true // FREE: 1000 RU/s + 25 GB storage
-    capabilities: [
-      {
-        name: 'EnableServerless'
-      }
-    ]
     consistencyPolicy: {
       defaultConsistencyLevel: 'Session' // Cheapest option
     }
@@ -60,6 +55,9 @@ resource trainingDaysContainer 'Microsoft.DocumentDB/databaseAccounts/sqlDatabas
         ]
       }
     }
+    options: {
+      throughput: 100
+    }
   }
 }
 
@@ -75,6 +73,9 @@ resource exercisesContainer 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/
         ]
       }
     }
+    options: {
+      throughput: 100
+    }
   }
 }
 
@@ -89,6 +90,9 @@ resource trainingSessionContainer 'Microsoft.DocumentDB/databaseAccounts/sqlData
           '/UserId'
         ]
       }
+    }
+    options: {
+      throughput: 100
     }
   }
 }
@@ -106,6 +110,9 @@ resource usersContainer 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/cont
         kind: 'Hash'
       }
     }
+    options: {
+      throughput: 100
+    }
   }
 }
 
@@ -120,6 +127,9 @@ resource setsContainer 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/conta
           '/UserId'
         ]
       }
+    }
+    options: {
+      throughput: 100
     }
   }
 }
