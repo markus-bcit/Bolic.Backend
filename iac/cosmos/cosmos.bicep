@@ -3,7 +3,6 @@ param environmentShort string
 param accountName string = 'db-${projectName}-${environmentShort}'
 param location string = resourceGroup().location
 
-
 resource account 'Microsoft.DocumentDB/databaseAccounts@2025-05-01-preview' = {
   name: accountName
   location: location
@@ -40,6 +39,9 @@ resource database 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases@2024-02-15
   properties: {
     resource: {
       id: projectName
+    }
+    options: {
+      throughput: 500 // Shared across all containers - stays under 1000 RU/s free tier
     }
   }
 }
@@ -101,6 +103,11 @@ resource usersContainer 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/cont
         ]
         kind: 'Hash'
       }
+    }
+  }
+}
+  }
+}
     }
   }
 }
