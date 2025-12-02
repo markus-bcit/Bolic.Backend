@@ -3,10 +3,9 @@ param environmentShort string
 param location string
 
 module Cosmos 'cosmos/cosmos.bicep' = {
+  scope: resourceGroup('rg-shared')
   params: {
-    environmentShort: environmentShort
     projectName: projectName
-    location: location
   }
 }
 

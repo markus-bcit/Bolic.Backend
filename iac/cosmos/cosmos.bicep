@@ -1,10 +1,8 @@
 param projectName string
-param environmentShort string
 param accountName string = 'db-shared'
 
 resource account 'Microsoft.DocumentDB/databaseAccounts@2025-10-15' existing = {
   name: accountName
-  scope: resourceGroup('rg-shared')
 }
 
 resource database 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases@2025-10-15' = {
