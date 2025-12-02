@@ -7,34 +7,16 @@ resource account 'Microsoft.DocumentDB/databaseAccounts@2025-10-15' = {
   name: accountName
   location: location
   properties: {
-    databaseAccountOfferType: 'Standard'
-    locations: [
-      {
-        locationName: location
-        failoverPriority: 0
-        isZoneRedundant: false
-      }
-    ]
     enableFreeTier: true // FREE: 1000 RU/s + 25 GB storage
-    capabilities: [
-      {
-        name: 'EnableServerless'
-      }
-    ]
+    databaseAccountOfferType: 'Standard'
     consistencyPolicy: {
       defaultConsistencyLevel: 'Session' // Cheapest option
     }
-    backupPolicy: {
-      type: 'Periodic' // FREE (vs Continuous which costs extra)
-      periodicModeProperties: {
-        backupIntervalInMinutes: 240 // Max interval = fewer backups = cheaper
-        backupRetentionIntervalInHours: 8 // Min retention = cheaper
-        backupStorageRedundancy: 'Local' // Cheapest redundancy
+    locations: [
+      {
+        locationName: location
       }
-    }
-    enableAnalyticalStorage: false // Costs extra, disabled
-    enableAutomaticFailover: false // Not needed for single region
-    disableKeyBasedMetadataWriteAccess: false
+    ]
   }
 }
 
@@ -44,6 +26,9 @@ resource database 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases@2025-10-15
   properties: {
     resource: {
       id: projectName
+    }
+    options: {
+      throughput: 1000
     }
   }
 }
