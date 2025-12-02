@@ -3,7 +3,7 @@ param environmentShort string
 param accountName string = 'db-${projectName}-${environmentShort}'
 param location string = resourceGroup().location
 
-resource account 'Microsoft.DocumentDB/databaseAccounts@2025-05-01-preview' = {
+resource account 'Microsoft.DocumentDB/databaseAccounts@2023-04-15' = {
   name: accountName
   location: location
   properties: {
@@ -33,7 +33,7 @@ resource account 'Microsoft.DocumentDB/databaseAccounts@2025-05-01-preview' = {
   }
 }
 
-resource database 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases@2024-02-15-preview' = {
+resource database 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases@2023-04-15' = {
   parent: account
   name: projectName
   properties: {
@@ -41,12 +41,12 @@ resource database 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases@2024-02-15
       id: projectName
     }
     options: {
-      throughput: 999 
+      throughput: 1000 // Shared across all containers - stays under 1000 RU/s free tier
     }
   }
 }
 
-resource trainingDaysContainer 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers@2025-05-01-preview' = {
+resource trainingDaysContainer 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers@2023-04-15' = {
   parent: database
   name: 'training-days'
   properties: {
@@ -58,13 +58,10 @@ resource trainingDaysContainer 'Microsoft.DocumentDB/databaseAccounts/sqlDatabas
         ]
       }
     }
-    options: {
-      throughput: 100 
-    }
   }
 }
 
-resource exercisesContainer 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers@2025-05-01-preview' = {
+resource exercisesContainer 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers@2023-04-15' = {
   parent: database
   name: 'exercises'
   properties: {
@@ -76,13 +73,10 @@ resource exercisesContainer 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/
         ]
       }
     }
-    options: {
-      throughput: 100 
-    }
   }
 }
 
-resource trainingSessionContainer 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers@2025-05-01-preview' = {
+resource trainingSessionContainer 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers@2023-04-15' = {
   parent: database
   name: 'training-sessions'
   properties: {
@@ -94,13 +88,10 @@ resource trainingSessionContainer 'Microsoft.DocumentDB/databaseAccounts/sqlData
         ]
       }
     }
-    options: {
-      throughput: 100 
-    }
   }
 }
 
-resource usersContainer 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers@2025-05-01-preview' = {
+resource usersContainer 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers@2023-04-15' = {
   parent: database
   name: 'users'
   properties: {
@@ -113,13 +104,10 @@ resource usersContainer 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/cont
         kind: 'Hash'
       }
     }
-    options: {
-      throughput: 100 
-    }
   }
 }
 
-resource setsContainer 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers@2025-05-01-preview' = {
+resource setsContainer 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers@2023-04-15' = {
   parent: database
   name: 'sets'
   properties: {
@@ -130,9 +118,6 @@ resource setsContainer 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/conta
           '/UserId'
         ]
       }
-    }
-    options: {
-      throughput: 100 
     }
   }
 }
