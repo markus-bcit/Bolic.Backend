@@ -1,39 +1,10 @@
 param projectName string
 param environmentShort string
-param accountName string = 'db-${projectName}-${environmentShort}'
-param location string = resourceGroup().location
+param accountName string = 'db-shared'
 
-resource account 'Microsoft.DocumentDB/databaseAccounts@2025-10-15' = {
+resource account 'Microsoft.DocumentDB/databaseAccounts@2025-10-15' existing = {
   name: accountName
-  location: location
-  properties: {
-    databaseAccountOfferType: 'Standard'
-    locations: [
-      {
-        locationName: location
-        failoverPriority: 0
-        isZoneRedundant: false
-      }
-    ]
-    enableFreeTier: true // FREE: 1000 RU/s + 25 GB storage
-    consistencyPolicy: {
-      defaultConsistencyLevel: 'Session' // Cheapest option
-    }
-    backupPolicy: {
-      type: 'Periodic' // FREE (vs Continuous which costs extra)
-      periodicModeProperties: {
-        backupIntervalInMinutes: 240 // Max interval = fewer backups = cheaper
-        backupRetentionIntervalInHours: 8 // Min retention = cheaper
-        backupStorageRedundancy: 'Local' // Cheapest redundancy
-      }
-    }
-    enableAnalyticalStorage: false // Costs extra, disabled
-    enableAutomaticFailover: false // Not needed for single region
-    disableKeyBasedMetadataWriteAccess: false
-    capacity: {
-      totalThroughputLimit: 1000
-    }
-  }
+  scope: resourceGroup('rg-shared')
 }
 
 resource database 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases@2025-10-15' = {
@@ -44,7 +15,7 @@ resource database 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases@2025-10-15
       id: projectName
     }
     options: {
-      throughput: 1000 // Shared across all containers - stays under 1000 RU/s free tier
+      throughput: 1000 // Shared across all containers - stays under 1000 RU/s free tier, could change if another DB is added.
     }
   }
 }
