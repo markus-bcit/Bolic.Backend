@@ -14,4 +14,5 @@ public record TrainingSet
     public float Quality { get; init; }
     public float AverageRepetitionTime { get; init; }
     public string? Notes { get; init; }
+    public int Version { get; init; }
 }

@@ -14,6 +14,9 @@ public static class TrainingDay
         td.EndDate.IfSome(value => po.Add(PatchOperation.Replace("/EndDate", value)));
         td.MicrocycleId.IfSome(value => po.Add(PatchOperation.Replace("/MicrocycleId", value)));
 
+        var newVersion = td.Version.IfNone(0) + 1;
+        po.Add(PatchOperation.Replace("/Version", newVersion));
+
         if (td.Exercises is { Count: > 0 })
         {
             po.Add(PatchOperation.Replace("/Exercises",

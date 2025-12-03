@@ -11,6 +11,7 @@ public static class TrainingSessionService
             TrainingDayId: day.Id,
             Name: session.Name,
             Description: session.Description,
+            Version: 0,
             StartDate: DateTime.UtcNow,
             EndDate: Option<DateTime>.None,
             Exercises: day.Exercises

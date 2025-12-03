@@ -15,7 +15,8 @@ public static class TrainingSetTransformer
             RateOfPerceivedExertion: s.RateOfPerceivedExertion,
             Quality: s.Quality,
             AverageRepetitionTime: s.AverageRepetitionTime,
-            Notes: s.Notes
+            Notes: s.Notes,
+            Version: s.Version
         );
 
     public static Option<Api.TrainingSet> ToApi(this Domain.TrainingSet s) =>
@@ -32,6 +33,7 @@ public static class TrainingSetTransformer
             RateOfPerceivedExertion = s.RateOfPerceivedExertion.IfNone(0),
             Quality = s.Quality.IfNone(0),
             AverageRepetitionTime = s.AverageRepetitionTime.IfNone(0),
-            Notes = s.Notes.IfNone("")
+            Notes = s.Notes.IfNone(""),
+            Version = s.Version.IfNone(0)
         };
 }

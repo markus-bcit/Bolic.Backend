@@ -19,5 +19,7 @@ public record TrainingExercise
 
     public string? Notes { get; init; }
 
+    public int Version { get; init; }
+
     public List<TrainingSet> Sets { get; init; } = [];
 }

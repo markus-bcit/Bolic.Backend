@@ -9,5 +9,6 @@ public record Microcycle(
     Option<DateTime> CreatedDate,
     Option<DateTime> StartDate,
     Option<DateTime> EndDate,
+    Option<int> Version,
     List<TrainingDay> TrainingDays
 );

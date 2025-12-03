@@ -18,6 +18,9 @@ public static class TrainingExercise
         td.Equipment.IfSome(v => po.Add(PatchOperation.Replace("/Equipment", v)));
         td.Notes.IfSome(v => po.Add(PatchOperation.Replace("/Notes", v)));
 
+        var newVersion = td.Version.IfNone(0) + 1;
+        po.Add(PatchOperation.Replace("/Version", newVersion));
+
         if (td.Sets is { Count: > 0 })
         {
             po.Add(PatchOperation.Replace("/Sets",

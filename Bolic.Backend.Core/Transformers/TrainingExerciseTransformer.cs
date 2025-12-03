@@ -16,6 +16,7 @@ public static class TrainingExerciseTransformer
             TargetPosition: e.TargetPosition,
             Equipment: e.Equipment,
             Notes: e.Notes,
+            Version: e.Version,
             Sets: e.Sets.Select(TrainingSetTransformer.ToDt).Select(a => a.IfNone(() => throw new Exceptional("Invalid TrainingSet", 0018))).ToList()
         );
 
@@ -33,6 +34,7 @@ public static class TrainingExerciseTransformer
             TargetPosition = e.TargetPosition.IfNone(""),
             Equipment = e.Equipment.IfNone(""),
             Notes = e.Notes.IfNone(""),
+            Version = e.Version.IfNone(0),
             Sets = e.Sets.Select(TrainingSetTransformer.ToApi).Select(a => a.IfNone(() => throw new Exceptional("Invalid TrainingSet", 0019))).ToList()
         };
     }
