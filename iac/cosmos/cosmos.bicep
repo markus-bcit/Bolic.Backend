@@ -1,39 +1,11 @@
 param projectName string
-param environmentShort string
-param accountName string = 'db-${projectName}-${environmentShort}'
-param location string = resourceGroup().location
+param accountName string = 'db-shared'
 
-resource account 'Microsoft.DocumentDB/databaseAccounts@2025-05-01-preview' = {
+resource account 'Microsoft.DocumentDB/databaseAccounts@2025-10-15' existing = {
   name: accountName
-  location: location
-  properties: {
-    databaseAccountOfferType: 'Standard'
-    locations: [
-      {
-        locationName: location
-        failoverPriority: 0
-        isZoneRedundant: false
-      }
-    ]
-    enableFreeTier: true // FREE: 1000 RU/s + 25 GB storage
-    consistencyPolicy: {
-      defaultConsistencyLevel: 'Session' // Cheapest option
-    }
-    backupPolicy: {
-      type: 'Periodic' // FREE (vs Continuous which costs extra)
-      periodicModeProperties: {
-        backupIntervalInMinutes: 240 // Max interval = fewer backups = cheaper
-        backupRetentionIntervalInHours: 8 // Min retention = cheaper
-        backupStorageRedundancy: 'Local' // Cheapest redundancy
-      }
-    }
-    enableAnalyticalStorage: false // Costs extra, disabled
-    enableAutomaticFailover: false // Not needed for single region
-    disableKeyBasedMetadataWriteAccess: false
-  }
 }
 
-resource database 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases@2024-02-15-preview' = {
+resource database 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases@2025-10-15' = {
   parent: account
   name: projectName
   properties: {
@@ -41,12 +13,12 @@ resource database 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases@2024-02-15
       id: projectName
     }
     options: {
-      throughput: 500 // Shared across all containers - stays under 1000 RU/s free tier
+      throughput: 1000 // Shared across all containers - stays under 1000 RU/s free tier, could change if another DB is added.
     }
   }
 }
 
-resource trainingDaysContainer 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers@2025-05-01-preview' = {
+resource trainingDaysContainer 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers@2025-10-15' = {
   parent: database
   name: 'training-days'
   properties: {
@@ -61,7 +33,7 @@ resource trainingDaysContainer 'Microsoft.DocumentDB/databaseAccounts/sqlDatabas
   }
 }
 
-resource exercisesContainer 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers@2025-05-01-preview' = {
+resource exercisesContainer 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers@2025-10-15' = {
   parent: database
   name: 'exercises'
   properties: {
@@ -76,7 +48,7 @@ resource exercisesContainer 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/
   }
 }
 
-resource trainingSessionContainer 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers@2025-05-01-preview' = {
+resource trainingSessionContainer 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers@2025-10-15' = {
   parent: database
   name: 'training-sessions'
   properties: {
@@ -91,7 +63,7 @@ resource trainingSessionContainer 'Microsoft.DocumentDB/databaseAccounts/sqlData
   }
 }
 
-resource usersContainer 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers@2025-05-01-preview' = {
+resource usersContainer 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers@2025-10-15' = {
   parent: database
   name: 'users'
   properties: {
@@ -107,7 +79,7 @@ resource usersContainer 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/cont
   }
 }
 
-resource setsContainer 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers@2025-05-01-preview' = {
+resource setsContainer 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers@2025-10-15' = {
   parent: database
   name: 'sets'
   properties: {
