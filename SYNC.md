@@ -20,4 +20,27 @@ event triggered
 cron
 
 MANAGING THE DATA
+
+- Containers
+1. Workouts
+2. Measurements *probably not* -> updated on cron or trigger of new workout item - probably not event/trigger based
+3. Sync State (Rollups) -> Think checkpointing - some type of state management
+4. Templates 
+5. Exercises? ^ could tie in with templates
+
+
+Sync Flow:
+
+```
+POST /sync
+
+Checkpoint where/when/what has been updated -> requires consideration
+
+Start upserting items 
+
+Checkboxing items -> Add on DTO
+
+*maybe* trigger measurements -> could probably be fine on client side  
+```
+
 ...
