@@ -15,7 +15,7 @@ Partial Updates: Only include fields the user modifies to save RUs.
  */
 public class TrainingSession(IRuntime runtime)
 {
-    [Function("CreateTrainingSession")]
+    // [Function(("CreateTrainingSession")]
     public async Task<HttpResponseData> CreateTrainingSession([HttpTrigger("post", Route = "training-session")] HttpRequestData req)
     {
         var program =
@@ -57,7 +57,7 @@ public class TrainingSession(IRuntime runtime)
     }
     
     
-    [Function("GetTrainingDay")]
+    // [Function(("GetTrainingDay")]
     public async Task<HttpResponseData> GetTrainingSession([HttpTrigger("get", Route = "training-session")] HttpRequestData req)
     {
         var program =

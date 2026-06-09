@@ -8,7 +8,7 @@ namespace Bolic.Backend.Core;
 
 public class TrainingExercise(IRuntime runtime)
 {
-    [Function("CreateTrainingExercise")]
+    // [Function(("CreateTrainingExercise")]
     public async Task<HttpResponseData> CreateTrainingExercise([HttpTrigger("post", Route = "exercises")] HttpRequestData req)
     {
         var program =
@@ -33,7 +33,7 @@ public class TrainingExercise(IRuntime runtime)
         return await program.Run((Runtime)runtime).ToHttpResponse((Runtime)runtime, req, HttpStatusCode.Created, req.FunctionContext.InvocationId);
     }
 
-    [Function("PutTrainingExercise")]
+    // [Function(("PutTrainingExercise")]
     public async Task<HttpResponseData> PutTrainingExercise([HttpTrigger("put", Route = "exercises")] HttpRequestData req)
     {
         var program =
@@ -57,7 +57,7 @@ public class TrainingExercise(IRuntime runtime)
         return await program.Run((Runtime)runtime).ToHttpResponse((Runtime)runtime, req, HttpStatusCode.OK, req.FunctionContext.InvocationId);
     }
     
-    [Function("GetTrainingExercise")]
+    // [Function(("GetTrainingExercise")]
     public async Task<HttpResponseData> GetTrainingExercise([HttpTrigger("get", Route = "exercises")] HttpRequestData req, string userId, string id)
     {
         var program =
@@ -80,7 +80,7 @@ public class TrainingExercise(IRuntime runtime)
         return await program.Run((Runtime)runtime).ToHttpResponse((Runtime)runtime, req, HttpStatusCode.OK, req.FunctionContext.InvocationId);
     }
     
-    [Function("PatchTrainingExercise")]
+    // [Function(("PatchTrainingExercise")]
     public async Task<HttpResponseData> PatchTrainingExercise(
         [HttpTrigger("patch", Route = "exercises")] HttpRequestData req)
     {
