@@ -8,7 +8,7 @@ namespace Bolic.Backend.Core;
 
 public class TrainingDay(IRuntime runtime)
 {
-    [Function("CreateTrainingDay")]
+    // [Function(("CreateTrainingDay")]
     public async Task<HttpResponseData> CreateTrainingDay([HttpTrigger("post", Route = "training-days")] HttpRequestData req)
     {
         var program =
@@ -33,7 +33,7 @@ public class TrainingDay(IRuntime runtime)
         return await program.Run((Runtime)runtime).ToHttpResponse((Runtime)runtime, req, HttpStatusCode.Created, req.FunctionContext.InvocationId);
     }
 
-    [Function("PutTrainingDay")]
+    // [Function(("PutTrainingDay")]
     public async Task<HttpResponseData> PutTrainingDay([HttpTrigger("put", Route = "training-days")] HttpRequestData req)
     {
         var program =
@@ -57,7 +57,7 @@ public class TrainingDay(IRuntime runtime)
         return await program.Run((Runtime)runtime).ToHttpResponse((Runtime)runtime, req, HttpStatusCode.OK, req.FunctionContext.InvocationId);
     }
     
-    [Function("GetTrainingDay")]
+    // [Function(("GetTrainingDay")]
     public async Task<HttpResponseData> GetTrainingDay([HttpTrigger("get", Route = "training-days")] HttpRequestData req)
     {
         var program =
@@ -79,7 +79,7 @@ public class TrainingDay(IRuntime runtime)
         return await program.Run((Runtime)runtime).ToHttpResponse((Runtime)runtime, req, HttpStatusCode.OK, req.FunctionContext.InvocationId);
     }
     
-    [Function("PatchTrainingDay")]
+    // [Function(("PatchTrainingDay")]
     public async Task<HttpResponseData> PatchTrainingDay(
         [HttpTrigger("patch", Route = "training-days")] HttpRequestData req)
     {
