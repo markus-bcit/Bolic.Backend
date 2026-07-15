@@ -113,5 +113,7 @@ temp/
 *.orig
 *.rej
 *~
+
 hypertrophy_program.pdf
+bolic-backup*
 # End of file

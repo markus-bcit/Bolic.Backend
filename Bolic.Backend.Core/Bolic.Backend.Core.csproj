@@ -6,6 +6,8 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <RootNamespace>Bolic.Backend.Core</RootNamespace>
+        <AzureCosmosDisableNewtonsoftJsonCheck>true</AzureCosmosDisableNewtonsoftJsonCheck>
+
     </PropertyGroup>
     <ItemGroup>
         <FrameworkReference Include="Microsoft.AspNetCore.App"/>
@@ -16,10 +18,10 @@
         <PackageReference Include="Microsoft.Azure.Functions.Worker.Extensions.Http.AspNetCore" Version="2.1.0" />
         <PackageReference Include="Microsoft.Azure.Functions.Worker.Sdk" Version="2.0.7" />
 
-        <PackageReference Include="Bolic.Shared.Azure" Version="1.0.49"/>
-        <PackageReference Include="Bolic.Shared.Core" Version="1.0.49"/>
-        <PackageReference Include="Bolic.Shared.Tap" Version="1.0.49"/>
-        <PackageReference Include="Bolic.Shared.Database" Version="1.0.49"/>
+        <PackageReference Include="Bolic.Shared.Azure" Version="1.0.5-dev" />
+        <PackageReference Include="Bolic.Shared.Tap" Version="1.0.5-dev"/>
+        <PackageReference Include="Bolic.Shared.Database" Version="1.0.5-dev"/>
+        <PackageReference Include="Bolic.Shared.Core" Version="1.0.5-dev"/>
 
         <ProjectReference Include="..\Bolic.Backend.Api\Bolic.Backend.Api.csproj"/>
         <ProjectReference Include="..\Bolic.Backend.Domain\Bolic.Backend.Domain.csproj"/>

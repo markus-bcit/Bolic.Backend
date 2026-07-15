@@ -20,7 +20,7 @@ public class TrainingSession(IRuntime runtime)
     {
         var program =
             from request in Tap.Process<Api.TrainingDay>(req)
-            from body in request.Body.ToEff()
+            from body in request.Body
             from dt in body.ToDt().ToEff()
             let udt = dt with { Id = Guid.NewGuid() } 
             from tdid in udt.TrainingDayId.ToEff(new Exceptional("Missing trainingId", 0102))
@@ -34,10 +34,7 @@ public class TrainingSession(IRuntime runtime)
                     Database: "bolic"
                 )
             )
-            from td in dbr.Match( // ToDo this is ugly
-                Right: resp => resp.Document.ToDt().ToEff(),
-                Left: ex => LanguageExt.Eff<Domain.TrainingDay>.Fail(ex)
-            )
+            from td in dbr.Document.ToDt().ToEff()
             from ts in CreateTrainingSessionFromTrainingDay(td, udt).ToEff()
             from tsId in ts.Id.ToEff()
             from tsuid in ts.UserId.ToEff()
@@ -62,7 +59,7 @@ public class TrainingSession(IRuntime runtime)
     {
         var program =
             from request in Tap.Process<Api.TrainingDay>(req)
-            from body in request.Body.ToEff()
+            from body in request.Body
             from dt in body.ToDt().ToEff()
             from id in dt.Id.ToEff(new Exceptional("Missing id", 0101))
             from uid in dt.UserId.ToEff() 

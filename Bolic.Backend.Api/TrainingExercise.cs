@@ -2,7 +2,7 @@ namespace Bolic.Backend.Api;
 
 public record TrainingExercise
 {
-    [JsonProperty("id")] public string? Id { get; init; }
+    [JsonPropertyName("id")] public string? Id { get; init; }
 
     public required string UserId { get; init; }
     public List<string> TrainingDayIds { get; init; } = [];

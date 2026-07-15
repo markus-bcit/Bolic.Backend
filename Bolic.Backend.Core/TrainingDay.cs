@@ -13,7 +13,7 @@ public class TrainingDay(IRuntime runtime)
     {
         var program =
             from request in Tap.Process<Api.TrainingDay>(req)
-            from body in request.Body.ToEff()
+            from body in request.Body
             from dt in body.ToDt().ToEff()
             let udt = dt with { Id = Guid.NewGuid() }
             from id in udt.Id.ToEff()
@@ -30,7 +30,8 @@ public class TrainingDay(IRuntime runtime)
             )
             select databaseResponse;
 
-        return await program.Run((Runtime)runtime).ToHttpResponse((Runtime)runtime, req, HttpStatusCode.Created, req.FunctionContext.InvocationId);
+        
+        return await program.Run((Runtime)runtime).ToHttpResponse((Runtime)runtime, req, HttpStatusCode.Created, req.FunctionContext.InvocationId);;
     }
 
     // [Function(("PutTrainingDay")]
@@ -38,7 +39,7 @@ public class TrainingDay(IRuntime runtime)
     {
         var program =
             from request in Tap.Process<Api.TrainingDay>(req)
-            from body in request.Body.ToEff()
+            from body in request.Body
             from dt in body.ToDt().ToEff()
             from id in dt.Id.ToEff(new Exceptional("Missing id", 0101))
             from uid in dt.UserId.ToEff()
@@ -62,7 +63,7 @@ public class TrainingDay(IRuntime runtime)
     {
         var program =
             from request in Tap.Process<Api.TrainingDay>(req)
-            from body in request.Body.ToEff()
+            from body in request.Body
             from dt in body.ToDt().ToEff()
             from dtid in dt.Id.ToEff(new Exceptional("Missing id", 0101))
             from dtuid in dt.UserId.ToEff()
@@ -85,7 +86,7 @@ public class TrainingDay(IRuntime runtime)
     {
         var program =
             from request in Tap.Process<Api.TrainingDay>(req)
-            from body in request.Body.ToEff()
+            from body in request.Body
             from dt in body.ToDt().ToEff()
             from id in  dt.Id.ToEff(new Exceptional("Missing id", 0101))
             from uid in dt.UserId.ToEff()
@@ -103,7 +104,6 @@ public class TrainingDay(IRuntime runtime)
                 )
             )
             select databaseResponse;
-
         return await program.Run((Runtime)runtime).ToHttpResponse((Runtime)runtime, req, HttpStatusCode.Created, req.FunctionContext.InvocationId);
     }
 
