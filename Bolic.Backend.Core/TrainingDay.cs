@@ -8,7 +8,7 @@ namespace Bolic.Backend.Core;
 
 public class TrainingDay(IRuntime runtime)
 {
-    // [Function(("CreateTrainingDay")]
+    [Function("CreateTrainingDay")]
     public async Task<HttpResponseData> CreateTrainingDay([HttpTrigger("post", Route = "training-days")] HttpRequestData req)
     {
         var program =
@@ -29,7 +29,6 @@ public class TrainingDay(IRuntime runtime)
                 )
             )
             select databaseResponse;
-
         
         return await program.Run((Runtime)runtime).ToHttpResponse((Runtime)runtime, req, HttpStatusCode.Created, req.FunctionContext.InvocationId);;
     }

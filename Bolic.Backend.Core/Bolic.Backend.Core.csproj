@@ -25,6 +25,8 @@
 
         <ProjectReference Include="..\Bolic.Backend.Api\Bolic.Backend.Api.csproj"/>
         <ProjectReference Include="..\Bolic.Backend.Domain\Bolic.Backend.Domain.csproj"/>
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.3" /> 
+
 
     </ItemGroup>
     <ItemGroup>

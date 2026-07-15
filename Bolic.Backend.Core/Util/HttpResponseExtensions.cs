@@ -15,7 +15,11 @@ public static class HttpResponseExtensions
         // TODO fix at some point, looks like a🥀🥀
         return result.Match(
             Succ: T => req.CreateResponse(), Fail: error1 =>
-                req.CreateResponse());
+            {
+                var res = req.CreateResponse();
+                Console.WriteLine(error1.ToString());
+                return res;
+            });
     }
 
     private static async Task<HttpResponseData> CreateResponse<T>(
