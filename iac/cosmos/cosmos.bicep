@@ -26,7 +26,7 @@ resource trainingDaysContainer 'Microsoft.DocumentDB/databaseAccounts/sqlDatabas
       id: 'training-days'
       partitionKey: {
         paths: [
-          '/UserId'
+          '/userId'
         ]
       }
     }
@@ -41,7 +41,7 @@ resource exercisesContainer 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/
       id: 'exercises'
       partitionKey: {
         paths: [
-          '/UserId'
+          '/userId'
         ]
       }
     }
@@ -56,7 +56,7 @@ resource trainingSessionContainer 'Microsoft.DocumentDB/databaseAccounts/sqlData
       id: 'training-sessions'
       partitionKey: {
         paths: [
-          '/UserId'
+          '/userId'
         ]
       }
     }
@@ -87,7 +87,7 @@ resource setsContainer 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/conta
       id: 'sets'
       partitionKey: {
         paths: [
-          '/UserId'
+          '/userId'
         ]
       }
     }

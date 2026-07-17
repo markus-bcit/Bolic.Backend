@@ -2,16 +2,16 @@
 
 public record TrainingDay
 {
-    [JsonProperty("id")] public string? Id { get; init; }
-    public required string UserId { get; init; }
-    public string? MicrocycleId { get; init; }
-    public string? TrainingDayId { get; init; }
-    public int? Number { get; init; }
-    public DateTime? CreatedDate { get; init; }
-    public string? Name { get; init; }
-    public string? Description { get; init; }
-    public DateTime? StartDate { get; init; }
-    public DateTime? EndDate { get; init; }
-    public int Version { get; init; }
-    public List<TrainingExercise> Exercises { get; init; } = [];
+    public string? id { get; init; }
+    public required string userId { get; init; }
+    public string? microcycleId { get; init; }
+    public string? trainingDayId { get; init; }
+    public int? number { get; init; }
+    public DateTime? createdDate { get; init; }
+    public string? name { get; init; }
+    public string? description { get; init; }
+    public DateTime? startDate { get; init; }
+    public DateTime? endDate { get; init; }
+    public int version { get; init; }
+    public List<TrainingExercise> exercises { get; init; } = [];
 }

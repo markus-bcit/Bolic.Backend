@@ -4,36 +4,36 @@ public static class TrainingSetTransformer
 {
     public static Option<Domain.TrainingSet> ToDt(this Api.TrainingSet s) =>
         new Domain.TrainingSet(
-            Id: parseGuid(s.Id ?? ""),
-            UserId: parseGuid(s.UserId).IfNone(() => throw new Exceptional("Missing UserId", 0000)),
-            TrainingExerciseId: parseGuid(s.TrainingExerciseId ?? ""),
-            Type: s.Type,
-            Weight: s.Weight,
-            WeightType: s.WeightType,
-            Repetitions: s.Repetitions,
-            RepetitionsInReserve: s.RepetitionsInReserve,
-            RateOfPerceivedExertion: s.RateOfPerceivedExertion,
-            Quality: s.Quality,
-            AverageRepetitionTime: s.AverageRepetitionTime,
-            Notes: s.Notes,
-            Version: s.Version
+            Id: parseGuid(s.id ?? ""),
+            UserId: parseGuid(s.userId).IfNone(() => throw new Exceptional("Missing UserId", 0000)),
+            TrainingExerciseId: parseGuid(s.trainingExerciseId ?? ""),
+            Type: s.type,
+            Weight: s.weight,
+            WeightType: s.weightType,
+            Repetitions: s.repetitions,
+            RepetitionsInReserve: s.repetitionsInReserve,
+            RateOfPerceivedExertion: s.rateOfPerceivedExertion,
+            Quality: s.quality,
+            AverageRepetitionTime: s.averageRepetitionTime,
+            Notes: s.notes,
+            Version: s.version
         );
 
     public static Option<Api.TrainingSet> ToApi(this Domain.TrainingSet s) =>
         new Api.TrainingSet()
         {
-            Id = s.Id.Match(id => id.ToString(), () => throw new Exceptional("Missing Id", 0015)),
-            UserId = s.UserId.Match(id => id.ToString(), () => throw new Exceptional("Invalid UserId", 0013)),
-            TrainingExerciseId = s.TrainingExerciseId.Match(id => id.ToString(), () => ""),
-            Type = s.Type.IfNone(""),
-            Weight = s.Weight.IfNone(0),
-            WeightType = s.WeightType.IfNone(""),
-            Repetitions = s.Repetitions.IfNone(0),
-            RepetitionsInReserve = s.RepetitionsInReserve.IfNone(0),
-            RateOfPerceivedExertion = s.RateOfPerceivedExertion.IfNone(0),
-            Quality = s.Quality.IfNone(0),
-            AverageRepetitionTime = s.AverageRepetitionTime.IfNone(0),
-            Notes = s.Notes.IfNone(""),
-            Version = s.Version.IfNone(0)
+            id = s.Id.Match(id => id.ToString(), () => throw new Exceptional("Missing Id", 0015)),
+            userId = s.UserId.Match(id => id.ToString(), () => throw new Exceptional("Invalid UserId", 0013)),
+            trainingExerciseId = s.TrainingExerciseId.Match(id => id.ToString(), () => ""),
+            type = s.Type.IfNone(""),
+            weight = s.Weight.IfNone(0),
+            weightType = s.WeightType.IfNone(""),
+            repetitions = s.Repetitions.IfNone(0),
+            repetitionsInReserve = s.RepetitionsInReserve.IfNone(0),
+            rateOfPerceivedExertion = s.RateOfPerceivedExertion.IfNone(0),
+            quality = s.Quality.IfNone(0),
+            averageRepetitionTime = s.AverageRepetitionTime.IfNone(0),
+            notes = s.Notes.IfNone(""),
+            version = s.Version.IfNone(0)
         };
 }

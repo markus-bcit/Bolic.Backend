@@ -13,7 +13,7 @@ public class TrainingExercise(IRuntime runtime)
     {
         var program =
             from request in Tap.Process<Api.TrainingExercise>(req)
-            from body in request.Body.ToEff()
+            from body in request.Body
             from dt in body.ToDt().ToEff()
             let udt = dt with { Id = Guid.NewGuid() }
             from id in  udt.Id.ToEff()
@@ -29,8 +29,9 @@ public class TrainingExercise(IRuntime runtime)
                 )
             )
             select databaseResponse;
+        return req.CreateResponse();
 
-        return await program.Run((Runtime)runtime).ToHttpResponse((Runtime)runtime, req, HttpStatusCode.Created, req.FunctionContext.InvocationId);
+        // return await program.Run((Runtime)runtime).ToHttpResponse((Runtime)runtime, req, HttpStatusCode.Created, req.FunctionContext.InvocationId);
     }
 
     // [Function(("PutTrainingExercise")]
@@ -38,7 +39,7 @@ public class TrainingExercise(IRuntime runtime)
     {
         var program =
             from request in Tap.Process<Api.TrainingExercise>(req)
-            from body in request.Body.ToEff()
+            from body in request.Body
             from dt in body.ToDt().ToEff()
             from id in dt.Id.ToEff(new Exceptional("Missing id", 0101))
             from uid in dt.UserId.ToEff()
@@ -53,7 +54,7 @@ public class TrainingExercise(IRuntime runtime)
                 )
             )
             select databaseResponse;
-
+        
         return await program.Run((Runtime)runtime).ToHttpResponse((Runtime)runtime, req, HttpStatusCode.OK, req.FunctionContext.InvocationId);
     }
     
@@ -62,7 +63,7 @@ public class TrainingExercise(IRuntime runtime)
     {
         var program =
             from request in Tap.Process<Api.TrainingExercise>(req)
-            from body in request.Body.ToEff()
+            from body in request.Body
             from dt in body.ToDt().ToEff()
             from pid in dt.Id.ToEff(new Exceptional("Missing id", 0101))
             from puserId in dt.UserId.ToEff()
@@ -86,7 +87,7 @@ public class TrainingExercise(IRuntime runtime)
     {
         var program =
             from request in Tap.Process<Api.TrainingExercise>(req)
-            from body in request.Body.ToEff()
+            from body in request.Body
             from dt in body.ToDt().ToEff()
             from id in dt.Id.ToEff(new Exceptional("Missing id", 0101))
             from userId in dt.UserId.ToEff()
