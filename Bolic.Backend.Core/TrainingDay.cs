@@ -30,7 +30,7 @@ public class TrainingDay(IRuntime runtime)
             )
             select databaseResponse;
         
-        return await program.Run((Runtime)runtime).ToHttpResponse((Runtime)runtime, req, HttpStatusCode.Created, req.FunctionContext.InvocationId);;
+        return await program.Run((Runtime)runtime).ToHttpResponse((Runtime)runtime, req, HttpStatusCode.Created);;
     }
 
     // [Function(("PutTrainingDay")]
@@ -54,7 +54,7 @@ public class TrainingDay(IRuntime runtime)
             )
             select databaseResponse;
 
-        return await program.Run((Runtime)runtime).ToHttpResponse((Runtime)runtime, req, HttpStatusCode.OK, req.FunctionContext.InvocationId);
+        return await program.Run((Runtime)runtime).ToHttpResponse((Runtime)runtime, req, HttpStatusCode.OK);
     }
     
     // [Function(("GetTrainingDay")]
@@ -76,7 +76,7 @@ public class TrainingDay(IRuntime runtime)
             )
             select databaseResponse;
 
-        return await program.Run((Runtime)runtime).ToHttpResponse((Runtime)runtime, req, HttpStatusCode.OK, req.FunctionContext.InvocationId);
+        return await program.Run((Runtime)runtime).ToHttpResponse((Runtime)runtime, req, HttpStatusCode.OK);
     }
     
     // [Function(("PatchTrainingDay")]
@@ -103,7 +103,7 @@ public class TrainingDay(IRuntime runtime)
                 )
             )
             select databaseResponse;
-        return await program.Run((Runtime)runtime).ToHttpResponse((Runtime)runtime, req, HttpStatusCode.Created, req.FunctionContext.InvocationId);
+        return await program.Run((Runtime)runtime).ToHttpResponse((Runtime)runtime, req, HttpStatusCode.Created);
     }
 
 }

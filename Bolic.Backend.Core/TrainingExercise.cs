@@ -55,7 +55,7 @@ public class TrainingExercise(IRuntime runtime)
             )
             select databaseResponse;
         
-        return await program.Run((Runtime)runtime).ToHttpResponse((Runtime)runtime, req, HttpStatusCode.OK, req.FunctionContext.InvocationId);
+        return await program.Run((Runtime)runtime).ToHttpResponse((Runtime)runtime, req, HttpStatusCode.OK);
     }
     
     // [Function(("GetTrainingExercise")]
@@ -78,7 +78,7 @@ public class TrainingExercise(IRuntime runtime)
             )
             select databaseResponse;
 
-        return await program.Run((Runtime)runtime).ToHttpResponse((Runtime)runtime, req, HttpStatusCode.OK, req.FunctionContext.InvocationId);
+        return await program.Run((Runtime)runtime).ToHttpResponse((Runtime)runtime, req, HttpStatusCode.OK);
     }
     
     // [Function(("PatchTrainingExercise")]
@@ -106,7 +106,7 @@ public class TrainingExercise(IRuntime runtime)
             )
             select databaseResponse;
 
-        return await program.Run((Runtime)runtime).ToHttpResponse((Runtime)runtime, req, HttpStatusCode.Created, req.FunctionContext.InvocationId);
+        return await program.Run((Runtime)runtime).ToHttpResponse((Runtime)runtime, req, HttpStatusCode.Created);
     }
 
 }

@@ -50,7 +50,7 @@ public class TrainingSession(IRuntime runtime)
             )
             select dbr2;
 
-        return await program.Run((Runtime)runtime).ToHttpResponse((Runtime)runtime, req, HttpStatusCode.Created, req.FunctionContext.InvocationId);
+        return await program.Run((Runtime)runtime).ToHttpResponse((Runtime)runtime, req, HttpStatusCode.Created);
     }
     
     
@@ -73,7 +73,7 @@ public class TrainingSession(IRuntime runtime)
             )
             select databaseResponse;
 
-        return await program.Run((Runtime)runtime).ToHttpResponse((Runtime)runtime, req, HttpStatusCode.OK, req.FunctionContext.InvocationId);
+        return await program.Run((Runtime)runtime).ToHttpResponse((Runtime)runtime, req, HttpStatusCode.OK);
     }
 
 }

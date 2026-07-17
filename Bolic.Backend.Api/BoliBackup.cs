@@ -1,7 +1,9 @@
 namespace Bolic.Backend.Api;
 
-public record SyncRequest(
-    string UserId,
-    DateTime ClientTimestamp,
-    Dictionary<string, JsonElement> Data  
-);
+public record SyncRequest
+{
+    public DateTime? exportDate { get; init; }
+    public string? appVersion { get; init; }
+    public string? platform { get; init; }
+    public Dictionary<string, JsonElement> data { get; init; }
+}
