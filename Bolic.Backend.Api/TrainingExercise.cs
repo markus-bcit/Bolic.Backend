@@ -2,25 +2,25 @@ namespace Bolic.Backend.Api;
 
 public record TrainingExercise
 {
-    [JsonPropertyName("id")] public string? Id { get; init; }
+    public string? id { get; init; }
 
-    public required string UserId { get; init; }
-    public List<string> TrainingDayIds { get; init; } = [];
-    public string? Name { get; init; }
-    public string? TargetRepetitions { get; init; }
-    public string? TargetRepetitionsInReserve { get; init; }
-    public int TargetNumberOfSets { get; init; }
-    public string? TargetPosition { get; init; } // lengthened, short, etc.
+    public required string userId { get; init; }
+    public List<string> trainingDayIds { get; init; } = [];
+    public string? name { get; init; }
+    public string? targetRepetitions { get; init; }
+    public string? targetRepetitionsInReserve { get; init; }
+    public int targetNumberOfSets { get; init; }
+    public string? targetPosition { get; init; } // lengthened, short, etc.
 
-    public string? MuscleCategory { get; init; }
+    public string? muscleCategory { get; init; }
 
-    public string? MuscleSubcategory { get; init; } // optional
+    public string? muscleSubcategory { get; init; } // optional
 
-    public string? Equipment { get; init; }
+    public string? equipment { get; init; }
 
-    public string? Notes { get; init; }
+    public string? notes { get; init; }
 
-    public int Version { get; init; }
+    public int version { get; init; }
 
-    public List<TrainingSet> Sets { get; init; } = [];
+    public List<TrainingSet> sets { get; init; } = [];
 }

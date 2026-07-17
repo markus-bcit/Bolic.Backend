@@ -13,11 +13,17 @@ public static class HttpResponseExtensions
         string invocationId)
     {
         // TODO fix at some point, looks like a🥀🥀
-        return result.Match(
-            Succ: T => req.CreateResponse(), Fail: error1 =>
+        return await result.Match(
+            Succ: async suc =>
             {
-                var res = req.CreateResponse();
-                Console.WriteLine(error1.ToString());
+                var res = req.CreateResponse(code);
+                await res.WriteAsJsonAsync(suc);
+                return res;
+            },
+            Fail: async err =>
+            {
+                rt.Logger.LogError(err, "Request received non-success status code, see exception for details on {invocationId}", invocationId);
+                var res = req.CreateResponse(HttpStatusCode.InternalServerError);
                 return res;
             });
     }

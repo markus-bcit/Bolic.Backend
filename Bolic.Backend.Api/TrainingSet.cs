@@ -2,17 +2,17 @@ namespace Bolic.Backend.Api;
 
 public record TrainingSet
 {
-    [JsonPropertyName("id")] public string? Id { get; init; }
-    public required string UserId { get; init; }
-    public string? TrainingExerciseId { get; init; }
-    public string? Type { get; init; } // working set, warmup etc.
-    public float Weight { get; init; }
-    public string? WeightType { get; init; }
-    public float Repetitions { get; init; }
-    public float RepetitionsInReserve { get; init; }
-    public float RateOfPerceivedExertion { get; init; }
-    public float Quality { get; init; }
-    public float AverageRepetitionTime { get; init; }
-    public string? Notes { get; init; }
-    public int Version { get; init; }
+    public string? id { get; init; }
+    public required string userId { get; init; }
+    public string? trainingExerciseId { get; init; }
+    public string? type { get; init; } // working set, warmup etc.
+    public float weight { get; init; }
+    public string? weightType { get; init; }
+    public float repetitions { get; init; }
+    public float repetitionsInReserve { get; init; }
+    public float rateOfPerceivedExertion { get; init; }
+    public float quality { get; init; }
+    public float averageRepetitionTime { get; init; }
+    public string? notes { get; init; }
+    public int version { get; init; }
 }

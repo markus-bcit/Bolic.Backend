@@ -5,39 +5,39 @@ public static class TrainingExerciseTransformer
 {
     public static Option<Domain.TrainingExercise> ToDt(this Api.TrainingExercise e) =>
         new Domain.TrainingExercise(
-            Id: parseGuid(e.Id ?? ""),
-            UserId: parseGuid(e.UserId).IfNone(() => throw new Exceptional("Missing UserId", 0000)),
-            TrainingDayIds: e.TrainingDayIds.Select(parseGuid).Where(opt => opt.IsSome).Select(opt => opt.IfNone(Guid.Empty)).ToList(),
-            MuscleCategory: parseMuscleCategory(e.MuscleCategory),
-            MuscleSubcategory: parseMuscleSubcategory(e.MuscleCategory, e.MuscleSubcategory),
-            TargetRepetitions: e.TargetRepetitions,
-            TargetRepetitionsInReserve: e.TargetRepetitionsInReserve,
-            TargetNumberOfSets: e.TargetNumberOfSets,
-            Name: e.Name,
-            TargetPosition: e.TargetPosition,
-            Equipment: e.Equipment,
-            Notes: e.Notes,
-            Version: e.Version,
-            Sets: e.Sets.Select(TrainingSetTransformer.ToDt).Select(a => a.IfNone(() => throw new Exceptional("Invalid TrainingSet", 0018))).ToList()
+            Id: parseGuid(e.id ?? ""),
+            UserId: parseGuid(e.userId).IfNone(() => throw new Exceptional("Missing UserId", 0000)),
+            TrainingDayIds: e.trainingDayIds.Select(parseGuid).Where(opt => opt.IsSome).Select(opt => opt.IfNone(Guid.Empty)).ToList(),
+            MuscleCategory: parseMuscleCategory(e.muscleCategory),
+            MuscleSubcategory: parseMuscleSubcategory(e.muscleCategory, e.muscleSubcategory),
+            TargetRepetitions: e.targetRepetitions,
+            TargetRepetitionsInReserve: e.targetRepetitionsInReserve,
+            TargetNumberOfSets: e.targetNumberOfSets,
+            Name: e.name,
+            TargetPosition: e.targetPosition,
+            Equipment: e.equipment,
+            Notes: e.notes,
+            Version: e.version,
+            Sets: e.sets.Select(TrainingSetTransformer.ToDt).Select(a => a.IfNone(() => throw new Exceptional("Invalid TrainingSet", 0018))).ToList()
         );
 
     public static Option<Api.TrainingExercise> ToApi(this Domain.TrainingExercise e)
     {
         return new Api.TrainingExercise(){
-            Id = e.Id.Match(id => id.ToString(), () => throw new Exceptional("Missing Id", 0015)),
-            UserId = e.UserId.Match(id => id.ToString(), () => throw new Exceptional("Invalid UserId", 0017)),
-            TrainingDayIds = e.TrainingDayIds.Match(ids => ids.Select(id => id.ToString()).ToList(), () => []),
-            MuscleCategory = e.MuscleCategory.Match(mc => mc.Value, () => ""),
-            MuscleSubcategory = e.MuscleSubcategory.Match(ms => ms.Name, () => ""),
-            TargetRepetitions = e.TargetRepetitions.IfNone(""),
-            TargetRepetitionsInReserve = e.TargetRepetitionsInReserve.IfNone(""),
-            TargetNumberOfSets = e.TargetNumberOfSets.IfNone(0),
-            Name = e.Name.IfNone(""),
-            TargetPosition = e.TargetPosition.IfNone(""),
-            Equipment = e.Equipment.IfNone(""),
-            Notes = e.Notes.IfNone(""),
-            Version = e.Version.IfNone(0),
-            Sets = e.Sets.Select(TrainingSetTransformer.ToApi).Select(a => a.IfNone(() => throw new Exceptional("Invalid TrainingSet", 0019))).ToList()
+            id = e.Id.Match(id => id.ToString(), () => throw new Exceptional("Missing Id", 0015)),
+            userId = e.UserId.Match(id => id.ToString(), () => throw new Exceptional("Invalid UserId", 0017)),
+            trainingDayIds = e.TrainingDayIds.Match(ids => ids.Select(id => id.ToString()).ToList(), () => []),
+            muscleCategory = e.MuscleCategory.Match(mc => mc.Value, () => ""),
+            muscleSubcategory = e.MuscleSubcategory.Match(ms => ms.Name, () => ""),
+            targetRepetitions = e.TargetRepetitions.IfNone(""),
+            targetRepetitionsInReserve = e.TargetRepetitionsInReserve.IfNone(""),
+            targetNumberOfSets = e.TargetNumberOfSets.IfNone(0),
+            name = e.Name.IfNone(""),
+            targetPosition = e.TargetPosition.IfNone(""),
+            equipment = e.Equipment.IfNone(""),
+            notes = e.Notes.IfNone(""),
+            version = e.Version.IfNone(0),
+            sets = e.Sets.Select(TrainingSetTransformer.ToApi).Select(a => a.IfNone(() => throw new Exceptional("Invalid TrainingSet", 0019))).ToList()
         };
     }
 }

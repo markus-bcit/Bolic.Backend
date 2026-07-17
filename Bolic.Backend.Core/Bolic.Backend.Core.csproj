@@ -12,16 +12,16 @@
     <ItemGroup>
         <FrameworkReference Include="Microsoft.AspNetCore.App"/>
         <!-- Application Insights isn't enabled by default. See https://aka.ms/AAt8mw4. -->
-        <!-- <PackageReference Include="Microsoft.ApplicationInsights.WorkerService" Version="2.22.0" /> -->
-        <!-- <PackageReference Include="Microsoft.Azure.Functions.Worker.ApplicationInsights" Version="2.0.0" /> -->
+        <PackageReference Include="Microsoft.ApplicationInsights.WorkerService" Version="2.22.0" /> 
+        <PackageReference Include="Microsoft.Azure.Functions.Worker.ApplicationInsights" Version="2.0.0" /> 
         <PackageReference Include="Microsoft.Azure.Functions.Worker" Version="2.52.0" />
         <PackageReference Include="Microsoft.Azure.Functions.Worker.Extensions.Http.AspNetCore" Version="2.1.0" />
         <PackageReference Include="Microsoft.Azure.Functions.Worker.Sdk" Version="2.0.7" />
-
-        <PackageReference Include="Bolic.Shared.Azure" Version="1.0.5-dev" />
-        <PackageReference Include="Bolic.Shared.Tap" Version="1.0.5-dev"/>
-        <PackageReference Include="Bolic.Shared.Database" Version="1.0.5-dev"/>
-        <PackageReference Include="Bolic.Shared.Core" Version="1.0.5-dev"/>
+        
+        <PackageReference Include="Bolic.Shared.Azure" Version="1.0.6-dev" />
+        <PackageReference Include="Bolic.Shared.Tap" Version="1.0.6-dev"/>
+        <PackageReference Include="Bolic.Shared.Database" Version="1.0.6-dev"/>
+        <PackageReference Include="Bolic.Shared.Core" Version="1.0.6-dev"/>
 
         <ProjectReference Include="..\Bolic.Backend.Api\Bolic.Backend.Api.csproj"/>
         <ProjectReference Include="..\Bolic.Backend.Domain\Bolic.Backend.Domain.csproj"/>

@@ -2,13 +2,13 @@ namespace Bolic.Backend.Api;
 
 public record Macrocycle
 {
-    [JsonPropertyName("id")] public string? Id { get; init; }
-    public required string UserId { get; init; }
-    public string? MesocycleId { get; init; }
-    public string? Name { get; init; }
-    public string? Description { get; init; }
-    public DateTime? StartDate { get; init; }
-    public DateTime? EndDate { get; init; }
-    public int Version { get; init; }
-    public List<Microcycle> Microcycles { get; init; } = [];
+     public string? id { get; init; }
+    public required string userId { get; init; }
+    public string? mesocycleId { get; init; }
+    public string? name { get; init; }
+    public string? description { get; init; }
+    public DateTime? startDate { get; init; }
+    public DateTime? endDate { get; init; }
+    public int version { get; init; }
+    public List<Microcycle> microcycles { get; init; } = [];
 }
