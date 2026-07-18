@@ -14,7 +14,7 @@ public class TrainingDay(IRuntime runtime)
         var program =
             from request in Tap.Process<Api.TrainingDay>(req)
             from body in request.Body
-            from dt in body.ToDt().ToEff()
+            from dt in body.ToDt(ggV).ToEff()
             let udt = dt with { Id = Guid.NewGuid() }
             from id in udt.Id.ToEff()
             from uid in udt.UserId.ToEff()

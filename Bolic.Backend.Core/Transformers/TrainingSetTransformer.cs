@@ -2,10 +2,10 @@ namespace Bolic.Backend.Core.Transformers;
 
 public static class TrainingSetTransformer
 {
-    public static Option<Domain.TrainingSet> ToDt(this Api.TrainingSet s) =>
+    public static Option<Domain.TrainingSet> ToDt(this Api.TrainingSet s, string userId) =>
         new Domain.TrainingSet(
             Id: parseGuid(s.id ?? ""),
-            UserId: parseGuid(s.userId).IfNone(() => throw new Exceptional("Missing UserId", 0000)),
+            UserId: parseGuid(userId),
             TrainingExerciseId: parseGuid(s.trainingExerciseId ?? ""),
             Type: s.type,
             Weight: s.weight,
@@ -23,7 +23,6 @@ public static class TrainingSetTransformer
         new Api.TrainingSet()
         {
             id = s.Id.Match(id => id.ToString(), () => throw new Exceptional("Missing Id", 0015)),
-            userId = s.UserId.Match(id => id.ToString(), () => throw new Exceptional("Invalid UserId", 0013)),
             trainingExerciseId = s.TrainingExerciseId.Match(id => id.ToString(), () => ""),
             type = s.Type.IfNone(""),
             weight = s.Weight.IfNone(0),

@@ -1,12 +1,10 @@
 namespace Bolic.Backend.Core.Transformers;
-
-public static class TrainingDayTransformer
+public static class TrainingSessionTransformer
 {
-    public static Option<Domain.TrainingDay> ToDt(this Api.TrainingDay td, string userId) =>
-        new Domain.TrainingDay(
+    public static Option<Domain.TrainingSession> ToDt(this Api.TrainingSession td, string userId) =>
+        new Domain.TrainingSession(
             Id: parseGuid(td.id ?? ""),
             UserId: parseGuid(userId),
-            MicrocycleId: parseGuid(td.microcycleId ?? ""),
             TrainingDayId: parseGuid(td.trainingDayId ?? ""),
             Name: td.name,
             Description: td.description,
@@ -17,11 +15,10 @@ public static class TrainingDayTransformer
                 .Select(a => a.Match(ts => ts, () => throw new Exceptional("Invalid training exercise", 0043))).ToList()
         );
 
-    public static Option<Api.TrainingDay> ToApi(this Domain.TrainingDay td) =>
-        new Api.TrainingDay()
+    public static Option<Api.TrainingSession> ToApi(this Domain.TrainingSession td) =>
+        new Api.TrainingSession()
         {
             id = td.Id.Match(id => id.ToString(), () => throw new Exceptional("Missing Id", 0015)),
-            microcycleId = td.MicrocycleId.Match(id => id.ToString(), () => ""),
             trainingDayId =  td.TrainingDayId.Match(id => id.ToString(), () => ""),
             name = td.Name.IfNone(""),
             description = td.Description.IfNone(""),

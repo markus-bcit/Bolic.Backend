@@ -3,10 +3,10 @@ namespace Bolic.Backend.Core.Transformers;
 
 public static class TrainingExerciseTransformer
 {
-    public static Option<Domain.TrainingExercise> ToDt(this Api.TrainingExercise e) =>
+    public static Option<Domain.TrainingExercise> ToDt(this Api.TrainingExercise e, string userId) =>
         new Domain.TrainingExercise(
             Id: parseGuid(e.id ?? ""),
-            UserId: parseGuid(e.userId).IfNone(() => throw new Exceptional("Missing UserId", 0000)),
+            UserId: parseGuid(userId),
             TrainingDayIds: e.trainingDayIds.Select(parseGuid).Where(opt => opt.IsSome).Select(opt => opt.IfNone(Guid.Empty)).ToList(),
             MuscleCategory: parseMuscleCategory(e.muscleCategory),
             MuscleSubcategory: parseMuscleSubcategory(e.muscleCategory, e.muscleSubcategory),
@@ -18,14 +18,13 @@ public static class TrainingExerciseTransformer
             Equipment: e.equipment,
             Notes: e.notes,
             Version: e.version,
-            Sets: e.sets.Select(TrainingSetTransformer.ToDt).Select(a => a.IfNone(() => throw new Exceptional("Invalid TrainingSet", 0018))).ToList()
+            Sets: e.sets.Select(set => set.ToDt(userId)).Select(a => a.IfNone(() => throw new Exceptional("Invalid TrainingSet", 0018))).ToList()
         );
 
     public static Option<Api.TrainingExercise> ToApi(this Domain.TrainingExercise e)
     {
         return new Api.TrainingExercise(){
             id = e.Id.Match(id => id.ToString(), () => throw new Exceptional("Missing Id", 0015)),
-            userId = e.UserId.Match(id => id.ToString(), () => throw new Exceptional("Invalid UserId", 0017)),
             trainingDayIds = e.TrainingDayIds.Match(ids => ids.Select(id => id.ToString()).ToList(), () => []),
             muscleCategory = e.MuscleCategory.Match(mc => mc.Value, () => ""),
             muscleSubcategory = e.MuscleSubcategory.Match(ms => ms.Name, () => ""),

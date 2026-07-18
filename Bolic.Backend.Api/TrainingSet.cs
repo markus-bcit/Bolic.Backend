@@ -3,7 +3,6 @@ namespace Bolic.Backend.Api;
 public record TrainingSet
 {
     public string? id { get; init; }
-    public required string userId { get; init; }
     public string? trainingExerciseId { get; init; }
     public string? type { get; init; } // working set, warmup etc.
     public float weight { get; init; }
