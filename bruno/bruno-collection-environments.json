@@ -1,0 +1,36 @@
+{
+  "info": {
+    "type": "bruno-environment",
+    "exportedAt": "2026-07-18T02:04:46.088Z",
+    "exportedUsing": "Bruno/v3.5.2"
+  },
+  "environments": [
+    {
+      "name": "Develop",
+      "variables": [
+        {
+          "name": "url",
+          "value": "http://localhost:7071/",
+          "type": "text",
+          "enabled": true,
+          "secret": false
+        },
+        {
+          "name": "userId",
+          "value": "f0bf0bff-a1ed-493e-b07d-ddcc167e7b6a",
+          "type": "text",
+          "enabled": true,
+          "secret": false
+        }
+      ]
+    },
+    {
+      "name": "Local",
+      "variables": []
+    },
+    {
+      "name": "Main",
+      "variables": []
+    }
+  ]
+}

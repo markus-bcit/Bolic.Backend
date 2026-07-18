@@ -1,0 +1,24 @@
+info:
+  name: sync
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: "{{url}}/sync"
+  headers:
+    - name: userId
+      value: "{{userId}}"
+  body:
+    type: file
+    data:
+      - filePath: \\wsl.localhost\Ubuntu\home\markus\projects\Bolic.Backend\bruno\bolic-backup-compressed.json.gz
+        contentType: application/gzip
+        selected: true
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
