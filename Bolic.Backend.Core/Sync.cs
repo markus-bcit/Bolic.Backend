@@ -22,24 +22,22 @@ public class Sync(Runtime runtime)
             from compressedBody in compressedRequest.Body
             from decompressedBody in Shared.Core.Utils.Utils.To<SyncRequest>(compressedBody)
             from syncDT in SyncRequestTransformer.ToDt(decompressedBody, userId)
-            from _ in syncDT.TrainingSessions
-                .Map(s =>
+            from _ in syncDT.Exercises
+                .Traverse(s =>
+                    from itemUserId in s.UserId.ToEff()
+                    from itemId in s.Id.ToEff()
                     from item in s.ToApi().ToEff()
                     from request in CosmosDatabase.UpdateItem(
-                        new UpdateRequest<Api.TrainingSession>(
-                            Id: s.Id.ToString(),
-                            UserId: s.UserId.ToString(),
+                        new UpdateRequest<Api.TrainingExercise>(
+                            Id: itemId.ToString(),
+                            UserId: itemUserId.ToString(),
                             Document: item,
-                            Container: "training-sessions",
+                            Container: "exercises",
                             Database: "bolic"
-                        )
-                    select request;
-                ).retry<>(Schedule.exponential(1 * seconds) | Schedule.recurs(5)))
-                .SequenceSerial()
-                from __ in syncDT.Exercises
-                .Map(e => CosmosDatabase.UpsertItem(...))
-            .SequenceSerial()
-d            select syncDT;
+                        ))
+                    select request
+                )
+            select syncDT;
 
         return await program.Run(runtime).ToHttpResponse(runtime, req, HttpStatusCode.Created);
     }

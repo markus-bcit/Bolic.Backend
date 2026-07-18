@@ -21,6 +21,7 @@ public static class TrainingDayTransformer
         new Api.TrainingDay()
         {
             id = td.Id.Match(id => id.ToString(), () => throw new Exceptional("Missing Id", 0015)),
+            userId = td.UserId.Match(id => id.ToString(), () => throw new Exceptional("Invalid UserId", 0015)),
             microcycleId = td.MicrocycleId.Match(id => id.ToString(), () => ""),
             trainingDayId =  td.TrainingDayId.Match(id => id.ToString(), () => ""),
             name = td.Name.IfNone(""),

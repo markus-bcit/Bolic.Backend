@@ -23,6 +23,7 @@ public static class TrainingSetTransformer
         new Api.TrainingSet()
         {
             id = s.Id.Match(id => id.ToString(), () => throw new Exceptional("Missing Id", 0015)),
+            userId = s.UserId.Match(id => id.ToString(), () => throw new Exceptional("Invalid UserId", 0013)),
             trainingExerciseId = s.TrainingExerciseId.Match(id => id.ToString(), () => ""),
             type = s.Type.IfNone(""),
             weight = s.Weight.IfNone(0),

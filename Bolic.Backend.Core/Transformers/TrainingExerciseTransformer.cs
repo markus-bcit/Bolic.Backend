@@ -25,6 +25,7 @@ public static class TrainingExerciseTransformer
     {
         return new Api.TrainingExercise(){
             id = e.Id.Match(id => id.ToString(), () => throw new Exceptional("Missing Id", 0015)),
+            userId = e.UserId.Match(id => id.ToString(), () => throw new Exceptional("Invalid UserId", 0017)),
             trainingDayIds = e.TrainingDayIds.Match(ids => ids.Select(id => id.ToString()).ToList(), () => []),
             muscleCategory = e.MuscleCategory.Match(mc => mc.Value, () => ""),
             muscleSubcategory = e.MuscleSubcategory.Match(ms => ms.Name, () => ""),
