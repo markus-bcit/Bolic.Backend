@@ -3,9 +3,9 @@ public static class TrainingSessionTransformer
 {
     public static Option<Domain.TrainingSession> ToDt(this Api.TrainingSession td, string userId) =>
         new Domain.TrainingSession(
-            Id: parseGuid(td.id ?? ""),
-            UserId: parseGuid(userId),
-            TrainingDayId: parseGuid(td.trainingDayId ?? ""),
+            Id: parseGuid(td.id).IfNone(() => throw new Exceptional("Missing id", 0040)), // Todo: figure out how to handle id relations on both c/s
+            UserId: parseGuid(userId).IfNone(() => throw new Exceptional("Missing userId", 0041)),
+            TrainingDayId: parseGuid(td.trainingDayId).IfNone(Guid.NewGuid), // Todo: figure out how to handle id relations on both c/s
             Name: td.name,
             Description: td.description,
             StartDate: td.startDate ?? Option<DateTime>.None,
