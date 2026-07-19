@@ -2,10 +2,10 @@ namespace Bolic.Backend.Core.Transformers;
 
 public static class MicrocycleTransformer
 {
-    public static Option<Domain.Microcycle> ToDt(this Api.Microcycle m) =>
+    public static Option<Domain.Microcycle> ToDt(this Api.Microcycle m, string userId) =>
         new Domain.Microcycle(
             Id: parseGuid(m.id ?? ""),
-            UserId: parseGuid(m.userId).IfNone(() => throw new Exceptional("Missing UserId", 0000)),
+            UserId: parseGuid(userId),
             MacrocycleId: parseGuid(m.macrocycleId ?? ""),
             Name: m.name,
             Description: m.description,
@@ -13,7 +13,7 @@ public static class MicrocycleTransformer
             StartDate: m.startDate ?? Option<DateTime>.None,
             EndDate: m.endDate ?? Option<DateTime>.None,
             Version: m.version,
-            TrainingDays: m.trainingDays.Select(TrainingDayTransformer.ToDt)
+            TrainingDays: m.trainingDays.Select(td => td.ToDt(userId))
                 .Select(a => a.IfNone(() => throw new Exceptional("Invalid TrainingDay", 0016))).ToList()
         );
 
@@ -21,7 +21,6 @@ public static class MicrocycleTransformer
         new Api.Microcycle()
         {
             id = m.Id.Match(id => id.ToString(), () => throw new Exceptional("Missing Id", 0015)),
-            userId = m.Id.Match(id => id.ToString(), () => throw new Exceptional("Invalid UserId", 0001)),
             macrocycleId = m.MacrocycleId.Match(id => id.ToString(), () => ""),
             name = m.Name.IfNone(""),
             description = m.Description.IfNone(""),

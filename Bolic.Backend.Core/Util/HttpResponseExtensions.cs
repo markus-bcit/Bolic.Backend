@@ -9,8 +9,8 @@ public static class HttpResponseExtensions
         this Fin<T> result,
         Runtime rt,
         HttpRequestData req,
-        HttpStatusCode code,
-        string invocationId)
+        HttpStatusCode code
+        )
     {
         // TODO fix at some point, looks like a🥀🥀
         return await result.Match(
@@ -22,7 +22,7 @@ public static class HttpResponseExtensions
             },
             Fail: async err =>
             {
-                rt.Logger.LogError(err, "Request received non-success status code, see exception for details on {invocationId}", invocationId);
+                rt.Logger.LogError(err, "Request received non-success status code, see exception for details on {invocationId}", req.FunctionContext.InvocationId);
                 var res = req.CreateResponse(HttpStatusCode.InternalServerError);
                 return res;
             });

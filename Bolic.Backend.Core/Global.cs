@@ -1,8 +1,8 @@
 global using System.Text.Json;
 global using System.Text.Json.Serialization;
-
-
 global using System.Net;
+global using System.IO.Compression;
+
 global using Microsoft.Azure.Functions.Worker;
 global using Microsoft.Azure.Functions.Worker.Http;
 global using Microsoft.Azure.Cosmos;

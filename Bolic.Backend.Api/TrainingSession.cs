@@ -1,9 +1,8 @@
-﻿namespace Bolic.Backend.Api;
+namespace Bolic.Backend.Api;
 
-public record TrainingDay
+public record TrainingSession 
 {
     public string? id { get; init; }
-    public string? microcycleId { get; init; }
     public string? trainingDayId { get; init; }
     public int? number { get; init; }
     public DateTime? createdDate { get; init; }
