@@ -17,12 +17,12 @@ public static class TrainingDay
         var newVersion = td.Version.IfNone(0) + 1;
         po.Add(PatchOperation.Replace("/Version", newVersion));
 
-        if (td.Exercises is { Count: > 0 })
-        {
-            po.Add(PatchOperation.Replace("/Exercises",
-                td.Exercises.Select(a =>
-                    a.ToApi().Match(b => b, () => throw new Exceptional("Bad exercise list", 0202)))));
-        }
+        // if (td.Exercises is { Count: > 0 })
+        // {
+        //     po.Add(PatchOperation.Replace("/Exercises",
+        //         td.Exercises.Select(a =>
+        //             a.ToApi().Match(b => b, () => throw new Exceptional("Bad exercise list", 0202)))));
+        // }
 
         return po;
     }

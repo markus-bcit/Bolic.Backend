@@ -26,7 +26,7 @@ public class Sync(Runtime runtime)
                 .Traverse(s =>
                     from itemUserId in s.UserId.ToEff()
                     from itemId in s.Id.ToEff()
-                    from item in s.ToApi().ToEff()
+                    from item in s.ToApi()
                     from request in CosmosDatabase.UpdateItem(
                         new UpdateRequest<Api.TrainingExercise>(
                             Id: itemId.ToString(),

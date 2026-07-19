@@ -24,7 +24,7 @@ public class SyncRequestTransformer
                         var data = wrapper.data ?? throw new Exceptional("Missing exercise data", 0304);
                         return data with { id = data.id ?? wrapper.id };
                     })
-                    .Select(data => data.ToDt(userId).IfNone(() => throw new Exceptional("Invalid exercise", 0305)));        
+                    .Select(data => data.ToDt(userId).Run().ThrowIfFail());        
             
             var sessionLinq =
                 request.data
@@ -35,7 +35,7 @@ public class SyncRequestTransformer
                         var data = wrapper.data ?? throw new Exceptional("Missing session data", 0300);
                         return data with { id = data.id ?? wrapper.id };
                     })
-                    .Select(data => data.ToDt(userId).IfNone(() => throw new Exceptional("Invalid session", 0301)));
+                    .Select(data => data.ToDt(userId).Run().ThrowIfFail());
             
             var exercises = toSeq(exercisesLinq);
             var sessions = toSeq(sessionLinq);

@@ -2,8 +2,8 @@ namespace Bolic.Backend.Core.Transformers;
 
 public static class TrainingSetTransformer
 {
-    public static Option<Domain.TrainingSet> ToDt(this Api.TrainingSet s, string userId) =>
-        new Domain.TrainingSet(
+    public static Eff<Domain.TrainingSet> ToDt(this Api.TrainingSet s, string userId) =>
+        liftEff(_ => new Domain.TrainingSet(
             Id: parseGuid(s.id ?? ""),
             UserId: parseGuid(userId),
             TrainingExerciseId: parseGuid(s.trainingExerciseId ?? ""),
@@ -17,10 +17,10 @@ public static class TrainingSetTransformer
             AverageRepetitionTime: s.averageRepetitionTime,
             Notes: s.notes,
             Version: s.version
-        );
+        ));
 
-    public static Option<Api.TrainingSet> ToApi(this Domain.TrainingSet s) =>
-        new Api.TrainingSet()
+    public static Eff<Api.TrainingSet> ToApi(this Domain.TrainingSet s) =>
+        liftEff(_ => new Api.TrainingSet()
         {
             id = s.Id.Match(id => id.ToString(), () => throw new Exceptional("Missing Id", 0015)),
             userId = s.UserId.Match(id => id.ToString(), () => throw new Exceptional("Invalid UserId", 0013)),
@@ -35,5 +35,5 @@ public static class TrainingSetTransformer
             averageRepetitionTime = s.AverageRepetitionTime.IfNone(0),
             notes = s.Notes.IfNone(""),
             version = s.Version.IfNone(0)
-        };
+        });
 }
