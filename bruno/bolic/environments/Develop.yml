@@ -1,6 +1,6 @@
 name: Develop
 variables:
   - name: url
-    value: http://localhost:61523
+    value: http://localhost:59970
   - name: userId
     value: f0bf0bff-a1ed-493e-b07d-ddcc167e7b6a

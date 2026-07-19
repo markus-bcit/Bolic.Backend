@@ -23,7 +23,7 @@ public static class HttpResponseExtensions
             Fail: async err =>
             {
                 rt.Logger.LogError(err, "Request received non-success status code, see exception for details on {invocationId}", req.FunctionContext.InvocationId);
-                var res = req.CreateResponse(HttpStatusCode.InternalServerError);
+                var res = req.CreateResponse(HttpStatusCode.BadGateway); // Todo
                 return res;
             });
     }
