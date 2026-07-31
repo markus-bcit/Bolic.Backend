@@ -1,5 +1,4 @@
 using Bolic.Shared.Database.Api;
-using Error = Bolic.Backend.Api.Error;
 
 namespace Bolic.Backend.Core.Util;
 

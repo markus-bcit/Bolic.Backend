@@ -1,4 +1,3 @@
-using Bolic.Shared.Database.Api;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
