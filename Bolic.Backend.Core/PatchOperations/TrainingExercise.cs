@@ -26,7 +26,7 @@ public static class TrainingExercise
         {
             po.Add(PatchOperation.Replace("/Sets",
                 td.Sets.Select(a =>
-                    a.ToApi().Match(b => b, () => throw new Exceptional("Bad set list", 0203)))));
+                    a.ToApi().Run().ThrowIfFail())));
         }
 
         return po;

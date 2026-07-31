@@ -2,8 +2,8 @@ namespace Bolic.Backend.Core.Transformers;
 
 public static class MicrocycleTransformer
 {
-    public static Option<Domain.Microcycle> ToDt(this Api.Microcycle m, string userId) =>
-        new Domain.Microcycle(
+    public static Eff<Domain.Microcycle> ToDt(this Api.Microcycle m, string userId) =>
+        liftEff(_ => new Domain.Microcycle(
             Id: parseGuid(m.id ?? ""),
             UserId: parseGuid(userId),
             MacrocycleId: parseGuid(m.macrocycleId ?? ""),
@@ -14,11 +14,11 @@ public static class MicrocycleTransformer
             EndDate: m.endDate ?? Option<DateTime>.None,
             Version: m.version,
             TrainingDays: m.trainingDays.Select(td => td.ToDt(userId))
-                .Select(a => a.IfNone(() => throw new Exceptional("Invalid TrainingDay", 0016))).ToList()
-        );
+                .Select(a => a.Run().ThrowIfFail()).ToList()
+        ));
 
-    public static Option<Api.Microcycle> ToApi(this Domain.Microcycle m) =>
-        new Api.Microcycle()
+    public static Eff<Api.Microcycle> ToApi(this Domain.Microcycle m) =>
+        liftEff(_ => new Api.Microcycle()
         {
             id = m.Id.Match(id => id.ToString(), () => throw new Exceptional("Missing Id", 0015)),
             macrocycleId = m.MacrocycleId.Match(id => id.ToString(), () => ""),
@@ -29,6 +29,6 @@ public static class MicrocycleTransformer
             endDate = m.EndDate.IfNone(DateTime.MinValue),
             version = m.Version.IfNone(0),
             trainingDays = m.TrainingDays.Select(TrainingDayTransformer.ToApi)
-                .Select(a => a.IfNone(() => throw new Exceptional("Invalid TrainingDay", 0018))).ToList()
-        };
+                .Select(a => a.Run().ThrowIfFail()).ToList()
+        });
 }

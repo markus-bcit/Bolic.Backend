@@ -3,6 +3,7 @@
 public record TrainingDay
 {
     public string? id { get; init; }
+    public string? userId { get; init; }
     public string? microcycleId { get; init; }
     public string? trainingDayId { get; init; }
     public int? number { get; init; }
