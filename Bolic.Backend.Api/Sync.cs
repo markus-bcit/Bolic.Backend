@@ -6,5 +6,5 @@ public record SyncRequest
     public string? appVersion { get; init; }
     public string? platform { get; init; }
     public string? localUserId { get; init; }
-    public Dictionary<string, JsonElement> data { get; init; }
+    public Dictionary<string, JsonElement> data { get; init; } = [];
 }
