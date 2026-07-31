@@ -7,8 +7,11 @@ public static class TrainingSessionTransformer
             Id: parseGuid(td.id).IfNone(() => throw new Exceptional("Missing id", 0040)), // Todo: figure out how to handle id relations on both c/s
             UserId: parseGuid(userId).IfNone(() => throw new Exceptional("Missing userId", 0041)),
             TrainingDayId: parseGuid(td.trainingDayId).IfNone(Guid.NewGuid), // Todo: figure out how to handle id relations on both c/s
-            Name: td.name, Description: td.description, StartDate: td.startDate ?? Option<DateTime>.None,
-            EndDate: td.endDate ?? Option<DateTime>.None, Version: td.version,
+            Name: td.name, 
+            Description: td.description, 
+            StartDate: td.startedAt ?? Option<DateTime>.None,
+            EndDate: td.completedAt ?? Option<DateTime>.None, 
+            Version: td.version,
             Exercises: td.exercises.Select(exercise => exercise.ToDt(userId)).Select(a =>
                 a.Run().ThrowIfFail()).ToList()));
 
@@ -20,8 +23,8 @@ public static class TrainingSessionTransformer
             trainingDayId = td.TrainingDayId.Match(id => id.ToString(), () => ""),
             name = td.Name.IfNone(""),
             description = td.Description.IfNone(""),
-            startDate = td.StartDate.IfNone(DateTime.MinValue),
-            endDate = td.EndDate.IfNone(DateTime.MinValue),
+            startedAt = td.StartDate.IfNone(DateTime.MinValue),
+            completedAt = td.EndDate.IfNone(DateTime.MinValue),
             version = td.Version.IfNone(0),
             exercises = td.Exercises.Select(TrainingExerciseTransformer.ToApi)
                 .Select(a => a.Run().ThrowIfFail()).ToList()

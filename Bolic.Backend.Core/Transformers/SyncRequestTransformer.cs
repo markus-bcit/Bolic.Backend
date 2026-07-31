@@ -1,6 +1,4 @@
-using System.Security.Policy;
 using Bolic.Backend.Api;
-using TrainingSession = Bolic.Backend.Domain.TrainingSession;
 
 namespace Bolic.Backend.Core.Transformers;
 
@@ -26,7 +24,7 @@ public class SyncRequestTransformer
                     })
                     .Select(data => data.ToDt(userId).Run().ThrowIfFail());        
             
-            var sessionLinq =
+            var sessionLinq = 
                 request.data
                     .Where(kvp => kvp.Key.StartsWith($"{prefix}{SessionsKey}"))
                     .SelectMany(kvp => kvp.Value.Deserialize<List<StorageWrapper<Api.TrainingSession>>>() ?? [])

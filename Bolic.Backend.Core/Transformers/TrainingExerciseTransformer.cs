@@ -5,7 +5,7 @@ public static class TrainingExerciseTransformer
 {
     public static Eff<Domain.TrainingExercise> ToDt(this Api.TrainingExercise e, string userId) =>
         liftEff(_ => new Domain.TrainingExercise(
-            Id: parseGuid(e.id ?? "").IfNone(() =>  throw new Exceptional($"Missing Id {e.name}", 0015)),
+            Id: parseGuid(e.id ?? e.exerciseId).IfNone(() =>  throw new Exceptional($"Missing both id and exerciseId {e.name}", 0015)),
             UserId: parseGuid(userId),
             TrainingDayIds: e.trainingDayIds.Select(parseGuid).Where(opt => opt.IsSome).Select(opt => opt.IfNone(Guid.Empty)).ToList(),
             MuscleCategory: parseMuscleCategory(e.muscleCategory),
@@ -13,7 +13,7 @@ public static class TrainingExerciseTransformer
             TargetRepetitions: e.targetRepetitions,
             TargetRepetitionsInReserve: e.targetRepetitionsInReserve,
             TargetNumberOfSets: e.targetNumberOfSets,
-            Name: e.name,
+            Name: e.name ?? e.exerciseName,
             TargetPosition: e.targetPosition,
             Equipment: e.equipment,
             Notes: e.notes,

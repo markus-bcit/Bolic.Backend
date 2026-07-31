@@ -1,11 +1,8 @@
-using System.Reactive.Concurrency;
 using Bolic.Backend.Api;
 using Bolic.Backend.Core.Transformers;
 using Bolic.Backend.Core.Util;
 using Bolic.Shared.Database.Api;
 using Bolic.Shared.Database.Implementation;
-using Newtonsoft.Json.Linq;
-using static Bolic.Backend.Core.Logic.TrainingSessionService;
 
 namespace Bolic.Backend.Core;
 

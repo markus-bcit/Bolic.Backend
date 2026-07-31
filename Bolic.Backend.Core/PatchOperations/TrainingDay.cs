@@ -1,5 +1,3 @@
-using Bolic.Backend.Core.Transformers;
-
 namespace Bolic.Backend.Core.PatchOperations;
 
 public static class TrainingDay

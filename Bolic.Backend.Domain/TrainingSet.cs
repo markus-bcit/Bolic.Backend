@@ -7,11 +7,13 @@ public record TrainingSet(
     Option<string> Type,
     Option<float> Weight,
     Option<string> WeightType,
-    Option<float> Repetitions,
-    Option<float> RepetitionsInReserve,
-    Option<float> RateOfPerceivedExertion,
-    Option<float> Quality,
+    Option<int> Repetitions,
+    Option<string> RepetitionsInReserve,
+    Option<int> NumberOfPartials,
+    Option<int> RateOfPerceivedExertion,
+    Option<int> Quality,
     Option<float> AverageRepetitionTime,
     Option<string> Notes,
-    Option<int> Version
+    Option<int> Version,
+    Option<DateTime> CompletedAt 
 );
