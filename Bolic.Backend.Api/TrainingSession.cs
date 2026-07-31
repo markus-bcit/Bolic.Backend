@@ -9,8 +9,8 @@ public record TrainingSession
     public DateTime? createdDate { get; init; }
     public string? name { get; init; }
     public string? description { get; init; }
-    public DateTime? startDate { get; init; }
-    public DateTime? endDate { get; init; }
+    public DateTime? startedAt { get; init; }
+    public DateTime? completedAt { get; init; }
     public int version { get; init; }
     public List<TrainingExercise> exercises { get; init; } = [];
 }

@@ -3,6 +3,8 @@ namespace Bolic.Backend.Api;
 public record TrainingExercise
 {
     public string? id { get; init; }
+    public string? exerciseId { get; set; }  // session exercise reference
+    public string? exerciseName { get; set; }
     public string? userId { get; init; }
     public List<string> trainingDayIds { get; init; } = [];
     public string? name { get; init; }
