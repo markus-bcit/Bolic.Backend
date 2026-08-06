@@ -59,7 +59,7 @@ public class Sync(Runtime runtime)
                         ))
                     select upsertResponse
                 )
-            select trainingSessionUpserts;
+            select new SyncResponse(DateTime.Now, exerciseCount, trainingSessionCount);
 
         return await program.Run(runtime).ToHttpResponse(runtime, req, HttpStatusCode.Created);
     }
