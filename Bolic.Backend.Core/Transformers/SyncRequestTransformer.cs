@@ -7,7 +7,7 @@ public class SyncRequestTransformer
     private const string UserPrefix = "@bolic:user";
     private const string SessionsKey = ":sessions:";
     private const string ExercisesKey = ":exercises";
-    
+
     public static Eff<Domain.Sync> ToDt(SyncRequest request, string userId) =>
         liftEff(() =>
         {
@@ -22,9 +22,9 @@ public class SyncRequestTransformer
                         var data = wrapper.data ?? throw new Exceptional("Missing exercise data", 0304);
                         return data with { id = data.id ?? wrapper.id };
                     })
-                    .Select(data => data.ToDt(userId).Run().ThrowIfFail());        
-            
-            var sessionLinq = 
+                    .Select(data => data.ToDt(userId).Run().ThrowIfFail());
+
+            var sessionLinq =
                 request.data
                     .Where(kvp => kvp.Key.StartsWith($"{prefix}{SessionsKey}"))
                     .SelectMany(kvp => kvp.Value.Deserialize<List<StorageWrapper<Api.TrainingSession>>>() ?? [])
@@ -34,7 +34,7 @@ public class SyncRequestTransformer
                         return data with { id = data.id ?? wrapper.id };
                     })
                     .Select(data => data.ToDt(userId).Run().ThrowIfFail());
-            
+
             var exercises = toSeq(exercisesLinq);
             var sessions = toSeq(sessionLinq);
 

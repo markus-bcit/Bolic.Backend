@@ -3,7 +3,7 @@ namespace Bolic.Backend.Api;
 public record Microcycle
 {
     public string? id { get; init; }
-    public string? macrocycleId  { get; init; }
+    public string? macrocycleId { get; init; }
     public string? name { get; init; }
     public string? description { get; init; }
     public int? number { get; init; }

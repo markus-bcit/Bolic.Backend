@@ -2,7 +2,7 @@ namespace Bolic.Backend.Api;
 
 public record Macrocycle
 {
-     public string? id { get; init; }
+    public string? id { get; init; }
     public string? mesocycleId { get; init; }
     public string? name { get; init; }
     public string? description { get; init; }

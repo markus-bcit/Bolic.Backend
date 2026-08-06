@@ -1,6 +1,6 @@
 namespace Bolic.Backend.Api;
 
-public record TrainingSession 
+public record TrainingSession
 {
     public string? id { get; init; }
     public string? userId { get; init; }

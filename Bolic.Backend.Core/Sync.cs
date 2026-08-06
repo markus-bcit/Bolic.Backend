@@ -24,41 +24,41 @@ public class Sync(Runtime runtime)
                     from itemUserId in s.UserId.ToEff()
                     from itemId in s.Id.ToEff()
                     from item in s.ToApi()
-                    select item 
+                    select item
                 )
             from trainingSessionApi in syncDT.TrainingSessions
                 .Traverse(s =>
                     from itemUserId in s.UserId.ToEff()
                     from itemId in s.Id.ToEff()
                     from item in s.ToApi()
-                    select item 
+                    select item
                 )
             let exerciseCount = exercisesApi.Count
             let trainingSessionCount = trainingSessionApi.Count
             from exercisesUpserts in exercisesApi
-                .Traverse(e => 
+                .Traverse(e =>
                     from upsertResponse in CosmosDatabase.UpdateItem(
                         new UpdateRequest<Api.TrainingExercise>(
-                            Id: e.id!, // checks in .ToApi above
                             UserId: e.userId!, // checks in .ToApi above
+                            Id: e.id!, // checks in .ToApi above
                             Document: e,
                             Container: "exercises",
                             Database: "bolic"
                         ))
                     select upsertResponse
                     )
-            from trainingSessionUpserts in trainingSessionApi 
-                .Traverse(e => 
+            from trainingSessionUpserts in trainingSessionApi
+                .Traverse(e =>
                     from upsertResponse in CosmosDatabase.UpdateItem(
-                        new UpdateRequest<Api.TrainingSession>(
-                            Id: e.id!, // checks in .ToApi above
+                        request: new UpdateRequest<Api.TrainingSession>(
                             UserId: e.userId!, // checks in .ToApi above
+                            Id: e.id!, // checks in .ToApi above
                             Document: e,
                             Container: "training-sessions",
                             Database: "bolic"
                         ))
                     select upsertResponse
-                )
+                    )
             select new SyncResponse(DateTime.Now, exerciseCount, trainingSessionCount);
 
         return await program.Run(runtime).ToHttpResponse(runtime, req, HttpStatusCode.Created);
