@@ -2,7 +2,7 @@ using Bolic.Backend.Api;
 
 namespace Bolic.Backend.Core.Transformers;
 
-public class SyncRequestTransformer
+public static class SyncRequestTransformer
 {
     private const string UserPrefix = "@bolic:user";
     private const string SessionsKey = ":sessions:";

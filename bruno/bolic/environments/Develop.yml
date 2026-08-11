@@ -2,5 +2,10 @@ name: Develop
 variables:
   - name: url
     value: http://localhost:7071
+    description: ""
   - name: userId
     value: f0bf0bff-a1ed-493e-b07d-ddcc167e7b6a
+    description: ""
+  - name: authUrl
+    value: http://localhost:7026
+    description: ""
