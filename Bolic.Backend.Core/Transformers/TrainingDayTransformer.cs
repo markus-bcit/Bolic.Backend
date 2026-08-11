@@ -28,7 +28,6 @@ public static class TrainingDayTransformer
             startDate = td.StartDate.IfNone(DateTime.MinValue),
             endDate = td.EndDate.IfNone(DateTime.MinValue),
             version = td.Version.IfNone(0),
-            exercises = td.Exercises.Select(TrainingExerciseTransformer.ToApi).Select(a => a.Run().ThrowIfFail())
-                .ToList()
+            exercises = td.Exercises.Select(TrainingExerciseTransformer.ToApi).Select(a => a.Run().ThrowIfFail()).ToList()
         });
 }

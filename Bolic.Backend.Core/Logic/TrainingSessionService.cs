@@ -2,8 +2,10 @@ namespace Bolic.Backend.Core.Logic;
 
 public static class TrainingSessionService
 {
-    public static Option<Domain.TrainingDay> CreateTrainingSessionFromTrainingDay(Domain.TrainingDay day,
-        Domain.TrainingDay session) =>
+    public static Option<Domain.TrainingDay> CreateTrainingSessionFromTrainingDay(
+        Domain.TrainingDay day,
+        Domain.TrainingDay session
+    ) =>
         new Domain.TrainingDay(
             Id: session.Id,
             UserId: session.UserId,
@@ -11,9 +13,9 @@ public static class TrainingSessionService
             TrainingDayId: day.Id,
             Name: session.Name,
             Description: session.Description,
-            Version: 0,
             StartDate: DateTime.UtcNow,
             EndDate: Option<DateTime>.None,
+            Version: 0,
             Exercises: day.Exercises
         );
 }
