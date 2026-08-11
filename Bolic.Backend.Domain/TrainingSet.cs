@@ -15,5 +15,5 @@ public record TrainingSet(
     Option<float> AverageRepetitionTime,
     Option<string> Notes,
     Option<int> Version,
-    Option<DateTime> CompletedAt 
+    Option<DateTime> CompletedAt
 );

@@ -9,6 +9,6 @@
     </PropertyGroup>
     
     <ItemGroup>
-        <PackageReference Include="Bolic.Shared.Core" Version="1.0.6-dev"/>
+        <PackageReference Include="Bolic.Shared.Core" Version="1.0.7-dev"/>
     </ItemGroup>
 </Project>

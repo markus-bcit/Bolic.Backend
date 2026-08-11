@@ -4,5 +4,5 @@ public record SyncResponse
 (
     DateTime? syncAt,
     int exercisesCount,
-    int trainintSessionsCount
+    int trainingSessionsCount
 );

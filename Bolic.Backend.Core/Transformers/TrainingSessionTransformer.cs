@@ -7,10 +7,10 @@ public static class TrainingSessionTransformer
             Id: parseGuid(td.id).IfNone(() => throw new Exceptional("Missing id", 0040)), // Todo: figure out how to handle id relations on both c/s
             UserId: parseGuid(userId).IfNone(() => throw new Exceptional("Missing userId", 0041)),
             TrainingDayId: parseGuid(td.trainingDayId).IfNone(Guid.NewGuid), // Todo: figure out how to handle id relations on both c/s
-            Name: td.name, 
-            Description: td.description, 
+            Name: td.name,
+            Description: td.description,
             StartDate: td.startedAt ?? Option<DateTime>.None,
-            EndDate: td.completedAt ?? Option<DateTime>.None, 
+            EndDate: td.completedAt ?? Option<DateTime>.None,
             Version: td.version,
             Exercises: td.exercises.Select(exercise => exercise.ToDt(userId)).Select(a =>
                 a.Run().ThrowIfFail()).ToList()));
