@@ -20,10 +20,10 @@ resource database 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases@2025-10-15
 
 resource trainingDaysContainer 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers@2025-10-15' = {
   parent: database
-  name: 'training-days'
+  name: 'analytics'
   properties: {
     resource: {
-      id: 'training-days'
+      id: 'analytics'
       partitionKey: {
         paths: [
           '/userId'
