@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <TargetFramework>net10.0</TargetFramework>
@@ -9,6 +9,6 @@
     </PropertyGroup>
     
     <ItemGroup>
-        <PackageReference Include="Bolic.Shared.Core" Version="1.0.7-dev"/>
+        <PackageReference Include="Bolic.Shared.Core" Version="1.0.8-dev"/>
     </ItemGroup>
 </Project>
